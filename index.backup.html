@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Graph Parameter Hierarchy — unified</title>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+    #app { display:flex; height:100%; width:100%; padding-top: 62px;}
+    /* Sidebar (left panel) */
+    #node-panel { width:300px; border-right:1px solid #e5e7eb; padding:12px; padding-top: 24px; overflow:auto; }
+    #node-panel.collapsed { display:none; }
+    #node-panel h3 { margin:0; font-size:15px; color:#111827; }
+    #node-count { font-size:12px; color:#6b7280; }
+    #node-panel-list { padding-left:0; margin:0; }
+    #node-panel-list li { padding:8px 10px; border-radius:8px; list-style:none; cursor:pointer; }
+    #node-panel-list li:hover { background:#f3f4f6; }
+    #node-panel-list li.active { background:#e5f0ff; color:#0b63ff; font-weight:600; }
+    /* Header */
+    header { padding: 14px 18px; border-bottom:1px solid #e5e7eb; display:flex; gap:12px; align-items:center; flex-wrap:wrap; position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: #fff;}
+    header h1 { font-size: 20px; margin: 0; color:#0b63ff; }
+    header input, header button, header select { padding:12px 14px; border:1px solid #d1d5db; border-radius:10px; font-size:15px; }
+    header button.primary { background:#0b63ff; color:white; border:none; cursor:pointer; }
+    header .homepage-btn { margin-left: auto; text-decoration: none; display: inline-block; padding: 10px 14px; border-radius: 10px; }
+    #cy { width: 100%; height: 100%; }
+    /* Floating button + popover for bi list near node */
+    #bi-btn, #bi-popover { position:absolute; z-index:10; display:none; }
+    #bi-btn button { padding: 6px 10px; border:1px solid #cbd5e1; background:#fff; border-radius:10px; box-shadow:0 1px 4px rgba(0,0,0,0.15); cursor:pointer; font-size:12px; }
+    #bi-popover { min-width: 200px; max-width: 300px; background:#fff; border:1px solid #e5e7eb; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,0.14); padding:10px 12px; font-size:13px; }
+    #bi-popover h4 { margin:0 0 8px 0; font-size:13px; color:#111827; font-weight:600; }
+    #bi-popover ul { margin: 0; padding-left: 16px; max-height: 220px; overflow:auto; }
+    #bi-popover li { margin: 5px 0; cursor: pointer; }
+    /* Legend */
+    .legend { margin-left: 12px; font-size: 13px; color:#374151; display:flex; gap:12px; align-items:center; }
+    .legend .sep { opacity: 0.5; }
+    .legend span { display:inline-block; padding:2px 6px; border-radius:6px; margin-left:6px; }
+    .chip-out { background:#e6efff; border:1px solid #b3cdfd; }
+    .chip-in  { background:#e6f6ea; border:1px solid #b2e3c2; }
+  </style>
+  <script src="https://unpkg.com/cytoscape@3.27.0/dist/cytoscape.min.js"></script>
+  <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+  <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z5D0WM7N9S"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-Z5D0WM7N9S');
+</script>
+</head>
+<body>
+  <div id="app">
+    <aside id="node-panel">
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+        <h3>all nodes</h3>
+        <span id="node-count"></span>
+      </div>
+      <input id="node-filter" type="search" placeholder="Filter…" style="width:100%; padding:8px 10px; border:1px solid #d1d5db; border-radius:10px; margin-bottom:10px;" />
+      <ul id="node-panel-list"></ul>
+    </aside>
+    <div id="main" style="flex:1; display:flex; flex-direction:column; min-width:0;">
+      <header>
+        <h1>Graph Parameter Hierarchy</h1>
+        <button id="fit" class="primary" style="display:none">Fit</button>
+        <label for="edgeHL" style="margin-left:8px;">k-hierarchy</label>
+        <select id="edgeHL">
+          <option value="off" selected>Off</option>
+          <option value="1">k=1</option>
+          <option value="2">k=2</option>
+        </select>
+        <button id="reset">Reset</button>
+        <button id="toggle-panel" title="Show/Hide node panel">Parameter list</button>
+        <a href="https://yeonsuchang.com" target="_blank" class="primary homepage-btn">Homepage</a>
+      </header>
+      <div id="cy"></div>
+    </div>
+  </div>
+
+  <!-- bi button + popover (이 부분은 그대로 bi 명칭 유지) -->
+  <div id="bi-btn"><button type="button">Equivalent parameters (↔)</button></div>
+  <div id="bi-popover">
+    <h4>Equivalent parameters (↔)</h4>
+    <ul id="bi-list"></ul>
+  </div>
+
+  <script>
+    cytoscape.use(window.cytoscapeDagre);
+
+    // Utility: normalize ASCII arrows to Unicode for display
+    function toDisplayText(text) {
+      if (!text) return text;
+      return text.replace(/<->|<=>/g, '↔').replace(/-->/g, '→').replace(/<-{1,2}/g, '←').replace(/-{1,2}>/g, '→');
+    }
+
+    // ---- Source data (labels) ----
+    const NODES = [
+"acyclic chromatic number",
+"arboricity",
+"average degree",
+"average distance",
+"bandwidth",
+"bisection width",
+"boolean-width",
+"boxicity",
+"bramble number",
+"branch-depth",
+"branch-width",
+"burning number",
+"carving-width",
+"chordality",
+"chromatic number",
+"clique cover number",
+"clique-width",
+"cochromatic number",
+"component twin-width",
+"crossing number",
+"cut-width",
+"cycle rank",
+"DAG-depth",
+"DAG-width",
+"degeneracy",
+"diameter",
+"directed path-width",
+"directed tree-width",
+"distance to Bipartite",
+"distance to Block",
+"distance to Chordal",
+"distance to Clique",
+"distance to Cluster",
+"distance to Co-Cluster",
+"distance to Cograph",
+"distance to Disconnected",
+"distance to disjoint Paths",
+"distance to Interval",
+"distance to Linear forest",
+"distance to Outerplanar",
+"distance to Perfect",
+"distance to Planar",
+"domatic number",
+"domination number",
+"edge clique cover number",
+"edge-crossing width",
+"edge-cut width",
+"feedback edge set number",
+"feedback vertex set number",
+"fractional Hadwiger number",
+"genus",
+"geometric thickness",
+"girth",
+"interval number",
+"Kelly-width",
+"linear clique-width",
+"linear mim-width",
+"linear NLC-width",
+"linear rank-width",
+"linkedness",
+"max diameter of components",
+"max leaf number",
+"maximum clique",
+"maximum degree",
+"maximum independent set",
+"maximum induced matching",
+"maximum matching",
+"mim-width",
+"minimum degree",
+"minor-matching hypertree-width",
+"modular-width",
+"neighborhood diversity",
+"NLC-width",
+"o-mim-width",
+"path-independence number",
+"path-width",
+"queue number",
+"rank-depth",
+"rank-width",
+"reduced bandwidth",
+"reduced cut-width",
+"separation number",
+"shrub-depth",
+"sim-width",
+"simultaneous interval number",
+"slim tree-cut width",
+"stack number",
+"stretch-width",
+"strong (∞, →)-coloring number",
+"strong coloring number",
+"strong ∞-coloring number",
+"tangle number",
+"thickness",
+"thinness",
+"total twin-width",
+"track number",
+"tree bandwidth",
+"tree-cut width",
+"tree-depth",
+"tree-independence number",
+"tree-partition-width",
+"tree-width",
+"twin-cover",
+"twin-width",
+"vertex cover number",
+"weak (∞, →)-coloring number",
+"weak ∞-coloring number",
+"well-linked number",
+"α-edge-crossing width",
+"ℎ-index",
+"∞-flip-width",
+"𝑐-closure",
+"𝑟-flip-width",
+"𝑟-merge-width"
+];
+
+    const EDGE_LIST = [
+["acyclic chromatic number","boxicity"],
+["acyclic chromatic number","degeneracy"],
+["average degree","minimum degree"],
+["average distance","girth"],
+["bandwidth","bisection width"],
+["bandwidth","cut-width"],
+["bandwidth","track number"],
+["bisection width","distance to Disconnected"],
+["boxicity","chordality"],
+["burning number","max diameter of components"],
+["carving-width","maximum degree"],
+["carving-width","slim tree-cut width"],
+["carving-width","tree-cut width"],
+["chromatic number","chordality"],
+["chromatic number","cochromatic number"],
+["chromatic number","maximum clique"],
+["clique cover number","cochromatic number"],
+["clique cover number","maximum independent set"],
+["clique-width","boolean-width","bi"],
+["clique-width","component twin-width","bi"],
+["clique-width","mim-width"],
+["clique-width","NLC-width","bi"],
+["clique-width","rank-width","bi"],
+["clique-width","stretch-width"],
+["clique-width","∞-flip-width","bi"],
+["crossing number","genus"],
+["cut-width","carving-width"],
+["cut-width","path-width"],
+["cycle rank","directed path-width"],
+["cycle rank","weak (∞, →)-coloring number","bi"],
+["DAG-depth","cycle rank"],
+["DAG-width","directed tree-width"],
+["degeneracy","arboricity","bi"],
+["degeneracy","average degree"],
+["degeneracy","chromatic number"],
+["directed path-width","Kelly-width"],
+["distance to Bipartite","chromatic number"],
+["distance to Bipartite","distance to Perfect"],
+["distance to Chordal","chordality"],
+["distance to Chordal","distance to Perfect"],
+["distance to Clique","clique cover number"],
+["distance to Clique","distance to Cluster"],
+["distance to Clique","distance to Co-Cluster"],
+["distance to Clique","edge clique cover number"],
+["distance to Cluster","distance to Block"],
+["distance to Cluster","distance to Cograph"],
+["distance to Cluster","distance to Interval"],
+["distance to Co-Cluster","distance to Cograph"],
+["distance to Cograph","chordality"],
+["distance to Cograph","clique-width"],
+["distance to Cograph","diameter"],
+["distance to Cograph","distance to Perfect"],
+["distance to Cograph","max diameter of components"],
+["distance to disjoint Paths","distance to Interval"],
+["distance to disjoint Paths","feedback vertex set number"],
+["distance to disjoint Paths","path-width"],
+["distance to disjoint Paths","ℎ-index"],
+["distance to Interval","distance to Chordal"],
+["distance to Linear forest","distance to Block"],
+["distance to Linear forest","feedback vertex set number"],
+["distance to Linear forest","path-width"],
+["distance to Outerplanar","distance to Planar"],
+["distance to Outerplanar","tree-width"],
+["distance to Planar","acyclic chromatic number"],
+["distance to Planar","twin-width"],
+["domination number","diameter"],
+["domination number","max diameter of components"],
+["edge clique cover number","neighborhood diversity"],
+["edge clique cover number","simultaneous interval number"],
+["edge-cut width","slim tree-cut width"],
+["feedback edge set number","edge-cut width"],
+["feedback edge set number","feedback vertex set number"],
+["feedback edge set number","genus"],
+["feedback edge set number","𝑐-closure"],
+["feedback vertex set number","distance to Bipartite"],
+["feedback vertex set number","distance to Chordal"],
+["feedback vertex set number","distance to Outerplanar"],
+["genus","stack number"],
+["genus","twin-width"],
+["geometric thickness","thickness"],
+["Kelly-width","DAG-width"],
+["Kelly-width","strong (∞, →)-coloring number","bi"],
+["linear clique-width","clique-width"],
+["linear clique-width","linear NLC-width","bi"],
+["linear mim-width","mim-width"],
+["linear rank-width","clique-width"],
+["linear rank-width","total twin-width","bi"],
+["max diameter of components","average distance"],
+["max leaf number","bandwidth"],
+["max leaf number","distance to Linear forest"],
+["max leaf number","feedback edge set number"],
+["maximum degree","ℎ-index"],
+["maximum degree","𝑐-closure"],
+["maximum independent set","domination number"],
+["maximum independent set","maximum induced matching"],
+["maximum induced matching","diameter"],
+["mim-width","o-mim-width"],
+["minimum degree","distance to Disconnected"],
+["minimum degree","domatic number"],
+["minor-matching hypertree-width","sim-width"],
+["modular-width","clique-width"],
+["modular-width","max diameter of components"],
+["neighborhood diversity","modular-width"],
+["o-mim-width","sim-width"],
+["path-independence number","tree-independence number"],
+["path-width","linear clique-width"],
+["path-width","simultaneous interval number"],
+["path-width","tree-width"],
+["reduced bandwidth","reduced cut-width"],
+["reduced cut-width","twin-width"],
+["shrub-depth","linear clique-width"],
+["shrub-depth","rank-depth","bi"],
+["simultaneous interval number","path-independence number"],
+["simultaneous interval number","thinness"],
+["simultaneous interval number","track number"],
+["slim tree-cut width","tree-cut width"],
+["slim tree-cut width","α-edge-crossing width"],
+["stack number","acyclic chromatic number"],
+["stack number","geometric thickness"],
+["stretch-width","reduced bandwidth"],
+["thickness","average degree"],
+["thinness","boxicity"],
+["thinness","linear mim-width"],
+["track number","acyclic chromatic number"],
+["track number","geometric thickness"],
+["track number","interval number","bi"],
+["track number","queue number","bi"],
+["tree bandwidth","tree-width"],
+["tree-cut width","tree-partition-width"],
+["tree-depth","branch-depth","bi"],
+["tree-depth","diameter"],
+["tree-depth","max diameter of components"],
+["tree-depth","path-width"],
+["tree-depth","shrub-depth"],
+["tree-depth","tree bandwidth"],
+["tree-depth","weak ∞-coloring number","bi"],
+["tree-independence number","minor-matching hypertree-width"],
+["tree-independence number","o-mim-width"],
+["tree-partition-width","edge-crossing width","bi"],
+["tree-partition-width","tree bandwidth"],
+["tree-partition-width","tree-width"],
+["tree-width","bramble number","bi"],
+["tree-width","branch-width","bi"],
+["tree-width","clique-width"],
+["tree-width","fractional Hadwiger number","bi"],
+["tree-width","linkedness","bi"],
+["tree-width","separation number","bi"],
+["tree-width","stack number"],
+["tree-width","strong ∞-coloring number","bi"],
+["tree-width","tangle number","bi"],
+["tree-width","track number"],
+["tree-width","tree-independence number"],
+["tree-width","well-linked number","bi"],
+["twin-cover","distance to Cluster"],
+["twin-cover","linear rank-width"],
+["twin-cover","modular-width"],
+["twin-width","𝑟-merge-width"],
+["vertex cover number","distance to Co-Cluster"],
+["vertex cover number","distance to disjoint Paths"],
+["vertex cover number","distance to Linear forest"],
+["vertex cover number","maximum matching","bi"],
+["vertex cover number","maximum induced matching"],
+["vertex cover number","neighborhood diversity"],
+["vertex cover number","tree-depth"],
+["vertex cover number","twin-cover"],
+["α-edge-crossing width","tree-partition-width"],
+["ℎ-index","acyclic chromatic number"],
+["𝑟-merge-width","𝑟-flip-width"]
+];
+
+    const toId = (label) => label.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+
+    // Split edges: normal vs bi
+    const NORMAL_EDGES = [];
+    const BI_EDGES_RAW = [];
+    EDGE_LIST.forEach((row) => {
+      const sLabel = row[0];
+      const tLabel = row[1];
+      const dir    = row.length > 2 ? row[2] : null;
+      if (dir === 'bi') {
+        BI_EDGES_RAW.push([sLabel, tLabel]);
+      } else {
+        NORMAL_EDGES.push({ data: { source: toId(sLabel), target: toId(tLabel), sLabel: sLabel, tLabel: tLabel } });
+      }
+    });
+
+    // Only render nodes that appear in NORMAL_EDGES
+    const labelsInNormal = new Set();
+    NORMAL_EDGES.forEach(e => { labelsInNormal.add(e.data.sLabel); labelsInNormal.add(e.data.tLabel); });
+    const nodes = Array.from(labelsInNormal).map(label => ({ data: { id: toId(label), label: toDisplayText(label) } }));
+
+    // Build bi adjacency (by labels)
+    const biAdj = {};
+    BI_EDGES_RAW.forEach(([a,b])=>{ (biAdj[a] ||= new Set()).add(b); (biAdj[b] ||= new Set()).add(a); });
+
+    // Cytoscape
+    const cy = cytoscape({
+      container: document.getElementById('cy'),
+      elements: [...nodes, ...NORMAL_EDGES],
+      style: [
+        { selector: 'node', style: {
+          'label': 'data(label)',
+          'background-color': '#eef4ff',
+          'border-color': '#0b63ff',
+          'border-width': 1,
+          'shape': 'round-rectangle',
+          'color': '#111827',
+          'font-size': 18,
+          'text-valign': 'center',
+          'text-wrap': 'wrap',
+          'text-max-width': 340,
+          'padding': '12px',
+          'width': 'label',
+          'height': 'label'
+        }},
+        { selector: 'node.NH_OUT', style: { 'border-color':'#1d4ed8', 'border-width': 4, 'background-color': '#e6efff' } },
+        { selector: 'node.NH_IN',  style: { 'border-color':'#15803d', 'border-width': 4, 'background-color': '#e6f6ea' } },
+        { selector: 'node.dim',    style: { 'opacity': 0.2 } },
+        { selector: 'node.SEL',    style: { 'border-color': '#dc2626', 'background-color': '#ffe4e6', 'border-width': 5 } },
+
+        { selector: 'edge',        style: { 'width': 2.5, 'line-color': '#9ca3af', 'target-arrow-color': '#9ca3af', 'target-arrow-shape': 'triangle', 'curve-style': 'bezier' } },
+        { selector: 'edge.dim',    style: { 'opacity': 0.15 } },
+        { selector: 'edge.EH_OUT', style: { 'line-color':'#1d4ed8', 'target-arrow-color':'#1d4ed8', 'width': 6 } },
+        { selector: 'edge.EH_IN',  style: { 'line-color':'#15803d', 'target-arrow-color':'#15803d', 'width': 6 } },
+      ],
+      layout: { name:'dagre', rankDir:'TB', nodeSep: 54, rankSep: 120, edgeSep: 34 }
+    });
+
+    // Refs
+    const biBtn = document.getElementById('bi-btn');
+    const biBtnButton = biBtn.querySelector('button');
+    const pop = document.getElementById('bi-popover');
+    const biList = document.getElementById('bi-list');
+
+    const nodePanel  = document.getElementById('node-panel');
+    const nodeListEl = document.getElementById('node-panel-list');
+    const nodeCount  = document.getElementById('node-count');
+    const nodeFilter = document.getElementById('node-filter');
+
+    const edgeHL = document.getElementById('edgeHL');
+    const searchBox = document.getElementById('search');
+
+    // Position button/ popover
+    const BUTTON_X_OFFSET = 24;
+    const POPOVER_X_OFFSET = 0;
+
+    let currentNode = null;
+
+    function hideUI() { biBtn.style.display = 'none'; pop.style.display = 'none'; }
+    function showButtonNearNode(node) {
+      const box = node.renderedBoundingBox();
+      const rect = cy.container().getBoundingClientRect();
+      biBtn.style.left = (rect.left + box.x2 + BUTTON_X_OFFSET) + 'px';
+      biBtn.style.top  = (rect.top + (box.y1 + box.y2) / 2 - 12) + 'px';
+      biBtn.style.display = 'block';
+    }
+    function fillBiList(label) {
+      const set = biAdj[label] || new Set();
+      biList.innerHTML = '';
+      if (set.size === 0) { biList.innerHTML = '<li style="list-style: none; color:#6b7280;">(none)</li>'; return; }
+      Array.from(set).sort((a,b)=>a.localeCompare(b)).forEach(lab => {
+        const li = document.createElement('li');
+        li.textContent = toDisplayText(lab);
+        li.addEventListener('click', ()=>{ const n = cy.getElementById(toId(lab)); if (n && n.length) { cy.center(n); n.select(); } pop.style.display = 'none'; });
+        biList.appendChild(li);
+      });
+    }
+    function showPopoverNearButton() { const r = biBtn.getBoundingClientRect(); pop.style.left = (r.left + POPOVER_X_OFFSET) + 'px'; pop.style.top = (r.bottom + 6) + 'px'; pop.style.display = 'block'; }
+
+    // Build adjacency (directed for OUT; reverse for IN)
+    const ADJ_OUT = new Map();
+    const ADJ_IN  = new Map();
+    function addEdge(u, v) {
+      if (!ADJ_OUT.has(u)) ADJ_OUT.set(u, new Set());
+      ADJ_OUT.get(u).add(v);
+      if (!ADJ_IN.has(v)) ADJ_IN.set(v, new Set());
+      ADJ_IN.get(v).add(u);
+      if (!ADJ_OUT.has(v)) ADJ_OUT.set(v, new Set());
+      if (!ADJ_IN.has(u)) ADJ_IN.set(u, new Set());
+    }
+    NORMAL_EDGES.forEach(e => addEdge(e.data.source, e.data.target));
+
+    // Directional BFS up to K steps (returns Set of node ids incl. root)
+    function bfsDir(rootId, K, ADJ) {
+      const dist = new Map([[rootId, 0]]);
+      const q = [rootId];
+      while (q.length) {
+        const u = q.shift();
+        const du = dist.get(u);
+        if (du === K) continue;
+        const nbrs = ADJ.get(u) || new Set();
+        nbrs.forEach(v => { if (!dist.has(v)) { dist.set(v, du + 1); q.push(v); } });
+      }
+      return new Set(Array.from(dist.keys()));
+    }
+
+    function clearEdgeHighlights() { cy.edges().removeClass('EH_OUT EH_IN dim'); }
+    function clearNodeHighlights() { cy.nodes().removeClass('NH_OUT NH_IN dim'); }
+    function clearAllHighlights()  { clearEdgeHighlights(); clearNodeHighlights(); }
+
+    // Apply directional highlighting for edges & nodes
+    function applyEdgeHighlight(rootNode, k) {
+      clearAllHighlights();
+      if (!rootNode || k === 0 || isNaN(k)) return;
+      const rootId = rootNode.id();
+      const outSet = bfsDir(rootId, k, ADJ_OUT);
+      const inSet  = bfsDir(rootId, k, ADJ_IN);
+
+      // Start by dimming everything
+      cy.nodes().addClass('dim');
+      cy.edges().addClass('dim');
+
+      // Highlight edges
+      cy.edges().forEach(e => {
+        const s = e.source().id();
+        const t = e.target().id();
+        if (outSet.has(s) && outSet.has(t)) { e.addClass('EH_OUT'); e.removeClass('dim'); }
+        if (inSet.has(s) && inSet.has(t))  { e.addClass('EH_IN');  e.removeClass('dim'); }
+      });
+
+      // Highlight nodes
+      cy.nodes().forEach(n => {
+        const id = n.id();
+        let highlighted = false;
+        if (outSet.has(id)) { n.addClass('NH_OUT'); highlighted = true; }
+        if (inSet.has(id))  { n.addClass('NH_IN');  highlighted = true; }
+        if (highlighted) n.removeClass('dim');
+      });
+    }
+
+    // Helpers: build/layout k-neighborhood
+    function getKNeighborhoodElements(rootNode, k) {
+      const rootId = rootNode.id();
+      const outSet = bfsDir(rootId, k, ADJ_OUT);
+      const inSet  = bfsDir(rootId, k, ADJ_IN);
+      const ids = new Set([...outSet, ...inSet]);
+      const subNodes = cy.nodes().filter(n => ids.has(n.id()));
+      const subEdges = cy.edges().filter(e => ids.has(e.source().id()) && ids.has(e.target().id()));
+      return { subNodes, subEdges, subEles: subNodes.union(subEdges) };
+    }
+    function layoutKNeighborhood(rootNode, k) {
+      const { subEles } = getKNeighborhoodElements(rootNode, k);
+      const layout = subEles.layout({ name:'dagre', rankDir:'TB', nodeSep: 28, rankSep: 80, edgeSep: 20, animate:true, animationDuration:250 });
+      layout.run();
+      return subEles;
+    }
+    function smartFit(eles, padding=50) {
+      cy.fit(eles, padding);
+      const MAX_Z = 1.25; // clamp max zoom-in
+      if (cy.zoom() > MAX_Z) cy.zoom(MAX_Z);
+    }
+
+    // --- Canonical anchor resolution ---
+    function getNodeByName(name) {
+      if (!name) return cy.collection();
+      const byId = cy.getElementById(toId(name));
+      if (byId && byId.length) return byId;
+      const lower = String(name).toLowerCase();
+      const byLabel = cy.nodes().filter(n => (n.data('label')||'').toLowerCase() === lower);
+      if (byLabel && byLabel.length) return byLabel[0];
+      return byId;
+    }
+
+    const EQUIV_ALIAS = {
+      'rank-width': 'clique-width',
+      'linear NLC-width': 'linear clique-width',
+      'component twin-width': 'clique-width',
+      'NLC-width': 'clique-width',
+      'boolean-width': 'clique-width',
+      '∞-flip-width': 'clique-width',
+      'total twin-width': 'linear rank-width',
+      'edge-crossing width': 'tree-partition-width',
+      'queue number': 'track number',
+      'interval number': 'track number',
+      'arboricity': 'degeneracy',
+      'rank-depth': 'shrub-depth',
+      'branch-depth': 'tree-depth',
+      'weak ∞-coloring number': 'tree-depth',
+      'strong ∞-coloring number': 'tree-width',
+      'branch-width': 'tree-width',
+      'tangle number': 'tree-width',
+      'bramble number': 'tree-width',
+      'separation number': 'tree-width',
+      'linkedness': 'tree-width',
+      'well-linked number': 'tree-width',
+      'fractional Hadwiger number': 'tree-width',
+      'maximum matching': 'vertex cover number'
+    };
+
+    const PREFER_GLOBAL = [
+      'clique-width','linear clique-width','tree-width','tree-depth','track number','vertex cover number','degeneracy','shrub-depth','tree-partition-width','linear rank-width',
+      'component twin-width','NLC-width','boolean-width','∞-flip-width','total twin-width','edge-crossing width','queue number','interval number','arboricity','rank-depth','branch-depth',
+      'weak ∞-coloring number','strong ∞-coloring number','branch-width','tangle number','bramble number','separation number','linkedness','well-linked number','fractional Hadwiger number','maximum matching'
+    ];
+
+    function resolveAnchorName(label) {
+      // 1) Alias mapping first
+      if (EQUIV_ALIAS[label]) {
+        const ali = EQUIV_ALIAS[label];
+        const nodeAli = getNodeByName(ali);
+        if (nodeAli && nodeAli.length) return ali;
+      }
+      // 2) candidates = self + bi equivalents
+      const cand = new Set([label]);
+      if (biAdj[label]) { biAdj[label].forEach(x => cand.add(x)); }
+      // 3) Prefer canonical names that exist in the graph
+      for (const name of PREFER_GLOBAL) {
+        if (cand.has(name)) {
+          const node = getNodeByName(name);
+          if (node && node.length) return name;
+        }
+      }
+      // 4) Else first existing
+      for (const name of cand) {
+        const node = getNodeByName(name);
+        if (node && node.length) return name;
+      }
+      return label;
+    }
+
+    // Sidebar list (all nodes)
+    const allBiLabels = (function(){
+      const set = new Set();
+      Object.entries(biAdj).forEach(([k,v]) => { set.add(k); v.forEach(x => set.add(x)); });
+      return Array.from(set);
+    })();
+    const allNodeLabels = Array.from(new Set([ ...Array.from(labelsInNormal), ...allBiLabels ])).sort((a,b)=>a.localeCompare(b));
+    nodeCount.textContent = '(' + allNodeLabels.length + ')';
+
+    function renderNodeList(filter) {
+      const lower = (filter || '').trim().toLowerCase();
+      nodeListEl.innerHTML = '';
+      const items = allNodeLabels.filter(l => toDisplayText(l).toLowerCase().includes(toDisplayText(lower)));
+      items.forEach(label => {
+        const li = document.createElement('li');
+        li.textContent = toDisplayText(label);
+        li.addEventListener('click', () => {
+          document.querySelectorAll('#node-panel-list li.active').forEach(x=>x.classList.remove('active'));
+          li.classList.add('active');
+
+          // k from dropdown
+          let k = 0;
+          if (edgeHL) { const v = edgeHL.value; k = v === '1' ? 1 : (v === '2' ? 2 : 0); }
+
+          // Resolve canonical anchor (e.g., rank-width -> clique-width)
+          const anchorName = resolveAnchorName(label);
+          const anchor = getNodeByName(anchorName);
+          if (!anchor || !anchor.length) return;
+          currentNode = anchor;
+
+          // Visual selection
+          cy.nodes().removeClass('SEL');
+          anchor.addClass('SEL');
+
+          // Apply/clear highlights only (no layout/fit; keep full graph)
+          if (k > 0) {
+            applyEdgeHighlight(anchor, k);
+          } else {
+            clearAllHighlights();
+          }
+
+          showButtonNearNode(anchor);
+        });
+        nodeListEl.appendChild(li);
+      });
+    }
+    renderNodeList('');
+    nodeFilter.addEventListener('input', (e) => renderNodeList(e.target.value));
+
+    // Interactions
+    document.getElementById('fit').addEventListener('click', () => cy.fit(undefined, 40));
+    document.getElementById('reset').addEventListener('click', () => {
+      clearAllHighlights();
+      cy.nodes().removeClass('SEL');
+      cy.fit(undefined, 40);
+    });
+    document.getElementById('toggle-panel').addEventListener('click', () => {
+      nodePanel.classList.toggle('collapsed');
+      setTimeout(() => cy.fit(undefined, 40), 0);
+    });
+
+    // Dropdown change
+    edgeHL.addEventListener('change', () => {
+      const v = edgeHL.value;
+      const k = v === '1' ? 1 : (v === '2' ? 2 : 0);
+      if (currentNode && currentNode.length) {
+        if (k > 0) {
+          applyEdgeHighlight(currentNode, k);   // dim others + highlight k-neighbors
+        } else {
+          clearAllHighlights();                 // show full graph, keep SEL as-is
+        }
+      } else {
+        clearAllHighlights();
+      }
+    });
+
+    // Node click in canvas
+    cy.on('tap', 'node', (evt) => {
+      const node = evt.target;
+      currentNode = node;
+      const v = edgeHL ? edgeHL.value : 'off';
+      const k = v === '1' ? 1 : (v === '2' ? 2 : 0);
+
+      // selection
+      cy.nodes().removeClass('SEL');
+      node.addClass('SEL');
+
+      // highlight depending on k (keep full graph)
+      if (k > 0) {
+        applyEdgeHighlight(node, k);
+      } else {
+        clearAllHighlights(); // no dimming, SEL remains
+      }
+
+      showButtonNearNode(node);
+      pop.style.display = 'none';
+    });
+
+    // Background click
+    cy.on('tap', (evt) => {
+      if (evt.target === cy) {
+        clearAllHighlights();
+        cy.nodes().removeClass('SEL');
+        hideUI();
+      }
+    });
+
+    // bi popover
+    biBtn.querySelector('button').addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!currentNode) return;
+      const label = currentNode.data('label');
+      fillBiList(label);
+      showPopoverNearButton();
+    });
+
+    cy.ready(() => { cy.fit(undefined, 40); });
+  </script>
+</body>
+</html>

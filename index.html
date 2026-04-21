@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Graph Parameter Hierarchy</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="https://unpkg.com/cytoscape@3.27.0/dist/cytoscape.min.js"></script>
+  <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+  <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
+  <script src="./graph-data.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <div id="app">
+    <aside id="node-panel">
+      <div id="node-panel-top">
+        <div class="panel-header">
+          <h3 id="panel-title">All nodes</h3>
+          <button class="panel-close" id="close-node-panel" type="button" aria-label="Close parameter list">×</button>
+          <span id="node-count"></span>
+        </div>
+        <div class="search-stack">
+          <div class="search-input-wrap">
+            <input
+              id="node-filter"
+              type="search"
+              placeholder="Filter..."
+              aria-label="Filter node list"
+            />
+            <button id="clear-node-filter" class="search-clear" type="button" aria-label="Clear node filter">×</button>
+          </div>
+          <div class="panel-subline">
+            <span id="node-filter-meta">Showing all parameters</span>
+            <span id="selected-node-label"></span>
+          </div>
+        </div>
+      </div>
+      <ul id="node-panel-list"></ul>
+    </aside>
+
+    <main id="main">
+      <header>
+        <h1 id="page-title">Graph Parameter Hierarchy</h1>
+        <button id="fit" class="primary" type="button" style="display:none;">Fit</button>
+
+        <label for="edgeHL" id="highlight-label">k-hierarchy</label>
+        <select id="edgeHL">
+          <option value="off" selected>Off</option>
+          <option value="1">k=1</option>
+          <option value="2">k=2</option>
+        </select>
+
+        <button id="toggle-definition" type="button">Parameter definition</button>
+        <button id="toggle-path-finder" type="button">Path finder</button>
+        <button id="toggle-panel" type="button">Parameter list</button>
+        <button id="reset" type="button">Reset</button>
+        <a id="homepage-link" class="primary homepage-btn" target="_blank" rel="noreferrer">Homepage</a>
+      </header>
+
+      <section id="content">
+        <section id="graph-stage">
+          <section id="cy" aria-label="Graph visualization"></section>
+          <div id="mobile-graph-hint" hidden>
+            <p>On mobile, use Parameter list or Path finder to show only the relevant part of the graph.</p>
+          </div>
+        </section>
+        <section id="side-panels">
+          <aside id="definition-panel" class="side-panel">
+            <section id="definition-summary-card" class="detail-card">
+              <button class="panel-close" id="close-definition" type="button" aria-label="Close parameter definition">×</button>
+              <div class="detail-card-header">
+                <p class="eyebrow">Parameter definition</p>
+                <h2 id="detail-title">Choose a node</h2>
+              </div>
+              <p id="detail-summary" class="muted">
+                This area is reserved for a future definition, notes, references, or examples for the selected parameter.
+              </p>
+            </section>
+
+            <section id="definition-relations-card" class="detail-card">
+              <div class="detail-list-section">
+                <div class="detail-list-header">
+                  <p class="eyebrow">Incoming</p>
+                </div>
+                <ul id="incoming-list" class="detail-list"></ul>
+              </div>
+              <div class="detail-list-section">
+                <div class="detail-list-header">
+                  <p class="eyebrow">Outgoing</p>
+                </div>
+                <ul id="outgoing-list" class="detail-list"></ul>
+              </div>
+              <div class="detail-list-section">
+                <div class="detail-list-header">
+                  <p class="eyebrow">Equivalent</p>
+                </div>
+                <ul id="equivalent-list" class="detail-list"></ul>
+              </div>
+            </section>
+          </aside>
+
+          <aside id="path-panel" class="side-panel">
+            <div class="detail-card-header">
+              <button class="panel-close" id="close-path-finder" type="button" aria-label="Close path finder">×</button>
+              <p class="eyebrow">Path finder</p>
+              <h2>Compare two parameters</h2>
+            </div>
+            <div class="field-stack">
+              <label for="path-from">From</label>
+              <input id="path-from" type="search" list="node-options" placeholder="Start parameter" />
+            </div>
+            <div class="field-stack">
+              <label for="path-to">To</label>
+              <input id="path-to" type="search" list="node-options" placeholder="Target parameter" />
+            </div>
+            <div class="button-row">
+              <button id="find-path" class="primary" type="button">Find path</button>
+              <button id="clear-path" type="button">Clear path</button>
+            </div>
+            <p id="path-result" class="muted">Pick two parameters to trace their shortest connection.</p>
+          </aside>
+        </section>
+      </section>
+    </main>
+  </div>
+  <datalist id="node-options"></datalist>
+</body>
+</html>
