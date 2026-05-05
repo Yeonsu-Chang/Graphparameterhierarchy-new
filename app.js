@@ -541,19 +541,44 @@
   }
 
   const equivalentAliases = settings.equivalentAliases || {};
+  const equivalentAliasesByLower = Object.fromEntries(
+    Object.entries(equivalentAliases).map(([key, value]) => [key.toLowerCase(), value])
+  );
   const preferredAnchors = settings.preferredAnchors || [];
+  let knownLabelByLower = new Map();
+
+  function normalizeKnownLabel(label) {
+    if (!label) return label;
+    return knownLabelByLower.get(String(label).toLowerCase()) || label;
+  }
+
+  function equivalentComponentNames(label) {
+    const start = normalizeKnownLabel(label);
+    const queue = [start];
+    const visited = new Set([start]);
+
+    while (queue.length) {
+      const current = queue.shift();
+      (biAdj[current] || []).forEach((next) => {
+        if (!visited.has(next)) {
+          visited.add(next);
+          queue.push(next);
+        }
+      });
+    }
+
+    return visited;
+  }
 
   function resolveAnchorName(label) {
-    if (equivalentAliases[label]) {
-      const alias = equivalentAliases[label];
+    const normalized = normalizeKnownLabel(label);
+    const alias = equivalentAliases[normalized] || equivalentAliasesByLower[String(normalized).toLowerCase()];
+    if (alias) {
       const aliasNode = getNodeByName(alias);
       if (aliasNode && aliasNode.length) return alias;
     }
 
-    const candidates = new Set([label]);
-    if (biAdj[label]) {
-      biAdj[label].forEach((value) => candidates.add(value));
-    }
+    const candidates = equivalentComponentNames(normalized);
 
     for (const name of preferredAnchors) {
       if (candidates.has(name)) {
@@ -567,7 +592,7 @@
       if (node && node.length) return name;
     }
 
-    return label;
+    return normalized;
   }
 
   const allBiLabels = (() => {
@@ -580,6 +605,7 @@
   })();
 
   const allNodeLabels = Array.from(new Set([...Array.from(labelsInNormal), ...allBiLabels])).sort((a, b) => a.localeCompare(b));
+  knownLabelByLower = new Map(allNodeLabels.map((label) => [label.toLowerCase(), label]));
   ui.nodeCount.textContent = `(${allNodeLabels.length})`;
   allNodeLabels.forEach((label) => {
     const option = document.createElement("option");
@@ -852,6 +878,11 @@
     setActiveListItem(from.anchorLabel);
 
     const pathLabels = undirectedPath.map(fromIdToLabel).map(toDisplayText).join(" → ");
+    if (from.id === to.id && from.inputLabel !== to.inputLabel) {
+      ui.pathResult.textContent = `${toDisplayText(from.inputLabel)} and ${toDisplayText(to.inputLabel)} are represented by ${toDisplayText(from.anchorLabel)}.`;
+      return;
+    }
+
     if (directedPath) {
       ui.pathResult.textContent = `Directed path found: ${pathLabels}`;
       return;
