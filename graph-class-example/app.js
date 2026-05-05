@@ -69,6 +69,20 @@
       .trim();
   }
 
+  function setDisplayLabel(element, label) {
+    const parts = displayLabel(label).split("∞");
+    element.replaceChildren();
+    parts.forEach((part, index) => {
+      if (part) element.appendChild(document.createTextNode(part));
+      if (index < parts.length - 1) {
+        const symbol = document.createElement("span");
+        symbol.className = "math-infinity";
+        symbol.textContent = "∞";
+        element.appendChild(symbol);
+      }
+    });
+  }
+
   function collectGraph() {
     const nodes = new Map();
     const edges = [];
@@ -342,8 +356,7 @@
       const button = document.createElement("button");
       button.type = "button";
       button.className = node.id === selectedId ? "active" : "";
-      button.textContent = displayLabel(node.label);
-      if (button.textContent.includes("∞")) button.classList.add("has-infinity-label");
+      setDisplayLabel(button, node.label);
       button.addEventListener("click", () => selectClass(node.id));
       ui.classList.appendChild(button);
     });
@@ -362,8 +375,7 @@
     sorted.forEach((id) => {
       const button = document.createElement("button");
       button.type = "button";
-      button.textContent = displayLabel(nodeById.get(id).label);
-      if (button.textContent.includes("∞")) button.classList.add("has-infinity-label");
+      setDisplayLabel(button, nodeById.get(id).label);
       button.addEventListener("click", () => selectClass(id));
       container.appendChild(button);
     });
@@ -383,8 +395,8 @@
     ]).filter((item) => !relationRoots.includes(item));
 
     ui.selectedGroup.textContent = groupLabel(selected);
-    ui.selectedTitle.textContent = displayLabel(selected.label);
-    ui.relationViewTitle.textContent = displayLabel(selected.label);
+    setDisplayLabel(ui.selectedTitle, selected.label);
+    setDisplayLabel(ui.relationViewTitle, selected.label);
     ui.selectedSummary.textContent = relationSummary(equivalents, subclasses, superclasses);
     renderRelationList(ui.equivalentList, ui.equivalentCount, equivalents);
     renderRelationList(ui.subclassList, ui.subclassCount, subclasses);
@@ -473,7 +485,6 @@
         },
         classes: [
           groupClass(nodeById.get(nodeId).group),
-          displayLabel(nodeById.get(nodeId).label).includes("∞") ? "has-infinity" : "",
           nodeId === id ? "selected" : ""
         ].join(" ")
       })),
@@ -588,13 +599,6 @@
             "text-wrap": "wrap",
             "text-max-width": 150,
             "overlay-opacity": 0
-          }
-        },
-        {
-          selector: "node.has-infinity",
-          style: {
-            "font-size": 15,
-            "text-max-width": 170
           }
         },
         { selector: ".group-fo-ideal", style: { "background-color": "#fff1f4", "border-color": "#e11d48" } },

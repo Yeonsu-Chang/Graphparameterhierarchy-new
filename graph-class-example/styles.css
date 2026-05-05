@@ -182,9 +182,11 @@ input[type="search"] {
   background: #eef4ff;
 }
 
-.class-list button.has-infinity-label,
-.relation-list button.has-infinity-label {
-  font-size: 13px;
+.math-infinity {
+  display: inline-block;
+  font-size: 1.28em;
+  line-height: 0;
+  transform: translateY(0.03em);
 }
 
 .detail-panel {
