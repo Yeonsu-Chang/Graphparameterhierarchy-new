@@ -182,6 +182,11 @@ input[type="search"] {
   background: #eef4ff;
 }
 
+.class-list button.has-infinity-label,
+.relation-list button.has-infinity-label {
+  font-size: 13px;
+}
+
 .detail-panel {
   padding: 16px;
 }

@@ -343,6 +343,7 @@
       button.type = "button";
       button.className = node.id === selectedId ? "active" : "";
       button.textContent = displayLabel(node.label);
+      if (button.textContent.includes("∞")) button.classList.add("has-infinity-label");
       button.addEventListener("click", () => selectClass(node.id));
       ui.classList.appendChild(button);
     });
@@ -362,6 +363,7 @@
       const button = document.createElement("button");
       button.type = "button";
       button.textContent = displayLabel(nodeById.get(id).label);
+      if (button.textContent.includes("∞")) button.classList.add("has-infinity-label");
       button.addEventListener("click", () => selectClass(id));
       container.appendChild(button);
     });
@@ -469,7 +471,11 @@
           label: displayLabel(nodeById.get(nodeId).label),
           group: groupLabel(nodeById.get(nodeId))
         },
-        classes: `${groupClass(nodeById.get(nodeId).group)} ${nodeId === id ? "selected" : ""}`
+        classes: [
+          groupClass(nodeById.get(nodeId).group),
+          displayLabel(nodeById.get(nodeId).label).includes("∞") ? "has-infinity" : "",
+          nodeId === id ? "selected" : ""
+        ].join(" ")
       })),
       ...localEdges.map((edge) => ({
         data: {
@@ -582,6 +588,13 @@
             "text-wrap": "wrap",
             "text-max-width": 150,
             "overlay-opacity": 0
+          }
+        },
+        {
+          selector: "node.has-infinity",
+          style: {
+            "font-size": 15,
+            "text-max-width": 170
           }
         },
         { selector: ".group-fo-ideal", style: { "background-color": "#fff1f4", "border-color": "#e11d48" } },

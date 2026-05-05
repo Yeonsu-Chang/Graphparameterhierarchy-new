@@ -99,9 +99,13 @@
     rawLabelById.set(toId(label), label);
   });
 
-  const nodes = Array.from(labelsInNormal).map((label) => ({
-    data: { id: toId(label), label: toDisplayText(label) },
-  }));
+  const nodes = Array.from(labelsInNormal).map((label) => {
+    const display = toDisplayText(label);
+    return {
+      data: { id: toId(label), label: display },
+      classes: display.includes("∞") ? "has-infinity" : ""
+    };
+  });
 
   const biAdj = {};
   biEdgesRaw.forEach(([left, right]) => {
@@ -131,6 +135,7 @@
           height: "label",
         },
       },
+      { selector: "node.has-infinity", style: { "font-size": 20, "text-max-width": 360 } },
       { selector: "node.NH_OUT", style: { "border-color": "#1d4ed8", "border-width": 4, "background-color": "#e6efff" } },
       { selector: "node.NH_IN", style: { "border-color": "#15803d", "border-width": 4, "background-color": "#e6f6ea" } },
       { selector: "node.dim", style: { opacity: 0.2 } },
