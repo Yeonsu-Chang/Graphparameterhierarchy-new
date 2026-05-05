@@ -598,7 +598,8 @@
             "text-halign": "center",
             "text-wrap": "wrap",
             "text-max-width": 150,
-            "overlay-opacity": 0
+            "overlay-opacity": 0,
+            "z-index": 10
           }
         },
         { selector: ".group-fo-ideal", style: { "background-color": "#fff1f4", "border-color": "#e11d48" } },
@@ -626,8 +627,11 @@
             "line-color": "#98a2b3",
             "target-arrow-color": "#98a2b3",
             "target-arrow-shape": "triangle",
+            "target-distance-from-node": 3,
+            "source-distance-from-node": 2,
             "arrow-scale": 0.9,
-            "overlay-opacity": 0
+            "overlay-opacity": 0,
+            "z-index": 1
           }
         },
         {
