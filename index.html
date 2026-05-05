@@ -4,12 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Graph Parameter Hierarchy</title>
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./styles.css?v=20260505-hierarchy1" />
   <script src="https://unpkg.com/cytoscape@3.27.0/dist/cytoscape.min.js"></script>
   <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
   <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
-  <script src="./graph-data.js"></script>
-  <script defer src="./app.js"></script>
+  <script src="./graph-data.js?v=20260505-hierarchy1"></script>
+  <script defer src="./app.js?v=20260505-hierarchy1"></script>
 </head>
 <body>
   <div id="app">
@@ -51,7 +51,7 @@
           <option value="2">k=2</option>
         </select>
 
-        <button id="toggle-definition" type="button">Parameter definition</button>
+        <a id="class-map-link" class="primary header-link" href="./graph-class-example/index.html">Class Map</a>
         <button id="toggle-path-finder" type="button">Path finder</button>
         <button id="toggle-panel" type="button">Parameter list</button>
         <button id="reset" type="button">Reset</button>
@@ -66,40 +66,6 @@
           </div>
         </section>
         <section id="side-panels">
-          <aside id="definition-panel" class="side-panel">
-            <section id="definition-summary-card" class="detail-card">
-              <button class="panel-close" id="close-definition" type="button" aria-label="Close parameter definition">×</button>
-              <div class="detail-card-header">
-                <p class="eyebrow">Parameter definition</p>
-                <h2 id="detail-title">Choose a node</h2>
-              </div>
-              <p id="detail-summary" class="muted">
-                This area is reserved for a future definition, notes, references, or examples for the selected parameter.
-              </p>
-            </section>
-
-            <section id="definition-relations-card" class="detail-card">
-              <div class="detail-list-section">
-                <div class="detail-list-header">
-                  <p class="eyebrow">Incoming</p>
-                </div>
-                <ul id="incoming-list" class="detail-list"></ul>
-              </div>
-              <div class="detail-list-section">
-                <div class="detail-list-header">
-                  <p class="eyebrow">Outgoing</p>
-                </div>
-                <ul id="outgoing-list" class="detail-list"></ul>
-              </div>
-              <div class="detail-list-section">
-                <div class="detail-list-header">
-                  <p class="eyebrow">Equivalent</p>
-                </div>
-                <ul id="equivalent-list" class="detail-list"></ul>
-              </div>
-            </section>
-          </aside>
-
           <aside id="path-panel" class="side-panel">
             <div class="detail-card-header">
               <button class="panel-close" id="close-path-finder" type="button" aria-label="Close path finder">×</button>

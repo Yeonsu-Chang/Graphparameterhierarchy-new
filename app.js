@@ -23,20 +23,13 @@
     fitButton: document.getElementById("fit"),
     resetButton: document.getElementById("reset"),
     togglePanelButton: document.getElementById("toggle-panel"),
-    toggleDefinitionButton: document.getElementById("toggle-definition"),
+    classMapLink: document.getElementById("class-map-link"),
     togglePathFinderButton: document.getElementById("toggle-path-finder"),
-    definitionPanel: document.getElementById("definition-panel"),
     pathPanel: document.getElementById("path-panel"),
     closeNodePanelButton: document.getElementById("close-node-panel"),
-    closeDefinitionButton: document.getElementById("close-definition"),
     closePathFinderButton: document.getElementById("close-path-finder"),
     sidePanels: document.getElementById("side-panels"),
     mobileGraphHint: document.getElementById("mobile-graph-hint"),
-    detailTitle: document.getElementById("detail-title"),
-    detailSummary: document.getElementById("detail-summary"),
-    incomingList: document.getElementById("incoming-list"),
-    outgoingList: document.getElementById("outgoing-list"),
-    equivalentList: document.getElementById("equivalent-list"),
     pathFrom: document.getElementById("path-from"),
     pathTo: document.getElementById("path-to"),
     nodeOptions: document.getElementById("node-options"),
@@ -56,7 +49,8 @@
   ui.homepageLink.textContent = site.homepageLabel || "Homepage";
   ui.homepageLink.href = site.homepageUrl || "#";
   ui.nodeFilter.placeholder = site.filterPlaceholder || "Filter...";
-  ui.toggleDefinitionButton.textContent = "Parameter definition";
+  ui.classMapLink.textContent = "Class Map";
+  ui.classMapLink.href = "./graph-class-example/index.html";
   ui.togglePathFinderButton.textContent = "Path finder";
   ui.sidePanels.prepend(ui.nodePanel);
 
@@ -307,7 +301,6 @@
     if (open) {
       const panels = [
         [ui.nodePanel, ui.togglePanelButton],
-        [ui.definitionPanel, ui.toggleDefinitionButton],
         [ui.pathPanel, ui.togglePathFinderButton],
       ];
 
@@ -330,9 +323,8 @@
   function syncPanelLayout(options = {}) {
     const { refit = false } = options;
     const nodePanelOpen = ui.nodePanel.classList.contains("open");
-    const definitionOpen = ui.definitionPanel.classList.contains("open");
     const pathOpen = ui.pathPanel.classList.contains("open");
-    const hasOpenPanel = nodePanelOpen || definitionOpen || pathOpen;
+    const hasOpenPanel = nodePanelOpen || pathOpen;
 
     ui.sidePanels.classList.toggle("has-open", hasOpenPanel);
     queueViewportRefresh({ refit });
@@ -673,58 +665,6 @@
     ui.selectedNodeLabel.textContent = targetText;
   }
 
-  function getRelatedLabels(label) {
-    const nodeId = toId(label);
-    const incoming = Array.from(ADJ_IN.get(nodeId) || []).map(fromIdToLabel).sort((a, b) => a.localeCompare(b));
-    const outgoing = Array.from(ADJ_OUT.get(nodeId) || []).map(fromIdToLabel).sort((a, b) => a.localeCompare(b));
-    const equivalent = Array.from(biAdj[label] || []).sort((a, b) => a.localeCompare(b));
-    return { incoming, outgoing, equivalent };
-  }
-
-  function renderRelationList(listElement, items) {
-    listElement.innerHTML = "";
-    if (items.length === 0) {
-      const empty = document.createElement("li");
-      empty.className = "empty-list";
-      empty.textContent = "No related parameters";
-      listElement.appendChild(empty);
-      return;
-    }
-
-    items.forEach((item) => {
-      const li = document.createElement("li");
-      const button = document.createElement("button");
-      button.type = "button";
-      button.textContent = toDisplayText(item);
-      button.addEventListener("click", () => {
-        ui.nodeFilter.value = "";
-        renderNodeList("");
-        setActiveListItem(item);
-        selectNodeByLabel(item);
-      });
-      li.appendChild(button);
-      listElement.appendChild(li);
-    });
-  }
-
-  function updateDetailPanel(label) {
-    if (!label) {
-      ui.detailTitle.textContent = "Choose a node";
-      ui.detailSummary.textContent = "This area is reserved for a future definition, notes, references, or examples for the selected parameter.";
-      renderRelationList(ui.incomingList, []);
-      renderRelationList(ui.outgoingList, []);
-      renderRelationList(ui.equivalentList, []);
-      return;
-    }
-
-    const related = getRelatedLabels(label);
-    ui.detailTitle.textContent = toDisplayText(label);
-    ui.detailSummary.textContent = "This space can later hold the formal definition, explanation, references, or update notes for this parameter.";
-    renderRelationList(ui.incomingList, related.incoming);
-    renderRelationList(ui.outgoingList, related.outgoing);
-    renderRelationList(ui.equivalentList, related.equivalent);
-  }
-
   function fromIdToLabel(id) {
     return rawLabelById.get(id) || id;
   }
@@ -752,7 +692,6 @@
     }
 
     anchor.removeClass("path-node");
-    updateDetailPanel(anchorName);
     ui.selectedNodeLabel.textContent = toDisplayText(anchorName);
 
     return true;
@@ -909,7 +848,6 @@
     resetGraphState();
     from.node.addClass("SEL");
     const directions = highlightPath(undirectedPath);
-    updateDetailPanel(from.anchorLabel);
     setActiveListItem(from.anchorLabel);
 
     const pathLabels = undirectedPath.map(fromIdToLabel).map(toDisplayText).join(" → ");
@@ -929,9 +867,6 @@
   }
 
   ui.fitButton.addEventListener("click", () => refreshViewport());
-  ui.toggleDefinitionButton.addEventListener("click", () => {
-    togglePanelWindow(ui.definitionPanel, ui.toggleDefinitionButton);
-  });
   ui.togglePathFinderButton.addEventListener("click", () => {
     togglePanelWindow(ui.pathPanel, ui.togglePathFinderButton);
     if (isPathFinderOpen()) {
@@ -941,9 +876,6 @@
         currentNode.addClass("SEL");
       }
     }
-  });
-  ui.closeDefinitionButton.addEventListener("click", () => {
-    setPanelOpen(ui.definitionPanel, ui.toggleDefinitionButton, false);
   });
   ui.closeNodePanelButton.addEventListener("click", () => {
     setPanelOpen(ui.nodePanel, ui.togglePanelButton, false);
@@ -963,7 +895,6 @@
     resetGraphState();
     cy.nodes().removeClass("SEL");
     currentNode = null;
-    updateDetailPanel(null);
     ui.pathResult.textContent = "Pick two parameters to trace their shortest connection.";
     ui.selectedNodeLabel.textContent = "";
     if (isCompactMobile()) {
@@ -1076,7 +1007,6 @@
       }
     }
 
-    updateDetailPanel(selectedLabel);
     if (activePathInput === "to") {
       ui.pathTo.value = selectedLabel;
     } else {
@@ -1089,7 +1019,6 @@
       resetGraphState();
       cy.nodes().removeClass("SEL");
       currentNode = null;
-      updateDetailPanel(null);
       ui.selectedNodeLabel.textContent = "";
       if (isCompactMobile()) {
         hideGraphForMobile();
@@ -1098,7 +1027,6 @@
   });
 
   cy.ready(() => {
-    updateDetailPanel(null);
     syncPanelLayout({ refit: false });
     if (isCompactMobile()) {
       hideGraphForMobile();

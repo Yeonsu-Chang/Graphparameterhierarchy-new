@@ -231,6 +231,7 @@ header h1 {
 
 header input,
 header button,
+header a.header-link,
 header select {
   padding: 9px 11px;
   border: 1px solid #d1d5db;
@@ -244,6 +245,7 @@ header button {
 }
 
 header button.primary,
+header a.header-link.primary,
 .homepage-btn {
   background: #0b63ff;
   color: #ffffff;
@@ -274,6 +276,12 @@ header button[aria-pressed="true"] {
   border-radius: 10px;
   white-space: nowrap;
   margin-left: auto;
+}
+
+.header-link {
+  display: inline-block;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 #cy {
@@ -331,47 +339,12 @@ header button[aria-pressed="true"] {
   display: flex;
 }
 
-#definition-panel {
-  overflow: hidden;
-}
-
-#definition-panel.open {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-#definition-summary-card,
-#definition-relations-card {
-  margin-bottom: 0;
-}
-
-#definition-summary-card {
-  flex: 0 0 auto;
-}
-
-#definition-relations-card {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow: auto;
-  overscroll-behavior: contain;
-  scroll-padding-top: 12px;
-}
-
-.detail-card {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 18px;
-  padding: 16px;
-  margin-bottom: 14px;
-}
-
 .detail-card-header {
   margin-bottom: 10px;
   position: relative;
 }
 
-.detail-card h2 {
+.detail-card-header h2 {
   margin: 4px 0 0;
   font-size: 20px;
 }
@@ -427,46 +400,6 @@ header button[aria-pressed="true"] {
   display: flex;
   gap: 8px;
   margin-bottom: 10px;
-}
-
-.detail-list-section + .detail-list-section {
-  margin-top: 18px;
-}
-
-.detail-list-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.detail-list {
-  margin: 0;
-  padding: 0;
-}
-
-.detail-list li {
-  list-style: none;
-}
-
-.detail-list button {
-  width: 100%;
-  text-align: left;
-  padding: 9px 10px;
-  border: none;
-  background: transparent;
-  border-radius: 10px;
-  cursor: pointer;
-  color: #111827;
-}
-
-.detail-list button:hover {
-  background: #eff6ff;
-}
-
-.empty-list {
-  padding: 8px 0;
-  color: #9ca3af;
-  font-size: 14px;
 }
 
 .path-node {
