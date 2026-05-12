@@ -625,7 +625,7 @@
         },
         { selector: ".group-basic-graph-classes", style: { "background-color": "#f5f3ff", "border-color": "#7c3aed" } },
         { selector: ".group-width-parameter-classes", style: { "background-color": "#ecfeff", "border-color": "#0891b2" } },
-        { selector: ".group-graph-parameter-classes", style: { "background-color": "#f8fafc", "border-color": "#64748b" } },
+        { selector: ".group-graph-parameter-classes", style: { "background-color": "#ecfdf3", "border-color": "#16a34a" } },
         { selector: ".group-model-theoretic-classes", style: { "background-color": "#fff7ed", "border-color": "#f97316" } },
         { selector: ".group-chi-bounded-classes", style: { "background-color": "#fdf2f8", "border-color": "#db2777" } },
         { selector: ".group-combined-classes", style: { "background-color": "#eef4ff", "border-color": "#2563eb" } },
