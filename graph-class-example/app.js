@@ -11,6 +11,7 @@
     selectedTitle: document.getElementById("selected-title"),
     selectedProperties: document.getElementById("selected-properties"),
     selectedSummary: document.getElementById("selected-summary"),
+    detailPanel: document.querySelector(".detail-panel"),
     relationViewTitle: document.getElementById("relation-view-title"),
     equivalentList: document.getElementById("equivalent-list"),
     subclassList: document.getElementById("subclass-list"),
@@ -368,7 +369,7 @@
       button.type = "button";
       button.className = node.id === selectedId ? "active" : "";
       setDisplayLabel(button, node.label);
-      button.addEventListener("click", () => selectClass(node.id));
+      button.addEventListener("click", () => selectClass(node.id, { revealDetail: true }));
       ui.classList.appendChild(button);
     });
   }
@@ -387,12 +388,12 @@
       const button = document.createElement("button");
       button.type = "button";
       setDisplayLabel(button, nodeById.get(id).label);
-      button.addEventListener("click", () => selectClass(id));
+      button.addEventListener("click", () => selectClass(id, { revealDetail: true }));
       container.appendChild(button);
     });
   }
 
-  function selectClass(id) {
+  function selectClass(id, options = {}) {
     if (!nodeById.has(id)) return;
     selectedId = id;
     const selected = nodeById.get(id);
@@ -415,6 +416,18 @@
     renderRelationList(ui.superclassList, ui.superclassCount, superclasses);
     renderClassList();
     renderLocalGraph(id, { relationRoots, equivalents, subclasses, superclasses, neighbors });
+    if (options.revealDetail && isMobileLayout()) scrollToDetailPanel();
+  }
+
+  function isMobileLayout() {
+    return window.matchMedia("(max-width: 820px)").matches;
+  }
+
+  function scrollToDetailPanel() {
+    if (!ui.detailPanel) return;
+    window.requestAnimationFrame(() => {
+      ui.detailPanel.scrollIntoView({ block: "start", behavior: "smooth" });
+    });
   }
 
   function relationSummary(equivalents, subclasses, superclasses) {
@@ -671,7 +684,7 @@
       ]
     });
 
-    cy.on("tap", "node", (event) => selectClass(event.target.id()));
+    cy.on("tap", "node", (event) => selectClass(event.target.id(), { revealDetail: true }));
   }
 
   function fitGraph() {
