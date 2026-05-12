@@ -4,12 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Graph Class Map</title>
-  <link rel="stylesheet" href="./styles.css?v=20260512-mobile-toggle1" />
+  <link rel="stylesheet" href="./styles.css?v=20260512-mobile-accordion1" />
   <script src="https://unpkg.com/cytoscape@3.27.0/dist/cytoscape.min.js"></script>
   <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
   <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
-  <script src="./data.js?v=20260512-mobile-toggle1"></script>
-  <script defer src="./app.js?v=20260512-mobile-toggle1"></script>
+  <script src="./data.js?v=20260512-mobile-accordion1"></script>
+  <script defer src="./app.js?v=20260512-mobile-accordion1"></script>
 </head>
 <body>
   <main class="shell explorer-shell">
@@ -49,24 +49,24 @@
 
         <div class="relation-grid">
           <section class="relation-card">
-            <div class="relation-card-head">
+            <button class="relation-card-head" type="button" aria-expanded="false">
               <h3>Equivalent</h3>
               <span id="equivalent-count"></span>
-            </div>
+            </button>
             <div id="equivalent-list" class="relation-list"></div>
           </section>
           <section class="relation-card">
-            <div class="relation-card-head">
+            <button class="relation-card-head" type="button" aria-expanded="false">
               <h3>Subclasses</h3>
               <span id="subclass-count"></span>
-            </div>
+            </button>
             <div id="subclass-list" class="relation-list"></div>
           </section>
           <section class="relation-card">
-            <div class="relation-card-head">
+            <button class="relation-card-head" type="button" aria-expanded="false">
               <h3>Superclasses</h3>
               <span id="superclass-count"></span>
-            </div>
+            </button>
             <div id="superclass-list" class="relation-list"></div>
           </section>
         </div>

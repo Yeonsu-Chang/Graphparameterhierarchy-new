@@ -24,6 +24,7 @@
     fit: document.getElementById("fit-graph"),
     zoomSlider: document.getElementById("zoom-slider"),
     graphViewButtons: Array.from(document.querySelectorAll(".graph-view-button")),
+    relationCards: Array.from(document.querySelectorAll(".relation-card")),
     graphCount: document.getElementById("graph-count"),
     graph: document.getElementById("class-graph")
   };
@@ -756,6 +757,13 @@
   ui.fit.addEventListener("click", fitGraph);
   ui.zoomSlider.addEventListener("input", () => {
     setGraphZoom(Number(ui.zoomSlider.value) / 100);
+  });
+  ui.relationCards.forEach((card) => {
+    const head = card.querySelector(".relation-card-head");
+    head?.addEventListener("click", () => {
+      card.classList.toggle("open");
+      head.setAttribute("aria-expanded", String(card.classList.contains("open")));
+    });
   });
   ui.mobileListButton?.addEventListener("click", () => setMobilePanel("list", { scroll: true }));
   ui.mobileDetailButton?.addEventListener("click", () => setMobilePanel("detail", { scroll: true }));

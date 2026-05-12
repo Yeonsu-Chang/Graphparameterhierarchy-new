@@ -264,8 +264,14 @@ input[type="search"] {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   gap: 10px;
   margin-bottom: 9px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
 }
 
 .relation-card h3 {
@@ -502,6 +508,40 @@ input[type="search"] {
   .relation-card {
     min-height: 0;
     padding: 12px;
+  }
+
+  .relation-card-head {
+    display: grid;
+    min-height: 34px;
+    margin-bottom: 0;
+    cursor: pointer;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+  }
+
+  .relation-card-head::after {
+    content: "+";
+    flex: 0 0 auto;
+    display: inline-grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background: #eef4ff;
+    color: var(--blue);
+    font-size: 17px;
+    font-weight: 850;
+  }
+
+  .relation-card.open .relation-card-head {
+    margin-bottom: 9px;
+  }
+
+  .relation-card.open .relation-card-head::after {
+    content: "−";
+  }
+
+  .relation-card:not(.open) .relation-list {
+    display: none;
   }
 
   .relation-list {
