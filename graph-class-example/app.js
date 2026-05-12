@@ -239,6 +239,7 @@
   let cy;
   let pendingZoomLevel = null;
   let zoomFrame = null;
+  let viewportFrame = null;
 
   function subsetEdges() {
     return graphData.edges.filter((edge) => edge.type !== "equivalent");
@@ -521,9 +522,10 @@
       }))
     ];
 
+    refreshGraphViewport();
     cy.elements().remove();
     cy.add(elements);
-    cy.layout({
+    const layout = cy.layout({
       name: "dagre",
       rankDir: localGraphView === "equivalent" ? "LR" : "BT",
       nodeSep: localGraphView === "equivalent" ? 70 : 42,
@@ -531,8 +533,13 @@
       rankSep: localGraphView === "equivalent" ? 120 : 94,
       padding: 24,
       animate: false
-    }).run();
-    setTimeout(fitGraph, 80);
+    });
+
+    layout.on("layoutstop", () => {
+      fitGraph();
+      refreshGraphViewport();
+    });
+    layout.run();
   }
 
   function localGraphEdges(selected, idSet, edgeTypes, relations) {
@@ -669,9 +676,20 @@
 
   function fitGraph() {
     if (!cy || !cy.elements().length) return;
+    cy.resize();
     cy.fit(cy.elements(), 48);
     cy.center();
+    refreshGraphViewport();
     syncZoomSlider();
+  }
+
+  function refreshGraphViewport() {
+    if (!cy || viewportFrame) return;
+    viewportFrame = window.requestAnimationFrame(() => {
+      viewportFrame = null;
+      cy.resize();
+      if (typeof cy.forceRender === "function") cy.forceRender();
+    });
   }
 
   function syncZoomSlider() {
@@ -693,6 +711,7 @@
 
   function applyGraphZoom(level) {
     if (!cy || level == null) return;
+    cy.resize();
     cy.zoom({
       level,
       renderedPosition: {
@@ -700,6 +719,7 @@
         y: ui.graph.clientHeight / 2
       }
     });
+    refreshGraphViewport();
   }
 
   ui.title.textContent = "Graph Class Map";
@@ -715,6 +735,7 @@
   ui.zoomSlider.addEventListener("input", () => {
     setGraphZoom(Number(ui.zoomSlider.value) / 100);
   });
+  window.addEventListener("resize", refreshGraphViewport);
   ui.graphViewButtons.forEach((button) => {
     button.addEventListener("click", () => {
       localGraphView = button.dataset.view;
