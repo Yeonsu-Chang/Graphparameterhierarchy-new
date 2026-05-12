@@ -351,6 +351,26 @@ input[type="search"] {
   color: var(--blue);
 }
 
+#fit-graph {
+  border-color: var(--blue);
+  background: var(--blue);
+  color: #ffffff;
+}
+
+#fit-graph:hover {
+  background: #145bc4;
+}
+
+#reset-graph {
+  border-color: var(--red);
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+#reset-graph:hover {
+  background: #fecaca;
+}
+
 .zoom-control {
   min-height: 34px;
   display: inline-flex;

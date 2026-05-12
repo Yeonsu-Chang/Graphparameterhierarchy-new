@@ -22,6 +22,7 @@
     subclassCount: document.getElementById("subclass-count"),
     superclassCount: document.getElementById("superclass-count"),
     fit: document.getElementById("fit-graph"),
+    reset: document.getElementById("reset-graph"),
     zoomSlider: document.getElementById("zoom-slider"),
     graphViewButtons: Array.from(document.querySelectorAll(".graph-view-button")),
     relationCards: Array.from(document.querySelectorAll(".relation-card")),
@@ -706,6 +707,10 @@
     syncZoomSlider();
   }
 
+  function resetGraph() {
+    selectClass(selectedId);
+  }
+
   function refreshGraphViewport() {
     if (!cy || viewportFrame) return;
     viewportFrame = window.requestAnimationFrame(() => {
@@ -755,6 +760,7 @@
 
   ui.search.addEventListener("input", renderClassList);
   ui.fit.addEventListener("click", fitGraph);
+  ui.reset.addEventListener("click", resetGraph);
   ui.zoomSlider.addEventListener("input", () => {
     setGraphZoom(Number(ui.zoomSlider.value) / 100);
   });
