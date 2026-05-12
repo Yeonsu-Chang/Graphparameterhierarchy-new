@@ -11,6 +11,8 @@
     selectedTitle: document.getElementById("selected-title"),
     selectedProperties: document.getElementById("selected-properties"),
     selectedSummary: document.getElementById("selected-summary"),
+    mobileListButton: document.getElementById("show-class-list"),
+    mobileDetailButton: document.getElementById("show-class-detail"),
     detailPanel: document.querySelector(".detail-panel"),
     relationViewTitle: document.getElementById("relation-view-title"),
     equivalentList: document.getElementById("equivalent-list"),
@@ -241,6 +243,7 @@
   let pendingZoomLevel = null;
   let zoomFrame = null;
   let viewportFrame = null;
+  let mobilePanel = "list";
 
   function subsetEdges() {
     return graphData.edges.filter((edge) => edge.type !== "equivalent");
@@ -416,17 +419,23 @@
     renderRelationList(ui.superclassList, ui.superclassCount, superclasses);
     renderClassList();
     renderLocalGraph(id, { relationRoots, equivalents, subclasses, superclasses, neighbors });
-    if (options.revealDetail && isMobileLayout()) scrollToDetailPanel();
+    if (options.revealDetail && isMobileLayout()) setMobilePanel("detail", { scroll: true });
   }
 
   function isMobileLayout() {
     return window.matchMedia("(max-width: 820px)").matches;
   }
 
-  function scrollToDetailPanel() {
-    if (!ui.detailPanel) return;
+  function setMobilePanel(panel, options = {}) {
+    mobilePanel = panel;
+    document.body.classList.toggle("mobile-detail-open", panel === "detail");
+    ui.mobileListButton?.classList.toggle("active", panel === "list");
+    ui.mobileDetailButton?.classList.toggle("active", panel === "detail");
+    if (!isMobileLayout()) return;
     window.requestAnimationFrame(() => {
-      ui.detailPanel.scrollIntoView({ block: "start", behavior: "smooth" });
+      if (options.scroll) window.scrollTo({ top: 0, behavior: "smooth" });
+      if (panel === "detail") fitGraph();
+      else refreshGraphViewport();
     });
   }
 
@@ -748,7 +757,12 @@
   ui.zoomSlider.addEventListener("input", () => {
     setGraphZoom(Number(ui.zoomSlider.value) / 100);
   });
-  window.addEventListener("resize", refreshGraphViewport);
+  ui.mobileListButton?.addEventListener("click", () => setMobilePanel("list", { scroll: true }));
+  ui.mobileDetailButton?.addEventListener("click", () => setMobilePanel("detail", { scroll: true }));
+  window.addEventListener("resize", () => {
+    setMobilePanel(isMobileLayout() ? mobilePanel : "list");
+    refreshGraphViewport();
+  });
   ui.graphViewButtons.forEach((button) => {
     button.addEventListener("click", () => {
       localGraphView = button.dataset.view;

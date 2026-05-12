@@ -4,12 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Graph Class Map</title>
-  <link rel="stylesheet" href="./styles.css?v=20260512-mobile1" />
+  <link rel="stylesheet" href="./styles.css?v=20260512-mobile-toggle1" />
   <script src="https://unpkg.com/cytoscape@3.27.0/dist/cytoscape.min.js"></script>
   <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
   <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
-  <script src="./data.js?v=20260512-mobile1"></script>
-  <script defer src="./app.js?v=20260512-mobile1"></script>
+  <script src="./data.js?v=20260512-mobile-toggle1"></script>
+  <script defer src="./app.js?v=20260512-mobile-toggle1"></script>
 </head>
 <body>
   <main class="shell explorer-shell">
@@ -22,6 +22,11 @@
         <p id="graph-count" class="graph-count"></p>
       </div>
     </header>
+
+    <nav class="mobile-view-switch" aria-label="Mobile class map sections">
+      <button id="show-class-list" class="active" type="button">List</button>
+      <button id="show-class-detail" type="button">Details</button>
+    </nav>
 
     <section class="explorer-layout">
       <aside class="search-panel" aria-label="Class search">
