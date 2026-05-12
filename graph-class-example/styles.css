@@ -206,6 +206,23 @@ input[type="search"] {
   line-height: 1.12;
 }
 
+.property-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 9px;
+}
+
+.property-tags span {
+  padding: 4px 8px;
+  border: 1px solid #dbe4ef;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #344054;
+  font-size: 12px;
+  font-weight: 800;
+}
+
 .selected-summary {
   margin: 0 0 14px;
   padding: 11px 12px;

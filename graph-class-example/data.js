@@ -193,63 +193,8 @@ window.GRAPH_CLASS_EXAMPLE = {
     "Weakly sparse"
   ],
 
-  // Add display labels separately so a class can belong to more than one label.
+  // Primary categories: each class should belong to exactly one of these groups.
   classLabels: [
-    {
-      id: "fo-ideal",
-      label: "FO-ideal",
-      classes: [
-        "Bounded clique-width",
-        "Bounded flip-width",
-        "Bounded linear clique-width",
-        "Bounded merge-width",
-        "Bounded shrub-depth",
-        "Bounded twin-width",
-        "Monadically dependent"
-      ]
-    },
-    {
-      id: "Monadically-stable",
-      label: "Monadically stable",
-      classes: [
-        "Monadically stable",
-        "Monadically stable bounded clique-width",
-        "Monadically stable bounded linear clique-width",
-        "Monadically stable bounded merge-width",
-        "Monadically stable bounded shrub-depth",
-        "Monadically stable bounded twin-width"
-      ]
-    },
-    {
-      id: "structural",
-      label: "Structural",
-      classes: [
-        "Structurally bounded expansion",
-        "Structurally bounded path-width",
-        "Structurally bounded sparse twin-width",
-        "Structurally bounded tree-depth",
-        "Structurally bounded tree-width",
-        "Structurally nowhere dense"
-      ]
-    },
-    {
-      id: "weakly-sparse",
-      label: "Weakly sparse",
-      classes: [
-        "Bounded expansion",
-        "Bounded path-width",
-        "Bounded polynomial expansion",
-        "Bounded sparse twin-width",
-        "Bounded tree-depth",
-        "Bounded tree-width",
-        "Excluded minor",
-        "Excluded topological minor",
-        "Low linear rank-width covers",
-        "Low rank-width covers",
-        "Nowhere dense",
-        "Weakly sparse"
-      ]
-    },
     {
       id: "basic-graph-classes",
       label: "Basic graph classes",
@@ -286,8 +231,8 @@ window.GRAPH_CLASS_EXAMPLE = {
         "Perfect",
         "Permutation",
         "Planar",
-        "Proper circular-arc",
         "Proper chordal",
+        "Proper circular-arc",
         "Proper interval",
         "Ptolemaic",
         "Series-parallel",
@@ -296,39 +241,91 @@ window.GRAPH_CLASS_EXAMPLE = {
         "Star",
         "Strongly chordal",
         "Threshold",
-        "Tree",
         "Trapezoid",
+        "Tree",
         "Trivially perfect",
         "Weakly chordal"
       ]
     },
     {
-      id: "parameter-classes",
-      label: "Parameter classes",
+      id: "width-parameter-classes",
+      label: "Width parameter classes",
       classes: [
         "Bounded ∞-flip-width",
+        "Bounded bandwidth",
+        "Bounded bisection width",
+        "Bounded boolean-width",
+        "Bounded bramble number",
+        "Bounded branch-depth",
+        "Bounded branch-width",
+        "Bounded carving-width",
+        "Bounded clique-width",
+        "Bounded component twin-width",
+        "Bounded cut-width",
+        "Bounded edge-crossing width",
+        "Bounded edge-cut width",
+        "Bounded flip-width",
+        "Bounded fractional Hadwiger number",
+        "Bounded linear clique-width",
+        "Bounded linear mim-width",
+        "Bounded linear NLC-width",
+        "Bounded linear rank-width",
+        "Bounded linkedness",
+        "Bounded max leaf number",
+        "Bounded merge-width",
+        "Bounded mim-width",
+        "Bounded minor-matching hypertree-width",
+        "Bounded modular-width",
+        "Bounded NLC-width",
+        "Bounded o-mim-width",
+        "Bounded path-independence number",
+        "Bounded path-width",
+        "Bounded queue number",
+        "Bounded 𝑟-flip-width",
+        "Bounded 𝑟-merge-width",
+        "Bounded rank-depth",
+        "Bounded rank-width",
+        "Bounded reduced bandwidth",
+        "Bounded reduced component max-leaf",
+        "Bounded reduced cut-width",
+        "Bounded reduced max-leaf",
+        "Bounded separation number",
+        "Bounded shrub-depth",
+        "Bounded sim-width",
+        "Bounded slim tree-cut width",
+        "Bounded stack number",
+        "Bounded stretch-width",
+        "Bounded tangle number",
+        "Bounded thinness",
+        "Bounded total twin-width",
+        "Bounded track number",
+        "Bounded tree bandwidth",
+        "Bounded tree-cut width",
+        "Bounded tree-depth",
+        "Bounded tree-independence number",
+        "Bounded tree-partition-width",
+        "Bounded tree-width",
+        "Bounded twin-width",
+        "Bounded well-linked number",
+        "Bounded α-edge-crossing width"
+      ]
+    },
+    {
+      id: "graph-parameter-classes",
+      label: "Graph parameter classes",
+      classes: [
         "Bounded acyclic chromatic number",
         "Bounded arboricity",
         "Bounded average degree",
         "Bounded average distance",
-        "Bounded bandwidth",
-        "Bounded bisection width",
-        "Bounded boolean-width",
         "Bounded boxicity",
-        "Bounded bramble number",
-        "Bounded branch-depth",
-        "Bounded branch-width",
         "Bounded burning number",
         "Bounded 𝑐-closure",
-        "Bounded carving-width",
         "Bounded chordality",
         "Bounded chromatic number",
         "Bounded clique cover number",
-        "Bounded clique-width",
         "Bounded cochromatic number",
-        "Bounded component twin-width",
         "Bounded crossing number",
-        "Bounded cut-width",
         "Bounded degeneracy",
         "Bounded diameter",
         "Bounded distance to Bipartite",
@@ -347,76 +344,70 @@ window.GRAPH_CLASS_EXAMPLE = {
         "Bounded domatic number",
         "Bounded domination number",
         "Bounded edge clique cover number",
-        "Bounded edge-crossing width",
-        "Bounded edge-cut width",
         "Bounded feedback edge set number",
         "Bounded feedback vertex set number",
-        "Bounded fractional Hadwiger number",
         "Bounded genus",
         "Bounded geometric thickness",
         "Bounded girth",
         "Bounded ℎ-index",
         "Bounded interval number",
-        "Bounded linear clique-width",
-        "Bounded linear mim-width",
-        "Bounded linear NLC-width",
-        "Bounded linear rank-width",
-        "Bounded linkedness",
         "Bounded max diameter of components",
-        "Bounded max leaf number",
         "Bounded maximum clique",
         "Bounded maximum degree",
         "Bounded maximum independent set",
         "Bounded maximum induced matching",
         "Bounded maximum matching",
-        "Bounded mim-width",
         "Bounded minimum degree",
-        "Bounded minor-matching hypertree-width",
-        "Bounded modular-width",
         "Bounded neighborhood diversity",
-        "Bounded NLC-width",
-        "Bounded o-mim-width",
-        "Bounded path-independence number",
-        "Bounded path-width",
-        "Bounded queue number",
-        "Bounded 𝑟-flip-width",
-        "Bounded 𝑟-merge-width",
-        "Bounded rank-depth",
-        "Bounded rank-width",
-        "Bounded reduced bandwidth",
-        "Bounded reduced component max-leaf",
-        "Bounded reduced cut-width",
-        "Bounded reduced max-leaf",
-        "Bounded separation number",
-        "Bounded shrub-depth",
-        "Bounded sim-width",
         "Bounded simultaneous interval number",
-        "Bounded slim tree-cut width",
-        "Bounded stack number",
-        "Bounded stretch-width",
         "Bounded strong ∞-coloring number",
-        "Bounded tangle number",
         "Bounded thickness",
-        "Bounded thinness",
-        "Bounded total twin-width",
-        "Bounded track number",
-        "Bounded tree bandwidth",
-        "Bounded tree-cut width",
-        "Bounded tree-depth",
-        "Bounded tree-independence number",
-        "Bounded tree-partition-width",
-        "Bounded tree-width",
         "Bounded twin-cover",
-        "Bounded twin-width",
         "Bounded vertex cover number",
-        "Bounded weak ∞-coloring number",
-        "Bounded well-linked number",
-        "Bounded α-edge-crossing width"
+        "Bounded weak ∞-coloring number"
       ]
     },
     {
-      id: "bounded-parameter-combinations",
-      label: "Combined parameter classes",
+      id: "model-theoretic-classes",
+      label: "Model-theoretic classes",
+      classes: [
+        "Bounded expansion",
+        "Bounded polynomial expansion",
+        "Bounded sparse twin-width",
+        "Excluded minor",
+        "Excluded topological minor",
+        "Low linear rank-width covers",
+        "Low rank-width covers",
+        "Monadically dependent",
+        "Monadically low VC-density",
+        "Monadically stable",
+        "Monadically stable bounded clique-width",
+        "Monadically stable bounded linear clique-width",
+        "Monadically stable bounded merge-width",
+        "Monadically stable bounded shrub-depth",
+        "Monadically stable bounded twin-width",
+        "Nowhere dense",
+        "Structurally bounded expansion",
+        "Structurally bounded path-width",
+        "Structurally bounded sparse twin-width",
+        "Structurally bounded tree-depth",
+        "Structurally bounded tree-width",
+        "Structurally nowhere dense",
+        "Weakly sparse"
+      ]
+    },
+    {
+      id: "chi-bounded-classes",
+      label: "χ-bounded classes",
+      classes: [
+        "\\chi - bounded",
+        "Linearly \\chi - bounded",
+        "Polynomially \\chi - bounded"
+      ]
+    },
+    {
+      id: "combined-classes",
+      label: "Combined classes",
       classes: [
         "Bounded clique-width \\cap Weakly sparse",
         "Bounded flip-width \\cap Weakly sparse",
@@ -426,23 +417,80 @@ window.GRAPH_CLASS_EXAMPLE = {
         "Monadically dependent \\cap Weakly sparse",
         "Monadically stable \\cap Weakly sparse"
       ]
-    },
+    }
+  ],
+
+  // Optional properties/tags: classes may belong to any number of these groups.
+  propertyLabels: [
     {
-      id: "coloring-classes",
-      label: "Coloring classes",
+      id: "fo-ideal",
+      label: "FO-ideal",
       classes: [
-        "\\chi - bounded",
-        "Linearly \\chi - bounded",
-        "Perfect",
-        "Polynomially \\chi - bounded"
+        "Bounded clique-width",
+        "Bounded flip-width",
+        "Bounded linear clique-width",
+        "Bounded merge-width",
+        "Bounded shrub-depth",
+        "Bounded twin-width",
+        "Monadically dependent"
       ]
     },
     {
-      id: "monadically-stable",
+      id: "monadically-stable-property",
       label: "Monadically stable",
       classes: [
-        "Monadically low VC-density"
+        "Monadically stable",
+        "Monadically stable bounded clique-width",
+        "Monadically stable bounded linear clique-width",
+        "Monadically stable bounded merge-width",
+        "Monadically stable bounded shrub-depth",
+        "Monadically stable bounded twin-width"
       ]
+    },
+    {
+      id: "structural-property",
+      label: "Structural",
+      classes: [
+        "Structurally bounded expansion",
+        "Structurally bounded path-width",
+        "Structurally bounded sparse twin-width",
+        "Structurally bounded tree-depth",
+        "Structurally bounded tree-width",
+        "Structurally nowhere dense"
+      ]
+    },
+    {
+      id: "weakly-sparse-property",
+      label: "Weakly sparse",
+      classes: [
+        "Bounded expansion",
+        "Bounded path-width",
+        "Bounded polynomial expansion",
+        "Bounded sparse twin-width",
+        "Bounded tree-depth",
+        "Bounded tree-width",
+        "Excluded minor",
+        "Excluded topological minor",
+        "Low linear rank-width covers",
+        "Low rank-width covers",
+        "Nowhere dense",
+        "Weakly sparse"
+      ]
+    },
+    {
+      id: "hereditary-property",
+      label: "Hereditary",
+      classes: []
+    },
+    {
+      id: "monotone-property",
+      label: "Monotone",
+      classes: []
+    },
+    {
+      id: "stable-property",
+      label: "Stable",
+      classes: []
     }
   ],
 

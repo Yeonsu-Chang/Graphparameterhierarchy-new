@@ -9,6 +9,7 @@
     classList: document.getElementById("class-list"),
     selectedGroup: document.getElementById("selected-group"),
     selectedTitle: document.getElementById("selected-title"),
+    selectedProperties: document.getElementById("selected-properties"),
     selectedSummary: document.getElementById("selected-summary"),
     relationViewTitle: document.getElementById("relation-view-title"),
     equivalentList: document.getElementById("equivalent-list"),
@@ -206,6 +207,14 @@
   }
 
   const graphData = collectGraph();
+  const propertyLabelsById = new Map();
+  (data.propertyLabels || []).forEach((property) => {
+    (property.classes || []).forEach((label) => {
+      const id = toId(label);
+      if (!propertyLabelsById.has(id)) propertyLabelsById.set(id, []);
+      propertyLabelsById.get(id).push(property.label);
+    });
+  });
   const nodeById = new Map(graphData.nodes.map((node) => [node.id, node]));
   const classNames = graphData.nodes.map((node) => node.label);
   const preferredEquivalentLabels = [
@@ -397,6 +406,7 @@
     ui.selectedGroup.textContent = groupLabel(selected);
     setDisplayLabel(ui.selectedTitle, selected.label);
     setDisplayLabel(ui.relationViewTitle, selected.label);
+    renderPropertyTags(id);
     ui.selectedSummary.textContent = relationSummary(equivalents, subclasses, superclasses);
     renderRelationList(ui.equivalentList, ui.equivalentCount, equivalents);
     renderRelationList(ui.subclassList, ui.subclassCount, subclasses);
@@ -411,6 +421,17 @@
       `${subclasses.length} subclasses`,
       `${superclasses.length} superclasses`
     ].join(" · ");
+  }
+
+  function renderPropertyTags(id) {
+    const properties = propertyLabelsById.get(id) || [];
+    ui.selectedProperties.replaceChildren();
+    ui.selectedProperties.hidden = properties.length === 0;
+    properties.forEach((property) => {
+      const tag = document.createElement("span");
+      tag.textContent = property;
+      ui.selectedProperties.appendChild(tag);
+    });
   }
 
   function groupClass(group) {
@@ -602,15 +623,12 @@
             "z-index": 10
           }
         },
-        { selector: ".group-fo-ideal", style: { "background-color": "#fff1f4", "border-color": "#e11d48" } },
-        { selector: ".group-monadically-stable", style: { "background-color": "#f0fdfa", "border-color": "#0f766e" } },
-        { selector: ".group-structural", style: { "background-color": "#fff7ed", "border-color": "#f97316" } },
-        { selector: ".group-weakly-sparse", style: { "background-color": "#eff6ff", "border-color": "#2563eb" } },
         { selector: ".group-basic-graph-classes", style: { "background-color": "#f5f3ff", "border-color": "#7c3aed" } },
-        { selector: ".group-coloring-classes", style: { "background-color": "#fdf2f8", "border-color": "#db2777" } },
-        { selector: ".group-combined-parameter-classes", style: { "background-color": "#ecfeff", "border-color": "#0891b2" } },
-        { selector: ".group-parameter-classes", style: { "background-color": "#f8fafc", "border-color": "#64748b" } },
-        { selector: ".group-general-graph-classes", style: { "background-color": "#fefce8", "border-color": "#ca8a04" } },
+        { selector: ".group-width-parameter-classes", style: { "background-color": "#ecfeff", "border-color": "#0891b2" } },
+        { selector: ".group-graph-parameter-classes", style: { "background-color": "#f8fafc", "border-color": "#64748b" } },
+        { selector: ".group-model-theoretic-classes", style: { "background-color": "#fff7ed", "border-color": "#f97316" } },
+        { selector: ".group-chi-bounded-classes", style: { "background-color": "#fdf2f8", "border-color": "#db2777" } },
+        { selector: ".group-combined-classes", style: { "background-color": "#eef4ff", "border-color": "#2563eb" } },
         {
           selector: "node.selected",
           style: {
