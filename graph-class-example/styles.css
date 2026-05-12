@@ -329,6 +329,26 @@ input[type="search"] {
   color: var(--blue);
 }
 
+.zoom-control {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.zoom-control input {
+  width: 120px;
+  accent-color: var(--blue);
+  cursor: pointer;
+}
+
 .class-graph {
   height: 480px;
   background:

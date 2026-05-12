@@ -19,8 +19,7 @@
     subclassCount: document.getElementById("subclass-count"),
     superclassCount: document.getElementById("superclass-count"),
     fit: document.getElementById("fit-graph"),
-    zoomIn: document.getElementById("zoom-in"),
-    zoomOut: document.getElementById("zoom-out"),
+    zoomSlider: document.getElementById("zoom-slider"),
     graphViewButtons: Array.from(document.querySelectorAll(".graph-view-button")),
     graphCount: document.getElementById("graph-count"),
     graph: document.getElementById("class-graph")
@@ -238,6 +237,8 @@
     graphData.nodes[0].id;
   let localGraphView = "all";
   let cy;
+  let pendingZoomLevel = null;
+  let zoomFrame = null;
 
   function subsetEdges() {
     return graphData.edges.filter((edge) => edge.type !== "equivalent");
@@ -670,20 +671,34 @@
     if (!cy || !cy.elements().length) return;
     cy.fit(cy.elements(), 48);
     cy.center();
+    syncZoomSlider();
   }
 
-  function zoomGraph(factor) {
+  function syncZoomSlider() {
+    if (!cy || !ui.zoomSlider) return;
+    ui.zoomSlider.value = String(Math.round(cy.zoom() * 100));
+  }
+
+  function setGraphZoom(level) {
     if (!cy) return;
-    const level = Math.max(cy.minZoom(), Math.min(cy.maxZoom(), cy.zoom() * factor));
-    cy.animate({
-      zoom: {
-        level,
-        renderedPosition: {
-          x: ui.graph.clientWidth / 2,
-          y: ui.graph.clientHeight / 2
-        }
-      },
-      duration: 120
+    pendingZoomLevel = Math.max(cy.minZoom(), Math.min(cy.maxZoom(), level));
+    if (zoomFrame) return;
+
+    zoomFrame = window.requestAnimationFrame(() => {
+      zoomFrame = null;
+      applyGraphZoom(pendingZoomLevel);
+      pendingZoomLevel = null;
+    });
+  }
+
+  function applyGraphZoom(level) {
+    if (!cy || level == null) return;
+    cy.zoom({
+      level,
+      renderedPosition: {
+        x: ui.graph.clientWidth / 2,
+        y: ui.graph.clientHeight / 2
+      }
     });
   }
 
@@ -693,11 +708,13 @@
   initGraph();
   renderClassList();
   selectClass(selectedId);
+  syncZoomSlider();
 
   ui.search.addEventListener("input", renderClassList);
   ui.fit.addEventListener("click", fitGraph);
-  ui.zoomIn.addEventListener("click", () => zoomGraph(1.18));
-  ui.zoomOut.addEventListener("click", () => zoomGraph(1 / 1.18));
+  ui.zoomSlider.addEventListener("input", () => {
+    setGraphZoom(Number(ui.zoomSlider.value) / 100);
+  });
   ui.graphViewButtons.forEach((button) => {
     button.addEventListener("click", () => {
       localGraphView = button.dataset.view;
