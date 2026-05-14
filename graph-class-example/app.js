@@ -468,30 +468,47 @@
     return (node.groups || [node.group]).join(" · ");
   }
 
-  function directionalTwoHopLocalIds(id, relations) {
-    const selectedRoots = new Set(relations.relationRoots || [id]);
+  function localRepresentative(id, selected, relations) {
+    const selectedRoots = new Set(relations.relationRoots || [selected]);
+    if (selectedRoots.has(id)) return selected;
+    return representativeForView(id, selected, relations);
+  }
+
+  function localStepEdges(sources, direction, selected, relations) {
+    const sourceRoots = new Set(Array.from(sources).flatMap((nodeId) => equivalentComponentIds(nodeId)));
+    const selectedRoots = new Set(relations.relationRoots || [selected]);
     const equivalentSet = new Set(relations.equivalents || []);
-    const visited = new Set([id]);
-    const directIn = new Set();
-    const directOut = new Set();
+    const edges = [];
 
     graphData.edges.forEach((edge) => {
       if (edge.type === "equivalent") return;
-      if (selectedRoots.has(edge.source) && !equivalentSet.has(edge.target)) directOut.add(edge.target);
-      if (selectedRoots.has(edge.target) && !equivalentSet.has(edge.source)) directIn.add(edge.source);
+
+      if (direction === "out" && sourceRoots.has(edge.source) && !selectedRoots.has(edge.target)) {
+        const source = localRepresentative(edge.source, selected, relations);
+        const target = localRepresentative(edge.target, selected, relations);
+        if (!equivalentSet.has(target) && source !== target) edges.push({ ...edge, source, target });
+      }
+
+      if (direction === "in" && sourceRoots.has(edge.target) && !selectedRoots.has(edge.source)) {
+        const source = localRepresentative(edge.source, selected, relations);
+        const target = localRepresentative(edge.target, selected, relations);
+        if (!equivalentSet.has(source) && source !== target) edges.push({ ...edge, source, target });
+      }
     });
+
+    return edges;
+  }
+
+  function directionalTwoHopLocalIds(id, relations) {
+    const visited = new Set([id]);
+    const directIn = new Set(localStepEdges(new Set([id]), "in", id, relations).map((edge) => edge.source));
+    const directOut = new Set(localStepEdges(new Set([id]), "out", id, relations).map((edge) => edge.target));
 
     directIn.forEach((nodeId) => visited.add(nodeId));
     directOut.forEach((nodeId) => visited.add(nodeId));
 
-    const directInRoots = new Set(Array.from(directIn).flatMap((nodeId) => equivalentComponentIds(nodeId)));
-    const directOutRoots = new Set(Array.from(directOut).flatMap((nodeId) => equivalentComponentIds(nodeId)));
-
-    graphData.edges.forEach((edge) => {
-      if (edge.type === "equivalent") return;
-      if (directOutRoots.has(edge.source) && !equivalentSet.has(edge.target)) visited.add(edge.target);
-      if (directInRoots.has(edge.target) && !equivalentSet.has(edge.source)) visited.add(edge.source);
-    });
+    localStepEdges(directIn, "in", id, relations).forEach((edge) => visited.add(edge.source));
+    localStepEdges(directOut, "out", id, relations).forEach((edge) => visited.add(edge.target));
 
     return representativeIdsForView(Array.from(visited), id, relations);
   }
@@ -567,6 +584,10 @@
   }
 
   function localGraphEdges(selected, idSet, edgeTypes, relations) {
+    if (localGraphView === "all") {
+      return removeRedundantLocalSubsetEdges(twoHopLocalGraphEdges(selected, idSet, relations));
+    }
+
     const edges = [];
     const seen = new Set();
     const roots = new Set(relations.relationRoots || [selected]);
@@ -595,6 +616,31 @@
     });
 
     return removeRedundantLocalSubsetEdges(edges);
+  }
+
+  function twoHopLocalGraphEdges(selected, idSet, relations) {
+    const edges = [];
+    const seen = new Set();
+
+    function add(edge) {
+      if (!idSet.has(edge.source) || !idSet.has(edge.target)) return;
+      const key = `${edge.source}::${edge.target}::subset`;
+      if (seen.has(key)) return;
+      seen.add(key);
+      edges.push({ ...edge, id: `local-two-hop-${seen.size}`, type: "subset" });
+    }
+
+    const firstIn = localStepEdges(new Set([selected]), "in", selected, relations);
+    const firstOut = localStepEdges(new Set([selected]), "out", selected, relations);
+    firstIn.forEach(add);
+    firstOut.forEach(add);
+
+    const firstInIds = new Set(firstIn.map((edge) => edge.source).filter((nodeId) => nodeId !== selected));
+    const firstOutIds = new Set(firstOut.map((edge) => edge.target).filter((nodeId) => nodeId !== selected));
+    localStepEdges(firstInIds, "in", selected, relations).forEach(add);
+    localStepEdges(firstOutIds, "out", selected, relations).forEach(add);
+
+    return edges;
   }
 
   function removeRedundantLocalSubsetEdges(edges) {
