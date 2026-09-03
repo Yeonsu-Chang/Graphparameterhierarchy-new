@@ -3,89 +3,204 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f4f5f2" />
   <title>Graph Parameter Hierarchy</title>
   <link rel="icon" href="./graph-hierarchy-icon.svg?v=20260514" type="image/svg+xml" />
-  <link rel="stylesheet" href="./styles.css?v=20260506-path-equivalent1" />
+  <link rel="stylesheet" href="./styles.css?v=20260801-redesign2-light" />
   <script src="https://unpkg.com/cytoscape@3.27.0/dist/cytoscape.min.js"></script>
   <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
   <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
-  <script src="./graph-data.js?v=20260506-path-equivalent1"></script>
-  <script defer src="./app.js?v=20260506-path-equivalent1"></script>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.js"></script>
+  <script src="./graph-data.js?v=20260903-rank-width-merge1"></script>
+  <script defer src="./app.js?v=20260801-parameter-batch1"></script>
 </head>
 <body>
   <div id="app">
-    <aside id="node-panel">
-      <div id="node-panel-top">
-        <div class="panel-header">
-          <h3 id="panel-title">All nodes</h3>
-          <button class="panel-close" id="close-node-panel" type="button" aria-label="Close parameter list">×</button>
-          <span id="node-count"></span>
-        </div>
-        <div class="search-stack">
-          <div class="search-input-wrap">
-            <input
-              id="node-filter"
-              type="search"
-              placeholder="Filter..."
-              aria-label="Filter node list"
-            />
-            <button id="clear-node-filter" class="search-clear" type="button" aria-label="Clear node filter">×</button>
-          </div>
-          <div class="panel-subline">
-            <span id="node-filter-meta">Showing all parameters</span>
-            <span id="selected-node-label"></span>
-          </div>
-        </div>
+    <header class="topbar">
+      <a class="brand" href="./index.html" aria-label="Graph Parameter Hierarchy home">
+        <span class="brand-mark" aria-hidden="true">
+          <img src="./graph-hierarchy-icon.svg" alt="" />
+        </span>
+        <span class="brand-copy">
+          <strong id="page-title">Graph Parameter Hierarchy</strong>
+          <span>Boundedness relations at a glance</span>
+        </span>
+      </a>
+
+      <div class="quick-search" role="search">
+        <i data-lucide="search" aria-hidden="true"></i>
+        <input
+          id="quick-search"
+          type="search"
+          list="node-options"
+          autocomplete="off"
+          placeholder="Search a graph parameter..."
+          aria-label="Search a graph parameter"
+        />
+        <button id="clear-quick-search" class="bare-icon-button" type="button" aria-label="Clear parameter search" title="Clear search">
+          <i data-lucide="x" aria-hidden="true"></i>
+        </button>
       </div>
-      <ul id="node-panel-list"></ul>
-    </aside>
+
+      <nav class="topbar-actions" aria-label="Site navigation">
+        <a id="class-map-link" class="nav-button" href="./graph-class-example/index.html" aria-label="Open Class Map" title="Class Map">
+          <i data-lucide="network" aria-hidden="true"></i>
+          <span>Class Map</span>
+        </a>
+        <a id="homepage-link" class="nav-button nav-button-subtle" target="_blank" rel="noreferrer" aria-label="Open homepage" title="Homepage">
+          <i data-lucide="external-link" aria-hidden="true"></i>
+          <span>Homepage</span>
+        </a>
+      </nav>
+    </header>
 
     <main id="main">
-      <header>
-        <h1 id="page-title">Graph Parameter Hierarchy</h1>
-        <button id="fit" class="primary" type="button" style="display:none;">Fit</button>
+      <section class="workspace-toolbar" aria-label="Graph view controls">
+        <div class="focus-control">
+          <span id="highlight-label" class="toolbar-label">Neighborhood</span>
+          <div class="segmented-control" role="group" aria-labelledby="highlight-label">
+            <button class="focus-depth-button" type="button" data-depth="off" aria-pressed="false">All</button>
+            <button class="focus-depth-button active" type="button" data-depth="1" aria-pressed="true">1 step</button>
+            <button class="focus-depth-button" type="button" data-depth="2" aria-pressed="false">2 steps</button>
+          </div>
+          <label class="sr-only" for="edgeHL">Neighborhood depth</label>
+          <select id="edgeHL" class="sr-only" tabindex="-1" aria-hidden="true">
+            <option value="off">All</option>
+            <option value="1" selected>1 step</option>
+            <option value="2">2 steps</option>
+          </select>
+        </div>
 
-        <label for="edgeHL" id="highlight-label">k-hierarchy</label>
-        <select id="edgeHL">
-          <option value="off" selected>Off</option>
-          <option value="1">k=1</option>
-          <option value="2">k=2</option>
-        </select>
+        <div class="graph-meta" aria-label="Graph summary">
+          <span><strong id="parameter-total">0</strong> parameters</span>
+          <span class="meta-separator" aria-hidden="true"></span>
+          <span><strong id="relation-total">0</strong> relations</span>
+        </div>
 
-        <a id="class-map-link" class="primary header-link" href="./graph-class-example/index.html">Class Map</a>
-        <button id="toggle-path-finder" type="button">Path finder</button>
-        <button id="toggle-panel" type="button">Parameter list</button>
-        <button id="reset" type="button">Reset</button>
-        <a id="homepage-link" class="primary homepage-btn" target="_blank" rel="noreferrer">Homepage</a>
-      </header>
+        <div class="toolbar-actions">
+          <button id="toggle-panel" class="tool-button" type="button" aria-pressed="false" aria-label="Open parameter list" title="Parameters">
+            <i data-lucide="list-filter" aria-hidden="true"></i>
+            <span>Parameters</span>
+          </button>
+          <button id="toggle-path-finder" class="tool-button" type="button" aria-pressed="false" aria-label="Open path finder" title="Path finder">
+            <i data-lucide="route" aria-hidden="true"></i>
+            <span>Path finder</span>
+          </button>
+        </div>
+      </section>
 
       <section id="content">
         <section id="graph-stage">
-          <section id="cy" aria-label="Graph visualization"></section>
+          <section id="cy" aria-label="Graph parameter hierarchy visualization"></section>
+
+          <div class="canvas-controls" aria-label="Canvas controls">
+            <button id="fit" class="canvas-button" type="button" aria-label="Fit graph to view" title="Fit graph to view">
+              <i data-lucide="maximize" aria-hidden="true"></i>
+            </button>
+            <button id="reset" class="canvas-button" type="button" aria-label="Reset graph" title="Reset graph">
+              <i data-lucide="rotate-ccw" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <div id="selection-dock" class="selection-dock" hidden>
+            <div class="selection-copy">
+              <span class="selection-kicker">Selected parameter</span>
+              <strong id="selection-title"></strong>
+            </div>
+            <dl class="relation-summary">
+              <div>
+                <dt><span class="status-dot incoming" aria-hidden="true"></span>Incoming</dt>
+                <dd id="incoming-count">0</dd>
+              </div>
+              <div>
+                <dt><span class="status-dot outgoing" aria-hidden="true"></span>Outgoing</dt>
+                <dd id="outgoing-count">0</dd>
+              </div>
+              <div>
+                <dt><span class="status-dot equivalent" aria-hidden="true"></span>Equivalent</dt>
+                <dd id="equivalent-count">0</dd>
+              </div>
+            </dl>
+            <button id="clear-selection" class="bare-icon-button" type="button" aria-label="Clear selection" title="Clear selection">
+              <i data-lucide="x" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <div class="graph-legend" aria-label="Graph highlight legend">
+            <span><i class="legend-line incoming" aria-hidden="true"></i>Incoming</span>
+            <span><i class="legend-line outgoing" aria-hidden="true"></i>Outgoing</span>
+            <span><i class="legend-line reverse" aria-hidden="true"></i>Reverse path</span>
+          </div>
+
           <div id="mobile-graph-hint" hidden>
-            <p>On mobile, use Parameter list or Path finder to show only the relevant part of the graph.</p>
+            <i data-lucide="search" aria-hidden="true"></i>
+            <p>Search or choose a parameter to open its local hierarchy.</p>
           </div>
         </section>
-        <section id="side-panels">
-          <aside id="path-panel" class="side-panel">
-            <div class="detail-card-header">
-              <button class="panel-close" id="close-path-finder" type="button" aria-label="Close path finder">×</button>
-              <p class="eyebrow">Path finder</p>
-              <h2>Compare two parameters</h2>
+
+        <section id="side-panels" aria-live="polite">
+          <aside id="node-panel" class="side-panel" aria-label="Parameter list">
+            <div id="node-panel-top">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Explorer</p>
+                  <h2 id="panel-title">All parameters</h2>
+                </div>
+                <span id="node-count"></span>
+                <button class="panel-close" id="close-node-panel" type="button" aria-label="Close parameter list" title="Close panel">
+                  <i data-lucide="x" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="search-stack">
+                <div class="search-input-wrap">
+                  <i data-lucide="search" aria-hidden="true"></i>
+                  <input id="node-filter" type="search" placeholder="Filter..." aria-label="Filter parameter list" />
+                  <button id="clear-node-filter" class="search-clear" type="button" aria-label="Clear node filter" title="Clear filter">
+                    <i data-lucide="x" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <div class="panel-subline">
+                  <span id="node-filter-meta">Showing all parameters</span>
+                  <span id="selected-node-label"></span>
+                </div>
+              </div>
             </div>
-            <div class="field-stack">
-              <label for="path-from">From</label>
-              <input id="path-from" type="search" list="node-options" placeholder="Start parameter" />
+            <ul id="node-panel-list"></ul>
+          </aside>
+
+          <aside id="path-panel" class="side-panel" aria-label="Path finder">
+            <div class="panel-header path-panel-header">
+              <div>
+                <p class="eyebrow">Path finder</p>
+                <h2>Compare parameters</h2>
+              </div>
+              <button class="panel-close" id="close-path-finder" type="button" aria-label="Close path finder" title="Close panel">
+                <i data-lucide="x" aria-hidden="true"></i>
+              </button>
             </div>
-            <div class="field-stack">
-              <label for="path-to">To</label>
-              <input id="path-to" type="search" list="node-options" placeholder="Target parameter" />
+
+            <div class="path-fields">
+              <div class="field-stack">
+                <label for="path-from">From</label>
+                <input id="path-from" type="search" list="node-options" placeholder="Start parameter" />
+              </div>
+              <button id="swap-path" class="swap-button" type="button" aria-label="Swap path endpoints" title="Swap endpoints">
+                <i data-lucide="arrow-down-up" aria-hidden="true"></i>
+              </button>
+              <div class="field-stack">
+                <label for="path-to">To</label>
+                <input id="path-to" type="search" list="node-options" placeholder="Target parameter" />
+              </div>
             </div>
+
             <div class="button-row">
-              <button id="find-path" class="primary" type="button">Find path</button>
-              <button id="clear-path" type="button">Clear path</button>
+              <button id="find-path" class="primary-button" type="button">
+                <i data-lucide="route" aria-hidden="true"></i>
+                <span>Find path</span>
+              </button>
+              <button id="clear-path" class="secondary-button" type="button">Clear</button>
             </div>
-            <p id="path-result" class="muted">Pick two parameters to trace their shortest connection.</p>
+            <p id="path-result" class="path-result">Pick two parameters to trace their shortest connection.</p>
           </aside>
         </section>
       </section>

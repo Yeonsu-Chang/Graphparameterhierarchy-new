@@ -11,8 +11,13 @@
     pageTitle: document.getElementById("page-title"),
     panelTitle: document.getElementById("panel-title"),
     homepageLink: document.getElementById("homepage-link"),
+    quickSearch: document.getElementById("quick-search"),
+    clearQuickSearchButton: document.getElementById("clear-quick-search"),
     highlightLabel: document.getElementById("highlight-label"),
     edgeHL: document.getElementById("edgeHL"),
+    depthButtons: Array.from(document.querySelectorAll(".focus-depth-button")),
+    parameterTotal: document.getElementById("parameter-total"),
+    relationTotal: document.getElementById("relation-total"),
     nodePanel: document.getElementById("node-panel"),
     nodeListEl: document.getElementById("node-panel-list"),
     nodeCount: document.getElementById("node-count"),
@@ -35,7 +40,14 @@
     nodeOptions: document.getElementById("node-options"),
     findPathButton: document.getElementById("find-path"),
     clearPathButton: document.getElementById("clear-path"),
+    swapPathButton: document.getElementById("swap-path"),
     pathResult: document.getElementById("path-result"),
+    selectionDock: document.getElementById("selection-dock"),
+    selectionTitle: document.getElementById("selection-title"),
+    incomingCount: document.getElementById("incoming-count"),
+    outgoingCount: document.getElementById("outgoing-count"),
+    equivalentCount: document.getElementById("equivalent-count"),
+    clearSelectionButton: document.getElementById("clear-selection"),
   };
 
   const site = data.site || {};
@@ -46,13 +58,16 @@
   ui.pageTitle.textContent = site.title || "Graph Parameter Hierarchy";
   ui.panelTitle.textContent = site.panelTitle || "All nodes";
   ui.highlightLabel.textContent = site.highlightLabel || "k-hierarchy";
-  ui.homepageLink.textContent = site.homepageLabel || "Homepage";
+  ui.homepageLink.querySelector("span").textContent = site.homepageLabel || "Homepage";
   ui.homepageLink.href = site.homepageUrl || "#";
   ui.nodeFilter.placeholder = site.filterPlaceholder || "Filter...";
-  ui.classMapLink.textContent = "Class Map";
+  ui.classMapLink.querySelector("span").textContent = "Class Map";
   ui.classMapLink.href = "./graph-class-example/index.html";
-  ui.togglePathFinderButton.textContent = "Path finder";
-  ui.sidePanels.prepend(ui.nodePanel);
+  ui.togglePathFinderButton.querySelector("span").textContent = "Path finder";
+
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
 
   if (site.analyticsId) {
     loadAnalytics(site.analyticsId);
@@ -67,7 +82,12 @@
       .replace(/-{1,2}>/g, "→");
   };
 
-  const toId = (label) => label.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  const idSymbols = { "α": "alpha", "γ": "gamma", "μ": "mu", "χ": "chi" };
+  const toId = (label) => label
+    .toLowerCase()
+    .replace(/[αγμχ]/g, (symbol) => idSymbols[symbol])
+    .replace(/[^\x00-\x7F]/gu, (symbol) => `u${symbol.codePointAt(0).toString(16)}`)
+    .replace(/[^a-z0-9]+/g, "-");
 
   const normalEdges = [];
   const biEdgesRaw = [];
@@ -118,47 +138,51 @@
         selector: "node",
         style: {
           label: "data(label)",
-          "background-color": "#eef4ff",
-          "border-color": "#0b63ff",
-          "border-width": 1,
+          "background-color": "#ffffff",
+          "border-color": "#c8d0da",
+          "border-width": 1.5,
           shape: "round-rectangle",
-          color: "#111827",
-          "font-size": 18,
+          color: "#2c3748",
+          "font-size": 16,
+          "font-weight": 500,
           "text-valign": "center",
           "text-wrap": "wrap",
-          "text-max-width": 340,
-          padding: "12px",
+          "text-max-width": 160,
+          padding: "11px",
           width: "label",
           height: "label",
+          "overlay-opacity": 0,
         },
       },
-      { selector: "node.NH_OUT", style: { "border-color": "#1d4ed8", "border-width": 4, "background-color": "#e6efff" } },
-      { selector: "node.NH_IN", style: { "border-color": "#15803d", "border-width": 4, "background-color": "#e6f6ea" } },
-      { selector: "node.dim", style: { opacity: 0.2 } },
+      { selector: "node.NH_OUT", style: { "border-color": "#7189d8", "border-width": 4, "background-color": "#f1f4ff" } },
+      { selector: "node.NH_IN", style: { "border-color": "#56a792", "border-width": 4, "background-color": "#eef9f6" } },
+      { selector: "node.dim", style: { opacity: 0.12 } },
       { selector: "node.hidden", style: { display: "none" } },
-      { selector: "node.SEL", style: { "border-color": "#dc2626", "background-color": "#ffe4e6", "border-width": 5 } },
-      { selector: "node.path-node", style: { "border-color": "#f97316", "background-color": "#ffedd5", "border-width": 5, opacity: 1 } },
-      { selector: "node.path-start", style: { "border-color": "#2563eb", "background-color": "#dbeafe", "border-width": 6, opacity: 1 } },
-      { selector: "node.path-end", style: { "border-color": "#7c3aed", "background-color": "#ede9fe", "border-width": 6, opacity: 1 } },
-      { selector: "node.path-dim", style: { opacity: 0.12 } },
+      { selector: "node.SEL", style: { "border-color": "#dc6675", "background-color": "#fff4f6", "border-width": 5, "z-index": 10 } },
+      { selector: "node.path-node", style: { "border-color": "#c58c4c", "background-color": "#fff8ef", "border-width": 5, opacity: 1 } },
+      { selector: "node.path-start", style: { "border-color": "#6380d8", "background-color": "#eef2ff", "border-width": 6, opacity: 1 } },
+      { selector: "node.path-end", style: { "border-color": "#dc6675", "background-color": "#fff4f6", "border-width": 6, opacity: 1 } },
+      { selector: "node.path-dim", style: { opacity: 0.06 } },
       {
         selector: "edge",
         style: {
-          width: 2.5,
-          "line-color": "#9ca3af",
-          "target-arrow-color": "#9ca3af",
+          width: 2,
+          "line-color": "#c7ced7",
+          "target-arrow-color": "#afb8c3",
           "target-arrow-shape": "triangle",
           "curve-style": "bezier",
+          opacity: 0.68,
+          "overlay-opacity": 0,
         },
       },
-      { selector: "edge.dim", style: { opacity: 0.15 } },
+      { selector: "edge.dim", style: { opacity: 0.07 } },
       { selector: "edge.hidden", style: { display: "none" } },
-      { selector: "edge.EH_OUT", style: { "line-color": "#1d4ed8", "target-arrow-color": "#1d4ed8", width: 6 } },
-      { selector: "edge.EH_IN", style: { "line-color": "#15803d", "target-arrow-color": "#15803d", width: 6 } },
-      { selector: "edge.path-edge", style: { width: 7, opacity: 1 } },
-      { selector: "edge.path-forward", style: { "line-color": "#f97316", "target-arrow-color": "#f97316" } },
-      { selector: "edge.path-reverse", style: { "line-color": "#14b8a6", "target-arrow-color": "#14b8a6", "line-style": "dashed" } },
-      { selector: "edge.path-dim", style: { opacity: 0.12 } },
+      { selector: "edge.EH_OUT", style: { "line-color": "#7189d8", "target-arrow-color": "#7189d8", width: 5, opacity: 1 } },
+      { selector: "edge.EH_IN", style: { "line-color": "#56a792", "target-arrow-color": "#56a792", width: 5, opacity: 1 } },
+      { selector: "edge.path-edge", style: { width: 6, opacity: 1 } },
+      { selector: "edge.path-forward", style: { "line-color": "#c58c4c", "target-arrow-color": "#c58c4c" } },
+      { selector: "edge.path-reverse", style: { "line-color": "#d17489", "target-arrow-color": "#d17489", "line-style": "dashed" } },
+      { selector: "edge.path-dim", style: { opacity: 0.06 } },
     ],
     layout: {
       name: "dagre",
@@ -201,7 +225,8 @@
     if (!ui.mobileGraphHint) return;
     ui.mobileGraphHint.hidden = !visible;
     if (message) {
-      ui.mobileGraphHint.innerHTML = `<p>${message}</p>`;
+      const copy = ui.mobileGraphHint.querySelector("p");
+      if (copy) copy.textContent = message;
     }
   }
 
@@ -216,7 +241,7 @@
     cy.edges().addClass("hidden");
     setMobileGraphHint(
       true,
-      message || "On mobile, use Parameter list or Path finder to show only the relevant part of the graph."
+      message || "Choose a parameter to open its local hierarchy."
     );
   }
 
@@ -299,6 +324,14 @@
   }
 
   function setPanelOpen(panel, button, open) {
+    const updateButtonState = (targetPanel, targetButton, isOpen) => {
+      const name = targetPanel === ui.nodePanel ? "parameter list" : "path finder";
+      const action = isOpen ? "Close" : "Open";
+      targetButton.setAttribute("aria-pressed", String(isOpen));
+      targetButton.setAttribute("aria-label", `${action} ${name}`);
+      targetButton.title = `${action} ${name}`;
+    };
+
     if (open) {
       const panels = [
         [ui.nodePanel, ui.togglePanelButton],
@@ -308,13 +341,13 @@
       panels.forEach(([targetPanel, targetButton]) => {
         const isCurrent = targetPanel === panel;
         targetPanel.classList.toggle("open", isCurrent);
-        targetButton.setAttribute("aria-pressed", String(isCurrent));
+        updateButtonState(targetPanel, targetButton, isCurrent);
       });
     } else {
       panel.classList.remove("open");
-      button.setAttribute("aria-pressed", "false");
+      updateButtonState(panel, button, false);
     }
-    syncPanelLayout({ refit: true });
+    syncPanelLayout({ refit: false });
   }
 
   function togglePanelWindow(panel, button) {
@@ -507,21 +540,22 @@
   }
 
   function layoutFocusedSubgraph(eles) {
+    const compact = isCompactMobile();
     const layout = eles.layout({
       name: "dagre",
       rankDir: "TB",
       ranker: "network-simplex",
-      nodeSep: 180,
-      rankSep: 260,
-      edgeSep: 110,
-      spacingFactor: 1.28,
+      nodeSep: compact ? 112 : 150,
+      rankSep: compact ? 132 : 220,
+      edgeSep: compact ? 42 : 80,
+      spacingFactor: compact ? 1.14 : 1.2,
       nodeDimensionsIncludeLabels: true,
       animate: false,
       fit: false,
     });
 
     layout.on("layoutstop", () => {
-      smartFit(eles, 170, 0.9);
+      smartFit(eles, compact ? 36 : 96, compact ? 1.15 : 1.15);
     });
 
     layout.run();
@@ -607,11 +641,78 @@
   const allNodeLabels = Array.from(new Set([...Array.from(labelsInNormal), ...allBiLabels])).sort((a, b) => a.localeCompare(b));
   knownLabelByLower = new Map(allNodeLabels.map((label) => [label.toLowerCase(), label]));
   ui.nodeCount.textContent = `(${allNodeLabels.length})`;
+  ui.parameterTotal.textContent = String(allNodeLabels.length);
+  ui.relationTotal.textContent = String((graph.edges || []).length);
   allNodeLabels.forEach((label) => {
     const option = document.createElement("option");
     option.value = label;
     ui.nodeOptions.appendChild(option);
   });
+
+  function setQuickSearchClearVisibility() {
+    ui.clearQuickSearchButton.hidden = !ui.quickSearch.value.trim();
+  }
+
+  function syncDepthButtons() {
+    ui.depthButtons.forEach((button) => {
+      const active = button.dataset.depth === ui.edgeHL.value;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+  }
+
+  function updateSelectionSummary(label, anchorName = resolveAnchorName(label)) {
+    const anchorId = toId(anchorName);
+    const equivalentCount = Math.max(0, equivalentComponentNames(label).size - 1);
+
+    ui.selectionTitle.textContent = toDisplayText(label);
+    ui.incomingCount.textContent = String((ADJ_IN.get(anchorId) || new Set()).size);
+    ui.outgoingCount.textContent = String((ADJ_OUT.get(anchorId) || new Set()).size);
+    ui.equivalentCount.textContent = String(equivalentCount);
+    ui.selectionDock.hidden = false;
+    ui.quickSearch.value = toDisplayText(label);
+    setQuickSearchClearVisibility();
+  }
+
+  function clearSelectionSummary() {
+    ui.selectionDock.hidden = true;
+    ui.selectionTitle.textContent = "";
+    ui.incomingCount.textContent = "0";
+    ui.outgoingCount.textContent = "0";
+    ui.equivalentCount.textContent = "0";
+    ui.selectedNodeLabel.textContent = "";
+  }
+
+  function clearCurrentSelection(options = {}) {
+    const { restoreLayout = true, clearSearch = true } = options;
+
+    resetGraphState();
+    cy.nodes().removeClass("SEL");
+    currentNode = null;
+    clearSelectionSummary();
+    ui.pathResult.textContent = "Pick two parameters to trace their shortest connection.";
+
+    if (clearSearch) {
+      ui.quickSearch.value = "";
+      setQuickSearchClearVisibility();
+    }
+
+    if (isCompactMobile()) {
+      hideGraphForMobile();
+    } else if (restoreLayout) {
+      restoreDefaultLayout();
+    }
+  }
+
+  function runQuickSearch() {
+    const label = resolveInputLabel(ui.quickSearch.value);
+    if (!label) return false;
+
+    return selectNodeByLabel(label);
+  }
+
+  syncDepthButtons();
+  setQuickSearchClearVisibility();
 
   function getSelectedDepth() {
     if (isPathFinderOpen()) return 0;
@@ -719,7 +820,8 @@
     }
 
     anchor.removeClass("path-node");
-    ui.selectedNodeLabel.textContent = toDisplayText(anchorName);
+    setActiveListItem(label);
+    updateSelectionSummary(label, anchorName);
 
     return true;
   }
@@ -875,7 +977,8 @@
     resetGraphState();
     from.node.addClass("SEL");
     const directions = highlightPath(undirectedPath);
-    setActiveListItem(from.anchorLabel);
+    setActiveListItem(from.inputLabel);
+    updateSelectionSummary(from.inputLabel, from.anchorLabel);
 
     const pathLabels = undirectedPath.map(fromIdToLabel).map(toDisplayText).join(" → ");
     if (from.id === to.id && from.inputLabel !== to.inputLabel) {
@@ -891,7 +994,7 @@
     const hasForward = directions.includes("forward");
     const hasReverse = directions.includes("reverse");
     if (hasForward && hasReverse) {
-      ui.pathResult.textContent = `Mixed-direction path found: ${pathLabels}. Orange follows the edge direction, teal dashed segments go against it, so this route indicates the parameters are incomparable by a single directed chain.`;
+      ui.pathResult.textContent = `Mixed-direction path found: ${pathLabels}. Solid segments follow the edge direction and dashed segments go against it, so this route does not form a single directed chain.`;
       return;
     }
 
@@ -911,6 +1014,7 @@
   });
   ui.closeNodePanelButton.addEventListener("click", () => {
     setPanelOpen(ui.nodePanel, ui.togglePanelButton, false);
+    queueViewportRefresh({ refit: true });
   });
   ui.closePathFinderButton.addEventListener("click", () => {
     setPanelOpen(ui.pathPanel, ui.togglePathFinderButton, false);
@@ -924,23 +1028,28 @@
     }
   });
   ui.resetButton.addEventListener("click", () => {
-    resetGraphState();
-    cy.nodes().removeClass("SEL");
-    currentNode = null;
-    ui.pathResult.textContent = "Pick two parameters to trace their shortest connection.";
-    ui.selectedNodeLabel.textContent = "";
-    if (isCompactMobile()) {
-      hideGraphForMobile();
-    } else {
-      restoreDefaultLayout();
-    }
+    clearCurrentSelection();
+    ui.pathFrom.value = "";
+    ui.pathTo.value = "";
   });
+
+  ui.clearSelectionButton.addEventListener("click", () => clearCurrentSelection());
 
   ui.togglePanelButton.addEventListener("click", () => {
     togglePanelWindow(ui.nodePanel, ui.togglePanelButton);
+    queueViewportRefresh({ refit: true });
+  });
+
+  ui.depthButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      ui.edgeHL.value = button.dataset.depth;
+      syncDepthButtons();
+      ui.edgeHL.dispatchEvent(new Event("change"));
+    });
   });
 
   ui.edgeHL.addEventListener("change", () => {
+    syncDepthButtons();
     const depth = getSelectedDepth();
 
     if (currentNode && currentNode.length) {
@@ -960,6 +1069,27 @@
     }
 
     showFullGraph({ refit: true });
+  });
+
+  ui.quickSearch.addEventListener("input", setQuickSearchClearVisibility);
+  ui.quickSearch.addEventListener("change", runQuickSearch);
+  ui.quickSearch.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      runQuickSearch();
+      return;
+    }
+
+    if (event.key === "Escape") {
+      ui.quickSearch.value = "";
+      setQuickSearchClearVisibility();
+    }
+  });
+
+  ui.clearQuickSearchButton.addEventListener("click", () => {
+    ui.quickSearch.value = "";
+    setQuickSearchClearVisibility();
+    ui.quickSearch.focus();
   });
 
   ui.nodeFilter.addEventListener("keydown", (event) => {
@@ -998,6 +1128,11 @@
   });
 
   ui.findPathButton.addEventListener("click", handleFindPath);
+  ui.swapPathButton.addEventListener("click", () => {
+    const previousFrom = ui.pathFrom.value;
+    ui.pathFrom.value = ui.pathTo.value;
+    ui.pathTo.value = previousFrom;
+  });
   ui.clearPathButton.addEventListener("click", () => {
     clearPathHighlights();
     ui.pathResult.textContent = "Pick two parameters to trace their shortest connection.";
@@ -1017,6 +1152,15 @@
 
   ui.pathTo.addEventListener("focus", () => {
     activePathInput = "to";
+  });
+
+  [ui.pathFrom, ui.pathTo].forEach((input) => {
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        handleFindPath();
+      }
+    });
   });
 
   cy.on("tap", "node", (event) => {
@@ -1044,17 +1188,14 @@
     } else {
       ui.pathFrom.value = selectedLabel;
     }
+
+    setActiveListItem(selectedLabel);
+    updateSelectionSummary(selectedLabel, selectedLabel);
   });
 
   cy.on("tap", (event) => {
     if (event.target === cy) {
-      resetGraphState();
-      cy.nodes().removeClass("SEL");
-      currentNode = null;
-      ui.selectedNodeLabel.textContent = "";
-      if (isCompactMobile()) {
-        hideGraphForMobile();
-      }
+      clearCurrentSelection({ restoreLayout: false });
     }
   });
 
