@@ -28,10 +28,13 @@
     fitButton: document.getElementById("fit"),
     resetButton: document.getElementById("reset"),
     togglePanelButton: document.getElementById("toggle-panel"),
+    toggleEquivalentsButton: document.getElementById("toggle-equivalents"),
     classMapLink: document.getElementById("class-map-link"),
     togglePathFinderButton: document.getElementById("toggle-path-finder"),
+    equivalentsPanel: document.getElementById("equivalents-panel"),
     pathPanel: document.getElementById("path-panel"),
     closeNodePanelButton: document.getElementById("close-node-panel"),
+    closeEquivalentsButton: document.getElementById("close-equivalents"),
     closePathFinderButton: document.getElementById("close-path-finder"),
     sidePanels: document.getElementById("side-panels"),
     mobileGraphHint: document.getElementById("mobile-graph-hint"),
@@ -47,6 +50,10 @@
     incomingCount: document.getElementById("incoming-count"),
     outgoingCount: document.getElementById("outgoing-count"),
     equivalentCount: document.getElementById("equivalent-count"),
+    equivalentsCount: document.getElementById("equivalents-count"),
+    equivalentsSelectionLabel: document.getElementById("equivalents-selection-label"),
+    equivalentsEmpty: document.getElementById("equivalents-empty"),
+    equivalentsList: document.getElementById("equivalents-list"),
     clearSelectionButton: document.getElementById("clear-selection"),
   };
 
@@ -63,6 +70,7 @@
   ui.nodeFilter.placeholder = site.filterPlaceholder || "Filter...";
   ui.classMapLink.querySelector("span").textContent = "Class Map";
   ui.classMapLink.href = "./graph-class-example/index.html";
+  ui.toggleEquivalentsButton.querySelector("span").textContent = "Equivalents";
   ui.togglePathFinderButton.querySelector("span").textContent = "Path finder";
 
   if (window.lucide) {
@@ -325,7 +333,12 @@
 
   function setPanelOpen(panel, button, open) {
     const updateButtonState = (targetPanel, targetButton, isOpen) => {
-      const name = targetPanel === ui.nodePanel ? "parameter list" : "path finder";
+      const panelNames = new Map([
+        [ui.nodePanel, "parameter list"],
+        [ui.equivalentsPanel, "equivalent parameters"],
+        [ui.pathPanel, "path finder"],
+      ]);
+      const name = panelNames.get(targetPanel) || "panel";
       const action = isOpen ? "Close" : "Open";
       targetButton.setAttribute("aria-pressed", String(isOpen));
       targetButton.setAttribute("aria-label", `${action} ${name}`);
@@ -335,6 +348,7 @@
     if (open) {
       const panels = [
         [ui.nodePanel, ui.togglePanelButton],
+        [ui.equivalentsPanel, ui.toggleEquivalentsButton],
         [ui.pathPanel, ui.togglePathFinderButton],
       ];
 
@@ -357,8 +371,9 @@
   function syncPanelLayout(options = {}) {
     const { refit = false } = options;
     const nodePanelOpen = ui.nodePanel.classList.contains("open");
+    const equivalentsOpen = ui.equivalentsPanel.classList.contains("open");
     const pathOpen = ui.pathPanel.classList.contains("open");
-    const hasOpenPanel = nodePanelOpen || pathOpen;
+    const hasOpenPanel = nodePanelOpen || equivalentsOpen || pathOpen;
 
     ui.sidePanels.classList.toggle("has-open", hasOpenPanel);
     queueViewportRefresh({ refit });
@@ -604,6 +619,54 @@
     return visited;
   }
 
+  function renderEquivalentPanel(label, anchorName = resolveAnchorName(label)) {
+    const normalized = normalizeKnownLabel(label);
+    const equivalentNames = Array.from(equivalentComponentNames(normalized))
+      .filter((name) => name !== normalized)
+      .sort((left, right) => {
+        if (left === anchorName) return -1;
+        if (right === anchorName) return 1;
+        return left.localeCompare(right);
+      });
+
+    ui.equivalentsSelectionLabel.textContent = toDisplayText(normalized);
+    ui.equivalentsCount.textContent = `(${equivalentNames.length})`;
+    ui.equivalentsList.innerHTML = "";
+    ui.equivalentsEmpty.textContent = "No recorded functional equivalents.";
+    ui.equivalentsEmpty.hidden = equivalentNames.length > 0;
+    ui.equivalentsList.hidden = equivalentNames.length === 0;
+
+    equivalentNames.forEach((name) => {
+      const item = document.createElement("li");
+      const button = document.createElement("button");
+      const labelText = document.createElement("span");
+
+      button.type = "button";
+      button.dataset.label = name;
+      labelText.textContent = toDisplayText(name);
+      button.appendChild(labelText);
+
+      if (name === anchorName) {
+        const anchorBadge = document.createElement("small");
+        anchorBadge.textContent = "Displayed node";
+        button.appendChild(anchorBadge);
+      }
+
+      button.addEventListener("click", () => selectNodeByLabel(name));
+      item.appendChild(button);
+      ui.equivalentsList.appendChild(item);
+    });
+  }
+
+  function clearEquivalentPanel() {
+    ui.equivalentsSelectionLabel.textContent = "No parameter selected";
+    ui.equivalentsCount.textContent = "(0)";
+    ui.equivalentsEmpty.textContent = "No equivalence class to display.";
+    ui.equivalentsEmpty.hidden = false;
+    ui.equivalentsList.hidden = true;
+    ui.equivalentsList.innerHTML = "";
+  }
+
   function resolveAnchorName(label) {
     const normalized = normalizeKnownLabel(label);
     const alias = equivalentAliases[normalized] || equivalentAliasesByLower[String(normalized).toLowerCase()];
@@ -669,6 +732,7 @@
     ui.incomingCount.textContent = String((ADJ_IN.get(anchorId) || new Set()).size);
     ui.outgoingCount.textContent = String((ADJ_OUT.get(anchorId) || new Set()).size);
     ui.equivalentCount.textContent = String(equivalentCount);
+    renderEquivalentPanel(label, anchorName);
     ui.selectionDock.hidden = false;
     ui.quickSearch.value = toDisplayText(label);
     setQuickSearchClearVisibility();
@@ -681,6 +745,7 @@
     ui.outgoingCount.textContent = "0";
     ui.equivalentCount.textContent = "0";
     ui.selectedNodeLabel.textContent = "";
+    clearEquivalentPanel();
   }
 
   function clearCurrentSelection(options = {}) {
@@ -1002,6 +1067,9 @@
   }
 
   ui.fitButton.addEventListener("click", () => refreshViewport());
+  ui.toggleEquivalentsButton.addEventListener("click", () => {
+    togglePanelWindow(ui.equivalentsPanel, ui.toggleEquivalentsButton);
+  });
   ui.togglePathFinderButton.addEventListener("click", () => {
     togglePanelWindow(ui.pathPanel, ui.togglePathFinderButton);
     if (isPathFinderOpen()) {
@@ -1014,6 +1082,10 @@
   });
   ui.closeNodePanelButton.addEventListener("click", () => {
     setPanelOpen(ui.nodePanel, ui.togglePanelButton, false);
+    queueViewportRefresh({ refit: true });
+  });
+  ui.closeEquivalentsButton.addEventListener("click", () => {
+    setPanelOpen(ui.equivalentsPanel, ui.toggleEquivalentsButton, false);
     queueViewportRefresh({ refit: true });
   });
   ui.closePathFinderButton.addEventListener("click", () => {

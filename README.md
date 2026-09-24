@@ -15,6 +15,7 @@
 
 - 상단 `Jump to a parameter`: 바로 특정 파라미터로 이동
 - 오른쪽 상세 패널: incoming / outgoing / equivalent 관계 확인
+- `Equivalents`: 선택한 파라미터의 functional-equivalence 그룹 확인
 - `Path finder`: 두 파라미터 사이의 최단 경로 탐색
 
 ### 1. 사이트 문구 바꾸기

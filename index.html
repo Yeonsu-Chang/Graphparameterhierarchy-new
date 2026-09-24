@@ -6,13 +6,13 @@
   <meta name="theme-color" content="#f4f5f2" />
   <title>Graph Parameter Hierarchy</title>
   <link rel="icon" href="./graph-hierarchy-icon.svg?v=20260514" type="image/svg+xml" />
-  <link rel="stylesheet" href="./styles.css?v=20260903-contrast1" />
+  <link rel="stylesheet" href="./styles.css?v=20260923-equivalents1" />
   <script src="https://unpkg.com/cytoscape@3.27.0/dist/cytoscape.min.js"></script>
   <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
   <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.js"></script>
-  <script src="./graph-data.js?v=20260903-rank-width-merge1"></script>
-  <script defer src="./app.js?v=20260903-contrast2"></script>
+  <script src="./graph-data.js?v=20260923-equivalents1"></script>
+  <script defer src="./app.js?v=20260923-equivalents1"></script>
 </head>
 <body>
   <div id="app">
@@ -81,6 +81,10 @@
           <button id="toggle-panel" class="tool-button" type="button" aria-pressed="false" aria-label="Open parameter list" title="Parameters">
             <i data-lucide="list-filter" aria-hidden="true"></i>
             <span>Parameters</span>
+          </button>
+          <button id="toggle-equivalents" class="tool-button" type="button" aria-pressed="false" aria-label="Open equivalent parameters" title="Equivalent parameters">
+            <i data-lucide="equal" aria-hidden="true"></i>
+            <span>Equivalents</span>
           </button>
           <button id="toggle-path-finder" class="tool-button" type="button" aria-pressed="false" aria-label="Open path finder" title="Path finder">
             <i data-lucide="route" aria-hidden="true"></i>
@@ -166,6 +170,27 @@
               </div>
             </div>
             <ul id="node-panel-list"></ul>
+          </aside>
+
+          <aside id="equivalents-panel" class="side-panel" aria-label="Functionally equivalent parameters">
+            <div class="panel-header equivalents-panel-header">
+              <div>
+                <p class="eyebrow">Functional equivalence</p>
+                <h2>Equivalent parameters</h2>
+              </div>
+              <span id="equivalents-count">(0)</span>
+              <button class="panel-close" id="close-equivalents" type="button" aria-label="Close equivalent parameters" title="Close panel">
+                <i data-lucide="x" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="equivalents-panel-body">
+              <div class="equivalents-selection">
+                <p class="eyebrow">Selected parameter</p>
+                <h3 id="equivalents-selection-label">No parameter selected</h3>
+              </div>
+              <p id="equivalents-empty" class="equivalents-empty">No equivalence class to display.</p>
+              <ul id="equivalents-list" hidden></ul>
+            </div>
           </aside>
 
           <aside id="path-panel" class="side-panel" aria-label="Path finder">
