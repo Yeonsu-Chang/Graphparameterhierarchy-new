@@ -784,11 +784,11 @@ input[type="search"] {
 }
 
 .complexity-condition {
-  display: block;
-  margin-top: 4px;
+  max-width: 100%;
   color: #667085;
   font-size: 10px;
   line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 .complexity-papers a {

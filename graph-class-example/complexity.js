@@ -83,17 +83,17 @@
           scope.title = "This result holds on general graphs, with the displayed parameter; it does not use a restriction to this graph class.";
           resultLine.appendChild(scope);
         }
+        if (finding.condition) {
+          const note = document.createElement("span");
+          note.className = "complexity-condition";
+          note.textContent = finding.condition;
+          resultLine.appendChild(note);
+        }
         item.appendChild(resultLine);
         if (conjecture) {
           const note = document.createElement("span");
           note.className = "complexity-conjecture-note";
           note.textContent = "Not proved";
-          item.appendChild(note);
-        }
-        if (finding.condition) {
-          const note = document.createElement("span");
-          note.className = "complexity-condition";
-          note.textContent = finding.condition;
           item.appendChild(note);
         }
         resultList.appendChild(item);

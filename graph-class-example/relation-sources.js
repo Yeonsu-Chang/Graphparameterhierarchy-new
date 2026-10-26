@@ -6,12 +6,13 @@
     rank: ["Oum & Seymour", 2006, "Approximating clique-width and branch-width", "https://web.math.princeton.edu/~pds/papers/rankwidth/paper.pdf"],
     linear: ["Adler & Kante", 2015, "Linear rank-width and linear clique-width of trees", "https://doi.org/10.1016/j.tcs.2015.04.021"],
     nlc: ["Gurski & Wanke", 2005, "On the relationship between NLC-width and linear NLC-width", "https://doi.org/10.1016/j.tcs.2005.05.018"],
+    johansson: ["Johansson", 1998, "Clique-decomposition, NLC-decomposition, and modular decomposition: relationships and results for random graphs", "https://www.csc.kth.se/tcs/projects/graphs.html"],
     boolean: ["Bui-Xuan, Telle & Vatshelle", 2011, "Boolean-width of graphs", "https://doi.org/10.1016/j.tcs.2011.05.022"],
     clique: ["Courcelle & Olariu", 2000, "Upper bounds to the clique width of graphs", "https://doi.org/10.1016/S0166-218X(99)00184-5"],
     sparseClique: ["Gurski & Wanke", 2000, "The tree-width of clique-width bounded graphs without K(n,n)", "https://doi.org/10.1007/3-540-40064-8_19"],
     bramble: ["Seymour & Thomas", 1993, "Graph Searching and a Min-Max Theorem for Tree-Width", "https://doi.org/10.1006/jctb.1993.1027"],
     twin: ["Bonnet et al.", 2022, "Twin-width I: tractable FO model checking", "https://arxiv.org/abs/2004.14789v3"],
-    twinVariants: ["Baril, Couceiro & Lagerkvist", 2026, "Improved Bounds for Twin-Width Parameter Variants with Algorithmic Applications to Counting Graph Colorings", "https://doi.org/10.1007/s00224-025-10233-y"],
+    twinContractions: ["Bonnet, Kim, Reinald & Thomasse", 2022, "Twin-width VI: the lens of contraction sequences", "https://arxiv.org/abs/2111.00282v2"],
     flip: ["Torunczyk", 2023, "Flip-width: Cops and Robber on dense graphs", "https://arxiv.org/pdf/2302.00352"],
     merge: ["Dreier & Torunczyk", 2025, "Merge-width and First-Order Model Checking", "https://arxiv.org/html/2502.18065v2"],
     shrub: ["Ganian et al.", 2019, "Shrub-depth: Capturing Height of Dense Graphs", "https://arxiv.org/html/1707.00359v4"],
@@ -22,11 +23,15 @@
     treeInd: ["Dallard, Milanic & Storgel", 2024, "Treewidth versus Clique Number. II. Tree-Independence Number", "https://arxiv.org/abs/2111.04543"],
     chordal: ["Gavril", 1972, "Algorithms for Minimum Coloring, Maximum Clique, Minimum Covering by Cliques, and Maximum Independent Set of a Chordal Graph", "https://doi.org/10.1137/0201001"],
     tied: ["Harvey & Wood", 2017, "Parameters Tied to Treewidth", "https://arxiv.org/abs/1312.3401v2"],
+    graphMinorsX: ["Robertson & Seymour", 1991, "Graph minors. X. Obstructions to tree-decomposition", "https://web.math.princeton.edu/~pds/papers/GM10/paper.pdf"],
+    separators: ["Dvorak & Norin", 2019, "Treewidth of graphs with balanced separations", "https://arxiv.org/abs/1408.3869"],
+    reed: ["Reed", 1997, "Tree Width and Tangles: A New Connectivity Measure and Some Applications", "https://doi.org/10.1017/CBO9780511662119.006"],
     branchDepth: ["DeVos, Kwon & Oum", 2020, "Branch-depth: Generalizing tree-depth of graphs", "https://arxiv.org/abs/1903.11988v2"],
     edgeCrossing: ["Chang, Kwon & Lee", 2023, "A new width parameter of graphs based on edge cuts: alpha-edge-crossing width", "https://arxiv.org/abs/2302.04624v3"],
     slim: ["Ganian & Korchemna", 2024, "Slim Tree-Cut Width", "https://doi.org/10.1007/s00453-024-01241-4"],
     treeBandwidth: ["Jacob, Lochet & Paul", 2025, "On a tree-based variant of bandwidth and forbidding simple topological minors", "https://arxiv.org/abs/2502.11674"],
     reduced: ["Bonnet, Chang, Duron, Geniet & Kwon", 2026, "Moderately Beyond Clique-Width: Reduced Component Max-Leaf and Related Parameters", "https://arxiv.org/abs/2604.19138"],
+    maxLeaf: ["Fellows, Lokshtanov, Misra, Mnich, Rosamond & Saurabh", 2009, "The Complexity Ecology of Parameters: An Illustration Using Bounded Max Leaf Number", "https://doi.org/10.1007/s00224-009-9167-9"],
     stretch: ["Bonnet & Duron", 2023, "Stretch-Width", "https://doi.org/10.4230/LIPIcs.IPEC.2023.8"],
     boxAcyclic: ["Esperet & Joret", 2013, "Boxicity of graphs on surfaces", "https://arxiv.org/abs/1107.1953v2"],
     twinSparse: ["Bonnet et al.", 2022, "Twin-width II: small classes", "https://arxiv.org/abs/2006.09877"],
@@ -43,16 +48,22 @@
     vertexMinors: ["Oum", 2005, "Rank-width and vertex-minors", "https://doi.org/10.1016/j.jctb.2005.03.003"],
     trackLayouts: ["Dujmovic, Por & Wood", 2004, "Track Layouts of Graphs", "https://arxiv.org/abs/cs/0407033"],
     surfaceStack: ["Malitz", 1994, "Genus g Graphs Have Pagenumber O(sqrt(g))", "https://doi.org/10.1006/jagm.1994.1028"],
-    perfect: ["Chudnovsky, Robertson, Seymour & Thomas", 2006, "The strong perfect graph theorem", "https://annals.math.princeton.edu/2006/164-1/p02"],
+    dilworth: ["Dilworth", 1950, "A Decomposition Theorem for Partially Ordered Sets", "https://mathweb.ucsd.edu/~asuk/dilworth.pdf"],
+    weaklyChordal: ["Hayward", 1985, "Weakly triangulated graphs", "https://doi.org/10.1016/0095-8956(85)90050-4"],
+    meyniel: ["Meyniel", 1976, "On the perfect graph conjecture", "https://doi.org/10.1016/S0012-365X(76)80008-8"],
+    parity: ["Burlet & Uhry", 1982, "Parity Graphs", "https://doi.org/10.1016/S0304-0208(08)72441-1"],
     ptolemaic: ["Howorka", 1981, "A characterization of ptolemaic graphs", "https://doi.org/10.1002/jgt.3190050314"],
     thin: ["Mannino & Oriolo", 2002, "Solving Stability Problems on a Superclass of Interval Graphs", "https://optimization-online.org/2002/04/465/"],
+    thinMim: ["Bonomo & de Estrada", 2019, "On the thinness and proper thinness of a graph", "https://arxiv.org/abs/1704.00379v3"],
     expansion: ["Nesetril & Ossona de Mendez", 2008, "Grad and classes with bounded expansion I. Decompositions", "https://doi.org/10.1016/j.ejc.2006.07.013"],
     treePartitions: ["Bodlaender, Groenland & Jacob", 2024, "On the parameterized complexity of computing tree-partitions", "https://dmtcs.episciences.org/15047"],
     circleOuter: ["Wessel & Poschel", 1985, "On circle graphs", "https://wwwpub.zih.tu-dresden.de/~poesch-r/poePUBLICATIONSpdf/1985_Wessel_Poe.pdf"],
     distanceHereditary: ["Bandelt & Mulder", 1986, "Distance-hereditary graphs", "https://doi.org/10.1016/0095-8956(86)90043-2"],
     meanGirth: ["Bekkai & Kouider", 2010, "On mean distance and girth", "https://arxiv.org/abs/0806.1438"],
     transductions: ["Braunfeld, Nesetril, Ossona de Mendez & Siebertz", 2025, "On first-order transductions of classes of graphs", "https://lmcs.episciences.org/15918"],
-    sparsity: ["Nesetril & Ossona de Mendez", 2012, "Sparsity: Graphs, Structures, and Algorithms", "https://doi.org/10.1007/978-3-642-27875-4"]
+    sparsity: ["Nesetril & Ossona de Mendez", 2012, "Sparsity: Graphs, Structures, and Algorithms", "https://doi.org/10.1007/978-3-642-27875-4"],
+    adler: ["Adler & Adler", 2014, "Interpreting nowhere dense graph classes as a classical notion of model theory", "https://eprints.whiterose.ac.uk/id/eprint/101104/1/adlersquare-ejc.pdf"],
+    inducedSubdivisions: ["Dvorak", 2018, "Induced subdivisions and bounded expansion", "https://arxiv.org/abs/1706.05766"]
   };
 
   function normalize(label) {
@@ -87,12 +98,12 @@
   }
 
   paper([["Bounded clique-width", "Bounded rank-width"]], ["rank"], "Proposition 6.3 (author version)", "rw(G) <= cw(G) <= 2^(rw(G)+1) - 1. This is functional equivalence, not equality of parameter values.", "equivalent");
-  paper([["Bounded clique-width", "Bounded NLC-width"]], ["nlc", "shrub"], { nlc: "NLC expression comparisons", shrub: "Section 2, width comparisons" }, "NLC-width(G) <= cw(G) <= 2 NLC-width(G).", "equivalent");
+  paper([["Bounded clique-width", "Bounded NLC-width"]], ["johansson", "nlc"], { johansson: "Original NLC/clique-width comparison; Congr. Numer. 132, pp. 39-60", nlc: "Section 2, NLC/clique expression comparisons" }, "NLC-width(G) <= cw(G) <= 2 NLC-width(G). Johansson is the original source; Gurski and Wanke give a later expression-model reference. The Johansson link is the author's institutional publication listing, not a full-text scan.", "equivalent");
   paper([["Bounded clique-width", "Bounded boolean-width"]], ["boolean"], "Width comparisons", "Boolean-width and clique-width are bounded on exactly the same graph classes.", "equivalent");
   paper([["Bounded linear clique-width", "Bounded linear NLC-width"]], ["nlc"], "Linear expression definitions and simulations", "The linear NLC and clique-width expression models simulate one another with a bounded number of labels.", "equivalent");
   paper([["Bounded linear clique-width", "Bounded linear rank-width"]], ["linear"], "Introduction, linear width comparisons", "Linear clique-width and linear rank-width are bounded on exactly the same graph classes.", "equivalent");
-  paper([["Bounded linear rank-width", "Bounded total twin-width"]], ["linear", "twinVariants"], { linear: "Introduction, linear width comparisons", twinVariants: "Section 3.3" }, "Linear rank-width is functionally equivalent to linear clique-width, which is functionally equivalent to total twin-width. This entry combines those two results.", "equivalent");
-  paper([["Bounded clique-width", "Bounded component twin-width"]], ["twinVariants"], "Sections 1 and 3", "The paper gives linear bounds between clique-width and component twin-width.", "equivalent");
+  paper([["Bounded linear rank-width", "Bounded total twin-width"]], ["twinContractions"], "Theorem 1; Section 3.1, Theorem 12", "The original contraction-sequence characterization identifies bounded total twin-width, with red loops, with bounded linear rank-width. The 2026 quantitative improvements are not needed for this functional equivalence.", "equivalent");
+  paper([["Bounded clique-width", "Bounded component twin-width"]], ["twinContractions", "rank"], { twinContractions: "Theorem 1; Section 3.1, Theorem 11", rank: "Proposition 6.3 (author version)" }, "Combine the original rank-width/component-twin-width equivalence with rank-width/clique-width equivalence. No 2026 linear quantitative bound is asserted here.", "equivalent");
   paper([["Bounded clique-width", "Bounded twin-width"]], ["twin", "boolean"], { twin: "Section 4, Theorem 3", boolean: "Width comparisons" }, "A boolean-width bound yields a twin-width bound. Combine this with the functional equivalence of boolean-width and clique-width.");
   paper([["Bounded tree-width", "Bounded clique-width"]], ["clique"], "Tree-width upper bound", "Clique-width is bounded by a function of treewidth; the converse does not hold in general.");
   paper([["Bounded clique-width \\cap Weakly sparse", "Bounded tree-width"]], ["sparseClique", "clique"], { sparseClique: "Excluded-biclique treewidth bound", clique: "Tree-width upper bound" }, "If cw(G) <= k and G excludes K(t,t) as a subgraph, then tw(G) <= 3k(t-1)-1. In the reverse direction bounded treewidth gives bounded clique-width and excludes a fixed biclique.", "equivalent");
@@ -100,9 +111,8 @@
   paper([["Bounded \u221e-flip-width", "Bounded clique-width"]], ["flip", "rank"], { flip: "Section 5.3, Theorem 5.17 (2024 full version)", rank: "Proposition 6.3 (author version)" }, "Infinite-radius flip-width and rank-width, hence clique-width, are functionally equivalent.", "equivalent");
   paper([["Bounded flip-width", "Monadically dependent"]], ["flip"], "Corollary 8.4", "Classes of bounded flip-width are monadically dependent. The reverse implication is not asserted.");
   paper([["Bounded flip-width \\cap Weakly sparse", "Bounded expansion"]], ["flip"], "Theorem 6.3 (2024 full version)", "Bounded flip-width plus exclusion of a fixed biclique as a subgraph characterizes bounded expansion.", "equivalent");
-  paper([["Monadically dependent \\cap Weakly sparse", "Nowhere dense"]], ["flip"], "Fact 10.4 and Theorem 10.9", "Within weakly sparse classes, monadic dependence is equivalent to nowhere denseness.", "equivalent");
-  paper([["Monadically stable \\cap Weakly sparse", "Nowhere dense"]], ["flip"], "Section 10.1, Facts 10.4-10.5", "Nowhere dense classes are monadically stable. Conversely, monadic stability implies monadic dependence, which characterizes nowhere denseness in the weakly sparse setting.", "equivalent");
-  paper([["Structurally nowhere dense", "Monadically stable"]], ["flip"], "Section 10.1", "Monadic stability is preserved under FO transductions, and nowhere dense classes are monadically stable.");
+  record([["Monadically dependent \\cap Weakly sparse", "Nowhere dense"], ["Monadically stable \\cap Weakly sparse", "Nowhere dense"]], "equivalent", "derived", ["adler", "inducedSubdivisions"], { adler: "Theorems 7 and 9, including colored expansions", inducedSubdivisions: "Theorem 5, induced-subdivision characterization of nowhere denseness" }, "Combine the original nowhere-dense stability theorem with the induced-subdivision characterization in weakly sparse classes. Stability implies dependence. The flip-width paper records this as an older consequence, not a new flip-width theorem.");
+  record([["Structurally nowhere dense", "Monadically stable"]], "subset", "derived", ["adler"], "Theorem 7; preservation under FO transductions", "Nowhere dense classes remain stable under unary expansions. Translate formulas through the witnessing FO transduction; this is a consequence of the original stability result, not a new flip-width result.");
   paper([["Bounded twin-width", "Bounded merge-width"]], ["merge"], "Theorem 1.4; Lemma 7.2", "Bounded twin-width gives bounded radius-r merge-width for every fixed r. No converse is claimed.");
   paper([["Bounded merge-width", "Bounded flip-width"]], ["merge"], "Theorem 1.7; Theorem 7.6", "A class with bounded radius-r merge-width for every fixed r has bounded radius-r flip-width for every fixed r. The reverse implication is not asserted.");
   paper([["Bounded twin-width", "Bounded (2\ud835\udc5f-1)-merge-width"]], ["merge"], "Lemma 7.2", "A contraction sequence gives a merge sequence of width bounded in terms of twin-width and any fixed radius, including 2r-1.");
@@ -277,10 +287,12 @@
   additionalArguments.forEach(([source, target, note]) => elementary([[source, target]], note));
   record([["Bounded distance to Cograph", "Bounded chordality"]], "subset", "incorrect", [], "Counterexample: complements of matchings", "The complement of n disjoint edges is a cograph. A chordal supergraph can omit at most one of those edges, otherwise it contains an induced C4. Its chordal intersection dimension is n, so the recorded implication is false.");
 
-  ["branch-width", "tangle number", "linkedness", "well-linked number", "fractional Hadwiger number"].forEach((name) => {
-    paper([[`Bounded ${name}`, "Bounded tree-width"]], ["tied"], "Theorem 1; Sections 6, 8, 9 and 12", "The parameter and treewidth are functionally equivalent.", "equivalent");
-  });
-  paper([["Bounded separation number", "Bounded tree-width"]], ["tied"], "Section 5, Lemma 9", "Separation number and treewidth are functionally equivalent.", "equivalent");
+  paper([["Bounded branch-width", "Bounded tree-width"]], ["graphMinorsX"], "Section 5, (5.1)", "Branchwidth and treewidth are bounded within constant factors, apart from the bounded trivial cases. Cite the original comparison, not its later survey.", "equivalent");
+  paper([["Bounded tangle number", "Bounded tree-width"]], ["graphMinorsX"], "Section 5, (5.2); Section 4, (4.3)", "The original tangle/treewidth and tangle/branchwidth comparisons give functional equivalence.", "equivalent");
+  paper([["Bounded linkedness", "Bounded tree-width"]], ["reed", "bramble"], { reed: "Linkedness/bramble comparison; reprinted as Lemma 15 in Harvey and Wood", bramble: "Treewidth duality theorem" }, "Use Reed's linkedness/bramble comparison and the original bramble/treewidth duality, rather than attributing the existing equivalence to the later survey.", "equivalent");
+  paper([["Bounded well-linked number", "Bounded tree-width"]], ["reed", "tied", "bramble"], { reed: "Well-linked sets and linkage definitions", tied: "Section 9, Lemmas 16 and 17", bramble: "Treewidth duality theorem" }, "Reed is the earlier source for well-linked sets. Harvey and Wood supply the explicit bound bramble <= well-linked <= 3 linkedness; the original treewidth duality completes the comparison.", "equivalent");
+  paper([["Bounded fractional Hadwiger number", "Bounded tree-width"]], ["tied"], "Theorem 1; Sections 11 and 12", "The paper supplies the proof chain through grid-like minors and the fractional Hadwiger number, not just a historical restatement.", "equivalent");
+  paper([["Bounded separation number", "Bounded tree-width"]], ["separators"], "Theorem 1; introduction, sn(G) <= tw(G)+1", "sn(G) <= tw(G)+1 <= 15 sn(G)+1. Cite the original separation-number theorem; the earlier survey used a preliminary weaker constant.", "equivalent");
   paper([["Bounded branch-depth", "Bounded tree-depth"]], ["branchDepth"], "Theorem 3.4", "bd(G)-1 <= td(G) <= max(2bd(G)^2-bd(G)+1,2).", "equivalent");
   paper([["Bounded shrub-depth", "Bounded rank-depth"]], ["branchDepth"], "Theorem 4.11", "Rank-depth and shrub-depth are bounded on the same classes.", "equivalent");
   paper([["Bounded acyclic chromatic number", "Bounded boxicity"]], ["boxAcyclic"], "Lemma 1", "box(G) <= a(G)(a(G)-1), apart from the edgeless trivial case.");
@@ -293,7 +305,7 @@
   paper([["Bounded tree bandwidth", "Bounded tree-width"], ["Bounded tree-partition-width", "Bounded tree bandwidth"], ["Bounded tree-depth", "Bounded tree bandwidth"]], ["treeBandwidth"], "Introduction: Treebandwidth and tree-partition-width; Proposition 1", "Apply the tree-layout comparisons.");
   paper([["Bounded clique-width", "Bounded stretch-width"], ["Bounded stretch-width", "Bounded reduced bandwidth"]], ["stretch"], "Parameter comparisons in the introduction", "The two comparisons are boundedness implications, not equivalences.");
   paper([["Bounded rank-width", "Bounded reduced component max-leaf"]], ["rank", "reduced"], { rank: "Proposition 6.3 (author version)", reduced: "Section 1, reduced-parameter hierarchy" }, "Combine rank/clique-width equivalence with the component-size contraction bound.");
-  paper([["Bounded reduced component max-leaf", "Bounded reduced bandwidth"]], ["reduced"], "Section 1, parameter hierarchy; Section 2.2", "Bounded component max-leaf bounds bandwidth in each red graph.");
+  record([["Bounded reduced component max-leaf", "Bounded reduced bandwidth"]], "subset", "derived", ["maxLeaf"], "Section 5, proof of Theorem 6; lift the bandwidth bound to red components", "The original max-leaf/bandwidth bound applies separately to every red component. Bandwidth of a disjoint union is the maximum component bandwidth. Keep the same contraction sequence.");
   elementary([["Bounded reduced bandwidth", "Bounded reduced cut-width"]], "A red graph of bandwidth b has cutwidth at most b(b+1)/2. Use the same contraction sequence.");
   elementary([["Bounded reduced cut-width", "Bounded twin-width"]], "Every red graph of cutwidth k has maximum degree at most 2k. Use the same contraction sequence.");
   elementary([["Bounded reduced max-leaf", "Bounded reduced component max-leaf"]], "The maximum leaf count of one component does not exceed the spanning-forest leaf count. Keep the same contraction sequence.");
@@ -324,10 +336,13 @@
   elementary([["Bounded bandwidth", "Bounded track layout number"]], "Partition a bandwidth-b vertex order into consecutive blocks of b vertices. Tracks are determined by position within the block and block index modulo three.");
   record([["Bounded interval number", "Bounded track layout number"]], "equivalent", "incorrect", ["simultaneous", "trackLayouts"], "Different track-number definitions", "The previous equivalence merged interval representations and graph-drawing layouts. They are different notions; the unsupported equivalence is excluded. Interval-track number is now a separate node.");
   paper([["Bounded thinness", "Bounded boxicity"]], ["thin"], "Theorem 4.5 (author preprint)", "box(G) <= thin(G).");
-  paper([["Bounded thinness", "Bounded linear mim-width"]], ["simultaneous"], "Section 3.1, following Definition 14", "The paper records linear-mim(G) <= thin(G) and its original reference.");
+  paper([["Bounded thinness", "Bounded linear mim-width"]], ["thinMim"], "Theorem 9 (author preprint)", "linear-mim(G) <= thin(G). The simultaneous-interval paper restates this earlier theorem; it is not the original source.");
   paper([["Ptolemaic", "Chordal"], ["Ptolemaic", "Distance-hereditary"]], ["ptolemaic"], "Chordal distance-hereditary characterization", "A graph is ptolemaic exactly when it is chordal and distance-hereditary.");
   elementary([["Comparability", "Perfect"]], "A transitive orientation defines a poset. Color each vertex by the length of a longest chain ending there; both chromatic and clique numbers equal the poset height, including in each induced subgraph.");
-  paper([["Co-comparability", "Perfect"], ["Weakly chordal", "Perfect"], ["Meyniel", "Perfect"], ["Parity", "Perfect"]], ["perfect"], "Strong perfect graph theorem", "The defining conditions exclude odd holes and odd antiholes. Apply the Berge-graph characterization.");
+  record([["Co-comparability", "Perfect"]], "subset", "derived", ["dilworth"], "Theorem 1.1, applied to each induced subposet", "Color the incomparability graph by a minimum chain partition. Dilworth equates its size with the maximum antichain, which is the clique number. The same argument applies to every induced subgraph.");
+  paper([["Weakly chordal", "Perfect"]], ["weaklyChordal"], "Main perfectness theorem", "Hayward's original weakly-triangulated graph theorem proves perfectness, before the strong perfect graph theorem.");
+  paper([["Meyniel", "Perfect"]], ["meyniel"], "Main theorem", "The original theorem proves that every graph whose odd cycles of length at least five have at least two chords is perfect.");
+  record([["Parity", "Perfect"]], "subset", "derived", ["parity", "meyniel"], { parity: "Theorem 1, odd-cycle characterization", meyniel: "Main theorem" }, "Parity graphs have two crossing chords on each odd cycle of length at least five, hence satisfy Meyniel's condition. Burlet and Uhry also explicitly credit the earlier direct perfectness proof to Sachs (1970); the strong perfect graph theorem is not needed.");
   elementary([["Distance-hereditary", "Meyniel"]], "An odd cycle of length at least five with zero or one chord gives a hole or an induced path that is not geodesic, contradicting distance heredity.");
   elementary([["Outerplanar", "Series-parallel"]], "Triangulate each outerplanar block. Repeatedly remove an ear of the triangulated outer polygon to obtain a 2-tree construction; take the original subgraph.");
   elementary([["Excluded minor", "Excluded topological minor"]], "A topological minor is a minor, so excluding H as a minor also excludes H as a topological minor.");
@@ -349,7 +364,7 @@
   paper([["Bounded shrub-depth \\cap Weakly sparse", "Bounded tree-depth"]], ["sparsity", "transductions", "shrub"], { sparsity: "Proposition 6.4", transductions: "Example 21.4", shrub: "Proposition 3(a)" }, "Weakly sparse bounded-shrubdepth classes have bounded treedepth; use Proposition 3(a) for the reverse implication.", "equivalent");
   paper([["Bounded strong ∞-coloring number", "Bounded tree-width"]], ["sparsity"], "Generalized coloring numbers: col_infinity = tw + 1", "The unlimited strong reachability parameter equals treewidth plus one.", "equivalent");
   paper([["Bounded weak ∞-coloring number", "Bounded tree-depth"]], ["sparsity"], "Generalized coloring numbers: wcol_infinity = td", "The unlimited weak reachability parameter equals treedepth.", "equivalent");
-  paper([["Bounded max leaf number", "Bounded bandwidth"]], ["reduced"], "Section 2.2, bounded-size subdivision characterization", "Suppress degree-two chains to a bounded-size core. Order all subdivided core edges in synchronized layers to obtain bounded bandwidth.");
+  paper([["Bounded max leaf number", "Bounded bandwidth"]], ["maxLeaf"], "Section 5, proof of Theorem 6 (author version)", "The older paper explicitly constructs a bounded-bandwidth layout from the bounded subdivision core. For disconnected graphs, concatenate the component layouts; isolated vertices do not affect bandwidth.");
   elementary([["Bounded distance to Linear forest", "Bounded distance to Block"]], "After the same deletion, each component is a path and every block is an edge.");
   elementary([["Bounded burning number", "Bounded max diameter of components"]], "A b-round burning process covers each component by at most b balls of radius at most b-1. A chain of their intersecting or adjacent regions bounds each component diameter by a function of b.");
   elementary([["Bounded distance to Cograph", "Bounded max diameter of components"]], "A geodesic uses at most k deleted vertices. The remaining at most k+1 path segments have at most three vertices each, giving component diameter at most 4k+2.");
@@ -359,8 +374,9 @@
   record([["Bounded average distance", "Bounded girth"]], "subset", "incorrect", ["meanGirth"], "The source theorem requires connected non-tree graphs", "Stars have bounded average distance but infinite girth under the usual forest convention. The connected non-tree theorem does not justify this unrestricted inclusion.");
   record([["Bounded max diameter of components", "Bounded average distance"]], "subset", "incorrect", [], "Disconnected-distance convention", "Two isolated vertices have maximum component diameter zero but infinite average distance when distances between components are infinite.");
   record([["Bounded distance to Cograph", "Bounded diameter"], ["Bounded domination number", "Bounded diameter"], ["Bounded maximum induced matching", "Bounded diameter"], ["Bounded tree-depth", "Bounded diameter"]], "subset", "incorrect", [], "Counterexample: two isolated vertices", "Two isolated vertices have cograph deletion distance zero, domination number two, induced matching number zero and treedepth one, but infinite diameter. The maximum-component-diameter version is valid instead.");
-  paper([["Bounded max leaf number", "Bounded distance to Linear forest"], ["Bounded max leaf number", "Bounded feedback edge set number"]], ["reduced"], "Section 2.2, bounded-size subdivision characterization; componentwise sum", "For disconnected graphs max-leaf is the maximum total leaf count of a spanning forest, not component max-leaf. Apply the bounded-core characterization per nontrivial component; deleting the cores and one vertex per remaining cycle gives a linear forest.");
-  paper([["Bounded linear rank-width", "Bounded reduced max-leaf"]], ["linear", "twinVariants"], { linear: "Introduction, linear width comparisons", twinVariants: "Section 3.3" }, "Linear rankwidth bounds linear clique-width and hence total twin-width. Every red graph has at most twice its number of red edges many degree-one leaves; isolated red vertices are not counted, as specified by the user.");
+  record([["Bounded max leaf number", "Bounded distance to Linear forest"]], "subset", "derived", ["maxLeaf"], "Section 5, proof of Theorem 5, bounded subdivision core; vertex-deletion consequence", "Delete the bounded-size subdivision core and one vertex from each remaining cycle. With the site's total spanning-forest leaf convention the nontrivial component contributions sum to a bound; isolated vertices already form a linear forest.");
+  record([["Bounded max leaf number", "Bounded feedback edge set number"]], "subset", "derived", ["maxLeaf"], "Section 5, proof of Theorem 5, bounded subdivision core; subdivision-invariance consequence", "Suppressing a degree-two chain preserves |E|-|V|+cc, the feedback edge set number. The bounded core therefore bounds this number. For disconnected graphs use the total leaf count of a spanning forest, not component max-leaf, and add the component bounds; isolated vertices contribute zero.");
+  record([["Bounded linear rank-width", "Bounded reduced max-leaf"]], "subset", "derived", ["twinContractions"], "Theorem 1; Section 3.1, Theorem 12; red-edge leaf-count consequence", "The original linear-rank-width/total-twin-width characterization bounds the number of red edges along a contraction sequence. Every red graph has at most twice that many degree-one leaves; isolated red vertices are not counted. No 2026 quantitative improvement is needed.");
   elementary([["Bounded maximum induced matching", "Bounded max diameter of components"]], "A geodesic of length d contains an induced matching with at least floor((d+2)/3) edges; hence every component diameter is bounded by the induced matching number.");
 
   function getEvidence(edge) {

@@ -330,7 +330,7 @@ test("all verified clique-width equivalents share algorithms and lower bounds", 
   }
   const component = findings("Bounded component twin-width", "independent-set").find((finding) => finding.parameter === "w");
   assert.equal(component.parameterName, "component twin-width");
-  assert.ok(component.sourceIds.includes("equivalence-twinVariants"));
+  assert.ok(component.sourceIds.includes("equivalence-twinContractions"));
   assert.ok(component.sourceIds.includes("rankApprox"));
   assert.ok(!component.condition);
   assert.ok(findings("Bounded \u221e-flip-width", "fo").some((finding) => finding.sourceIds.includes("equivalence-flip")));

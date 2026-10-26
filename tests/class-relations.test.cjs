@@ -99,7 +99,7 @@ test("functional equivalence works in both directions and preserves the source",
   for (const [left, right, sourceId] of [
     ["Bounded clique-width", "Bounded rank-width", "rank"],
     ["Bounded linear clique-width", "Bounded linear rank-width", "linear"],
-    ["Bounded linear rank-width", "Bounded total twin-width", "twinVariants"]
+    ["Bounded linear rank-width", "Bounded total twin-width", "twinContractions"]
   ]) {
     for (const [from, to] of [[left, right], [right, left]]) {
       const proof = citations.trace(from, to, "equivalent");
@@ -230,7 +230,81 @@ test("invalid disconnected-distance claims cannot enter proof paths or the displ
 test("all remaining active records have a supported argument after correcting the radius", () => {
   const unchecked = citations.records.filter((relation) => citations.trace(relation.source, relation.target, relation.type).kind === "unchecked");
   assert.equal(unchecked.length, 0);
-  assert.equal(citations.trace("Bounded linear rank-width", "Bounded reduced max-leaf").kind, "paper");
+  assert.equal(citations.trace("Bounded linear rank-width", "Bounded reduced max-leaf").kind, "derived");
+});
+
+test("ordinary max-leaf comparisons cite the older structural result, not the reduced parameter paper", () => {
+  for (const target of ["Bounded bandwidth", "Bounded distance to Linear forest", "Bounded feedback edge set number"]) {
+    const proof = citations.trace("Bounded max leaf number", target);
+    assert.ok(proof.sourceIds.includes("maxLeaf"), target);
+    assert.ok(!proof.sourceIds.includes("reduced"), target);
+    assert.equal(citations.sources.maxLeaf[1], 2009);
+  }
+  const feedback = citations.trace("Bounded max leaf number", "Bounded feedback edge set number");
+  assert.equal(feedback.kind, "derived");
+  assert.match(feedback.steps[0].locator, /subdivision-invariance consequence/);
+  assert.match(feedback.steps[0].note, /total leaf count.*not component max-leaf/);
+  assert.match(feedback.steps[0].note, /isolated vertices contribute zero/);
+});
+
+test("reduced consequences retain the older premises without claiming a new theorem", () => {
+  const bandwidth = citations.trace("Bounded reduced component max-leaf", "Bounded reduced bandwidth");
+  assert.equal(bandwidth.kind, "derived");
+  assert.deepEqual(Array.from(bandwidth.sourceIds), ["maxLeaf"]);
+  assert.match(bandwidth.steps[0].note, /same contraction sequence/);
+  const leaves = citations.trace("Bounded linear rank-width", "Bounded reduced max-leaf");
+  assert.equal(leaves.kind, "derived");
+  assert.ok(leaves.sourceIds.includes("twinContractions"));
+  assert.match(leaves.steps[0].note, /isolated red vertices are not counted/);
+  assert.ok(citations.trace("Bounded rank-width", "Bounded reduced component max-leaf").sourceIds.includes("reduced"));
+});
+
+test("existing twin-width equivalences cite the original characterization, not improved 2026 bounds", () => {
+  for (const [source, target] of [["Bounded clique-width", "Bounded component twin-width"], ["Bounded linear rank-width", "Bounded total twin-width"]]) {
+    const proof = citations.trace(source, target, "equivalent");
+    assert.ok(proof.sourceIds.includes("twinContractions"));
+    assert.ok(!proof.sourceIds.includes("twinVariants"));
+    assert.equal(citations.sources.twinContractions[1], 2022);
+    assert.ok(citations.citations(proof).some((entry) => entry.locators.some((locator) => locator.includes("Theorem 1"))));
+  }
+});
+
+test("NLC-width comparisons retain Johansson's original attribution", () => {
+  const proof = citations.trace("Bounded clique-width", "Bounded NLC-width", "equivalent");
+  assert.ok(proof.sourceIds.includes("johansson"));
+  assert.equal(citations.sources.johansson[1], 1998);
+  assert.ok(!proof.sourceIds.includes("shrub"));
+  assert.match(proof.steps[0].note, /institutional publication listing/);
+});
+
+test("thinness and treewidth comparisons retain their original theorem sources", () => {
+  const thin = citations.trace("Bounded thinness", "Bounded linear mim-width");
+  assert.deepEqual(Array.from(thin.sourceIds), ["thinMim"]);
+  assert.equal(thin.steps[0].locator, "Theorem 9 (author preprint)");
+  for (const name of ["branch-width", "tangle number"]) {
+    const proof = citations.trace(`Bounded ${name}`, "Bounded tree-width", "equivalent");
+    assert.deepEqual(Array.from(proof.sourceIds), ["graphMinorsX"]);
+    assert.equal(citations.sources.graphMinorsX[1], 1991);
+  }
+  const separator = citations.trace("Bounded separation number", "Bounded tree-width", "equivalent");
+  assert.deepEqual(Array.from(separator.sourceIds), ["separators"]);
+  assert.match(separator.steps[0].note, /15 sn/);
+  assert.ok(citations.trace("Bounded linkedness", "Bounded tree-width", "equivalent").sourceIds.includes("reed"));
+});
+
+test("classical perfectness and stability facts do not acquire later theorem attributions", () => {
+  for (const name of ["Co-comparability", "Weakly chordal", "Meyniel", "Parity"]) {
+    const proof = citations.trace(name, "Perfect");
+    assert.ok(proof.sourceIds.length, name);
+    assert.ok(proof.sourceIds.every((id) => citations.sources[id][1] < 2006), name);
+  }
+  for (const name of ["Monadically dependent \\cap Weakly sparse", "Monadically stable \\cap Weakly sparse"]) {
+    const proof = citations.trace(name, "Nowhere dense", "equivalent");
+    assert.equal(proof.kind, "derived");
+    assert.ok(proof.sourceIds.includes("adler") && proof.sourceIds.includes("inducedSubdivisions"));
+    assert.ok(!proof.sourceIds.includes("flip"));
+  }
+  assert.deepEqual(Array.from(citations.trace("Structurally nowhere dense", "Monadically stable").sourceIds), ["adler"]);
 });
 
 test("lifted inclusions preserve the base papers and their theorem locations", () => {

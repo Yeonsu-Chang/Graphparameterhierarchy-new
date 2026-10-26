@@ -25,8 +25,11 @@ inclusion graph. `complexity.js` renders the selected class's results below the
 relation graph, with separate graph-problem and model-checking lists.
 
 FPT and XP labels include their parameter. Required representations or contraction
-sequences remain visible beside conditional results. A compact legend above the
-tables defines only the parameter symbols currently shown; the meaning of `w`
+sequences remain visible beside conditional results. Grey conditions appear
+inline with their result badges, like the `All graphs` scope labels; long
+conditions wrap on narrow screens. Conjecture warnings remain separate and
+prominent. A compact legend above the tables defines only the parameter symbols
+currently shown; the meaning of `w`
 follows the selected class's results. Result tooltips retain problem-specific units
 for `k`, including deletion set size, selected edges, and requested path vertices.
 Unverified entries are marked
@@ -143,12 +146,19 @@ connect to it by definition; the remaining classes reach it through the existing
 supported inclusions and equivalences. No paper citation is invented for these
 definitional relations.
 
-The expanded audit registers 50 references. Of 422 raw relation records (including
+The expanded audit registers 61 references. Of 422 raw relation records (including
 reciprocal equivalence records), 413 have a supported direct or composed argument,
 9 are excluded, and none remain Unchecked. Excluded records are retained for audit
 but do not enter graph reduction, equivalence groups, or citation proof paths.
 Homepage parameter edges are checked against these exclusions and every shared
 parameter relation must have supported Class Map evidence.
+
+The source-provenance review is recorded in
+`../research/relation-source-provenance-2026-10-26.md`. Existing comparisons cite
+their earlier source rather than treating a later restatement or improved bound
+as the origin. A consequence of an older theorem is marked `Derived` with the
+premise's citation. Later papers remain where they prove the displayed result or
+supply a needed part of the proof; publication dates are not claims of priority.
 
 Interval-track number and track-layout number are separate nodes. The old
 interval-number/track-layout equivalence is excluded. Chordality means chordal

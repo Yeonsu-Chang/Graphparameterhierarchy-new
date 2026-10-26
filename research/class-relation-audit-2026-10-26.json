@@ -12,7 +12,7 @@
   },
   "counts": {
     "classes": 190,
-    "references": 50,
+    "references": 61,
     "rawRelations": 422,
     "supported": 413,
     "excluded": 9,
@@ -20,9 +20,9 @@
     "byStatus": {
       "elementary": 167,
       "definition": 87,
-      "paper": 130,
+      "paper": 119,
       "incorrect": 9,
-      "derived": 29
+      "derived": 40
     }
   },
   "references": {
@@ -43,6 +43,12 @@
       2005,
       "On the relationship between NLC-width and linear NLC-width",
       "https://doi.org/10.1016/j.tcs.2005.05.018"
+    ],
+    "johansson": [
+      "Johansson",
+      1998,
+      "Clique-decomposition, NLC-decomposition, and modular decomposition: relationships and results for random graphs",
+      "https://www.csc.kth.se/tcs/projects/graphs.html"
     ],
     "boolean": [
       "Bui-Xuan, Telle & Vatshelle",
@@ -74,11 +80,11 @@
       "Twin-width I: tractable FO model checking",
       "https://arxiv.org/abs/2004.14789v3"
     ],
-    "twinVariants": [
-      "Baril, Couceiro & Lagerkvist",
-      2026,
-      "Improved Bounds for Twin-Width Parameter Variants with Algorithmic Applications to Counting Graph Colorings",
-      "https://doi.org/10.1007/s00224-025-10233-y"
+    "twinContractions": [
+      "Bonnet, Kim, Reinald & Thomasse",
+      2022,
+      "Twin-width VI: the lens of contraction sequences",
+      "https://arxiv.org/abs/2111.00282v2"
     ],
     "flip": [
       "Torunczyk",
@@ -140,6 +146,24 @@
       "Parameters Tied to Treewidth",
       "https://arxiv.org/abs/1312.3401v2"
     ],
+    "graphMinorsX": [
+      "Robertson & Seymour",
+      1991,
+      "Graph minors. X. Obstructions to tree-decomposition",
+      "https://web.math.princeton.edu/~pds/papers/GM10/paper.pdf"
+    ],
+    "separators": [
+      "Dvorak & Norin",
+      2019,
+      "Treewidth of graphs with balanced separations",
+      "https://arxiv.org/abs/1408.3869"
+    ],
+    "reed": [
+      "Reed",
+      1997,
+      "Tree Width and Tangles: A New Connectivity Measure and Some Applications",
+      "https://doi.org/10.1017/CBO9780511662119.006"
+    ],
     "branchDepth": [
       "DeVos, Kwon & Oum",
       2020,
@@ -169,6 +193,12 @@
       2026,
       "Moderately Beyond Clique-Width: Reduced Component Max-Leaf and Related Parameters",
       "https://arxiv.org/abs/2604.19138"
+    ],
+    "maxLeaf": [
+      "Fellows, Lokshtanov, Misra, Mnich, Rosamond & Saurabh",
+      2009,
+      "The Complexity Ecology of Parameters: An Illustration Using Bounded Max Leaf Number",
+      "https://doi.org/10.1007/s00224-009-9167-9"
     ],
     "stretch": [
       "Bonnet & Duron",
@@ -266,11 +296,29 @@
       "Genus g Graphs Have Pagenumber O(sqrt(g))",
       "https://doi.org/10.1006/jagm.1994.1028"
     ],
-    "perfect": [
-      "Chudnovsky, Robertson, Seymour & Thomas",
-      2006,
-      "The strong perfect graph theorem",
-      "https://annals.math.princeton.edu/2006/164-1/p02"
+    "dilworth": [
+      "Dilworth",
+      1950,
+      "A Decomposition Theorem for Partially Ordered Sets",
+      "https://mathweb.ucsd.edu/~asuk/dilworth.pdf"
+    ],
+    "weaklyChordal": [
+      "Hayward",
+      1985,
+      "Weakly triangulated graphs",
+      "https://doi.org/10.1016/0095-8956(85)90050-4"
+    ],
+    "meyniel": [
+      "Meyniel",
+      1976,
+      "On the perfect graph conjecture",
+      "https://doi.org/10.1016/S0012-365X(76)80008-8"
+    ],
+    "parity": [
+      "Burlet & Uhry",
+      1982,
+      "Parity Graphs",
+      "https://doi.org/10.1016/S0304-0208(08)72441-1"
     ],
     "ptolemaic": [
       "Howorka",
@@ -283,6 +331,12 @@
       2002,
       "Solving Stability Problems on a Superclass of Interval Graphs",
       "https://optimization-online.org/2002/04/465/"
+    ],
+    "thinMim": [
+      "Bonomo & de Estrada",
+      2019,
+      "On the thinness and proper thinness of a graph",
+      "https://arxiv.org/abs/1704.00379v3"
     ],
     "expansion": [
       "Nesetril & Ossona de Mendez",
@@ -325,6 +379,18 @@
       2012,
       "Sparsity: Graphs, Structures, and Algorithms",
       "https://doi.org/10.1007/978-3-642-27875-4"
+    ],
+    "adler": [
+      "Adler & Adler",
+      2014,
+      "Interpreting nowhere dense graph classes as a classical notion of model theory",
+      "https://eprints.whiterose.ac.uk/id/eprint/101104/1/adlersquare-ejc.pdf"
+    ],
+    "inducedSubdivisions": [
+      "Dvorak",
+      2018,
+      "Induced subdivisions and bounded expansion",
+      "https://arxiv.org/abs/1706.05766"
     ]
   },
   "relations": [
@@ -897,9 +963,9 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "tied",
+          "sourceId": "graphMinorsX",
           "locators": [
-            "Theorem 1; Sections 6, 8, 9 and 12"
+            "Section 5, (5.1)"
           ]
         }
       ],
@@ -910,9 +976,9 @@
           "type": "equivalent",
           "status": "paper",
           "sourceIds": [
-            "tied"
+            "graphMinorsX"
           ],
-          "locator": "Theorem 1; Sections 6, 8, 9 and 12"
+          "locator": "Section 5, (5.1)"
         }
       ]
     },
@@ -1208,9 +1274,15 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "twinVariants",
+          "sourceId": "twinContractions",
           "locators": [
-            "Sections 1 and 3"
+            "Theorem 1; Section 3.1, Theorem 11"
+          ]
+        },
+        {
+          "sourceId": "rank",
+          "locators": [
+            "Proposition 6.3 (author version)"
           ]
         }
       ],
@@ -1221,9 +1293,14 @@
           "type": "equivalent",
           "status": "paper",
           "sourceIds": [
-            "twinVariants"
+            "twinContractions",
+            "rank"
           ],
-          "locator": "Sections 1 and 3"
+          "locator": "Theorem 1; Section 3.1, Theorem 11; Proposition 6.3 (author version)",
+          "sourceLocators": {
+            "twinContractions": "Theorem 1; Section 3.1, Theorem 11",
+            "rank": "Proposition 6.3 (author version)"
+          }
         }
       ]
     },
@@ -1255,15 +1332,15 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "nlc",
+          "sourceId": "johansson",
           "locators": [
-            "NLC expression comparisons"
+            "Original NLC/clique-width comparison; Congr. Numer. 132, pp. 39-60"
           ]
         },
         {
-          "sourceId": "shrub",
+          "sourceId": "nlc",
           "locators": [
-            "Section 2, width comparisons"
+            "Section 2, NLC/clique expression comparisons"
           ]
         }
       ],
@@ -1274,13 +1351,13 @@
           "type": "equivalent",
           "status": "paper",
           "sourceIds": [
-            "nlc",
-            "shrub"
+            "johansson",
+            "nlc"
           ],
-          "locator": "NLC expression comparisons; Section 2, width comparisons",
+          "locator": "Original NLC/clique-width comparison; Congr. Numer. 132, pp. 39-60; Section 2, NLC/clique expression comparisons",
           "sourceLocators": {
-            "nlc": "NLC expression comparisons",
-            "shrub": "Section 2, width comparisons"
+            "johansson": "Original NLC/clique-width comparison; Congr. Numer. 132, pp. 39-60",
+            "nlc": "Section 2, NLC/clique expression comparisons"
           }
         }
       ]
@@ -1466,9 +1543,15 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "twinVariants",
+          "sourceId": "twinContractions",
           "locators": [
-            "Sections 1 and 3"
+            "Theorem 1; Section 3.1, Theorem 11"
+          ]
+        },
+        {
+          "sourceId": "rank",
+          "locators": [
+            "Proposition 6.3 (author version)"
           ]
         }
       ],
@@ -1479,9 +1562,14 @@
           "type": "equivalent",
           "status": "paper",
           "sourceIds": [
-            "twinVariants"
+            "twinContractions",
+            "rank"
           ],
-          "locator": "Sections 1 and 3"
+          "locator": "Theorem 1; Section 3.1, Theorem 11; Proposition 6.3 (author version)",
+          "sourceLocators": {
+            "twinContractions": "Theorem 1; Section 3.1, Theorem 11",
+            "rank": "Proposition 6.3 (author version)"
+          }
         }
       ]
     },
@@ -2693,7 +2781,7 @@
         {
           "sourceId": "tied",
           "locators": [
-            "Theorem 1; Sections 6, 8, 9 and 12"
+            "Theorem 1; Sections 11 and 12"
           ]
         }
       ],
@@ -2706,7 +2794,7 @@
           "sourceIds": [
             "tied"
           ],
-          "locator": "Theorem 1; Sections 6, 8, 9 and 12"
+          "locator": "Theorem 1; Sections 11 and 12"
         }
       ]
     },
@@ -3146,19 +3234,13 @@
       "source": "Bounded linear rank-width",
       "target": "Bounded reduced max-leaf",
       "type": "subset",
-      "status": "paper",
+      "status": "derived",
       "active": true,
       "citations": [
         {
-          "sourceId": "linear",
+          "sourceId": "twinContractions",
           "locators": [
-            "Introduction, linear width comparisons"
-          ]
-        },
-        {
-          "sourceId": "twinVariants",
-          "locators": [
-            "Section 3.3"
+            "Theorem 1; Section 3.1, Theorem 12; red-edge leaf-count consequence"
           ]
         }
       ],
@@ -3167,16 +3249,11 @@
           "source": "Bounded linear rank-width",
           "target": "Bounded reduced max-leaf",
           "type": "subset",
-          "status": "paper",
+          "status": "derived",
           "sourceIds": [
-            "linear",
-            "twinVariants"
+            "twinContractions"
           ],
-          "locator": "Introduction, linear width comparisons; Section 3.3",
-          "sourceLocators": {
-            "linear": "Introduction, linear width comparisons",
-            "twinVariants": "Section 3.3"
-          }
+          "locator": "Theorem 1; Section 3.1, Theorem 12; red-edge leaf-count consequence"
         }
       ]
     },
@@ -3189,15 +3266,9 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "linear",
+          "sourceId": "twinContractions",
           "locators": [
-            "Introduction, linear width comparisons"
-          ]
-        },
-        {
-          "sourceId": "twinVariants",
-          "locators": [
-            "Section 3.3"
+            "Theorem 1; Section 3.1, Theorem 12"
           ]
         }
       ],
@@ -3208,14 +3279,9 @@
           "type": "equivalent",
           "status": "paper",
           "sourceIds": [
-            "linear",
-            "twinVariants"
+            "twinContractions"
           ],
-          "locator": "Introduction, linear width comparisons; Section 3.3",
-          "sourceLocators": {
-            "linear": "Introduction, linear width comparisons",
-            "twinVariants": "Section 3.3"
-          }
+          "locator": "Theorem 1; Section 3.1, Theorem 12"
         }
       ]
     },
@@ -3247,9 +3313,15 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "tied",
+          "sourceId": "reed",
           "locators": [
-            "Theorem 1; Sections 6, 8, 9 and 12"
+            "Linkedness/bramble comparison; reprinted as Lemma 15 in Harvey and Wood"
+          ]
+        },
+        {
+          "sourceId": "bramble",
+          "locators": [
+            "Treewidth duality theorem"
           ]
         }
       ],
@@ -3260,9 +3332,14 @@
           "type": "equivalent",
           "status": "paper",
           "sourceIds": [
-            "tied"
+            "reed",
+            "bramble"
           ],
-          "locator": "Theorem 1; Sections 6, 8, 9 and 12"
+          "locator": "Linkedness/bramble comparison; reprinted as Lemma 15 in Harvey and Wood; Treewidth duality theorem",
+          "sourceLocators": {
+            "reed": "Linkedness/bramble comparison; reprinted as Lemma 15 in Harvey and Wood",
+            "bramble": "Treewidth duality theorem"
+          }
         }
       ]
     },
@@ -3295,9 +3372,9 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "reduced",
+          "sourceId": "maxLeaf",
           "locators": [
-            "Section 2.2, bounded-size subdivision characterization"
+            "Section 5, proof of Theorem 6 (author version)"
           ]
         }
       ],
@@ -3308,9 +3385,9 @@
           "type": "subset",
           "status": "paper",
           "sourceIds": [
-            "reduced"
+            "maxLeaf"
           ],
-          "locator": "Section 2.2, bounded-size subdivision characterization"
+          "locator": "Section 5, proof of Theorem 6 (author version)"
         }
       ]
     },
@@ -3319,13 +3396,13 @@
       "source": "Bounded max leaf number",
       "target": "Bounded distance to Linear forest",
       "type": "subset",
-      "status": "paper",
+      "status": "derived",
       "active": true,
       "citations": [
         {
-          "sourceId": "reduced",
+          "sourceId": "maxLeaf",
           "locators": [
-            "Section 2.2, bounded-size subdivision characterization; componentwise sum"
+            "Section 5, proof of Theorem 5, bounded subdivision core; vertex-deletion consequence"
           ]
         }
       ],
@@ -3334,11 +3411,11 @@
           "source": "Bounded max leaf number",
           "target": "Bounded distance to Linear forest",
           "type": "subset",
-          "status": "paper",
+          "status": "derived",
           "sourceIds": [
-            "reduced"
+            "maxLeaf"
           ],
-          "locator": "Section 2.2, bounded-size subdivision characterization; componentwise sum"
+          "locator": "Section 5, proof of Theorem 5, bounded subdivision core; vertex-deletion consequence"
         }
       ]
     },
@@ -3347,13 +3424,13 @@
       "source": "Bounded max leaf number",
       "target": "Bounded feedback edge set number",
       "type": "subset",
-      "status": "paper",
+      "status": "derived",
       "active": true,
       "citations": [
         {
-          "sourceId": "reduced",
+          "sourceId": "maxLeaf",
           "locators": [
-            "Section 2.2, bounded-size subdivision characterization; componentwise sum"
+            "Section 5, proof of Theorem 5, bounded subdivision core; subdivision-invariance consequence"
           ]
         }
       ],
@@ -3362,11 +3439,11 @@
           "source": "Bounded max leaf number",
           "target": "Bounded feedback edge set number",
           "type": "subset",
-          "status": "paper",
+          "status": "derived",
           "sourceIds": [
-            "reduced"
+            "maxLeaf"
           ],
-          "locator": "Section 2.2, bounded-size subdivision characterization; componentwise sum"
+          "locator": "Section 5, proof of Theorem 5, bounded subdivision core; subdivision-invariance consequence"
         }
       ]
     },
@@ -3720,15 +3797,15 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "nlc",
+          "sourceId": "johansson",
           "locators": [
-            "NLC expression comparisons"
+            "Original NLC/clique-width comparison; Congr. Numer. 132, pp. 39-60"
           ]
         },
         {
-          "sourceId": "shrub",
+          "sourceId": "nlc",
           "locators": [
-            "Section 2, width comparisons"
+            "Section 2, NLC/clique expression comparisons"
           ]
         }
       ],
@@ -3739,13 +3816,13 @@
           "type": "equivalent",
           "status": "paper",
           "sourceIds": [
-            "nlc",
-            "shrub"
+            "johansson",
+            "nlc"
           ],
-          "locator": "NLC expression comparisons; Section 2, width comparisons",
+          "locator": "Original NLC/clique-width comparison; Congr. Numer. 132, pp. 39-60; Section 2, NLC/clique expression comparisons",
           "sourceLocators": {
-            "nlc": "NLC expression comparisons",
-            "shrub": "Section 2, width comparisons"
+            "johansson": "Original NLC/clique-width comparison; Congr. Numer. 132, pp. 39-60",
+            "nlc": "Section 2, NLC/clique expression comparisons"
           }
         }
       ]
@@ -4239,13 +4316,13 @@
       "source": "Bounded reduced component max-leaf",
       "target": "Bounded reduced bandwidth",
       "type": "subset",
-      "status": "paper",
+      "status": "derived",
       "active": true,
       "citations": [
         {
-          "sourceId": "reduced",
+          "sourceId": "maxLeaf",
           "locators": [
-            "Section 1, parameter hierarchy; Section 2.2"
+            "Section 5, proof of Theorem 6; lift the bandwidth bound to red components"
           ]
         }
       ],
@@ -4254,11 +4331,11 @@
           "source": "Bounded reduced component max-leaf",
           "target": "Bounded reduced bandwidth",
           "type": "subset",
-          "status": "paper",
+          "status": "derived",
           "sourceIds": [
-            "reduced"
+            "maxLeaf"
           ],
-          "locator": "Section 1, parameter hierarchy; Section 2.2"
+          "locator": "Section 5, proof of Theorem 6; lift the bandwidth bound to red components"
         }
       ]
     },
@@ -4309,9 +4386,9 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "tied",
+          "sourceId": "separators",
           "locators": [
-            "Section 5, Lemma 9"
+            "Theorem 1; introduction, sn(G) <= tw(G)+1"
           ]
         }
       ],
@@ -4322,9 +4399,9 @@
           "type": "equivalent",
           "status": "paper",
           "sourceIds": [
-            "tied"
+            "separators"
           ],
-          "locator": "Section 5, Lemma 9"
+          "locator": "Theorem 1; introduction, sn(G) <= tw(G)+1"
         }
       ]
     },
@@ -4759,9 +4836,9 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "tied",
+          "sourceId": "graphMinorsX",
           "locators": [
-            "Theorem 1; Sections 6, 8, 9 and 12"
+            "Section 5, (5.2); Section 4, (4.3)"
           ]
         }
       ],
@@ -4772,9 +4849,9 @@
           "type": "equivalent",
           "status": "paper",
           "sourceIds": [
-            "tied"
+            "graphMinorsX"
           ],
-          "locator": "Theorem 1; Sections 6, 8, 9 and 12"
+          "locator": "Section 5, (5.2); Section 4, (4.3)"
         }
       ]
     },
@@ -4834,9 +4911,9 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "simultaneous",
+          "sourceId": "thinMim",
           "locators": [
-            "Section 3.1, following Definition 14"
+            "Theorem 9 (author preprint)"
           ]
         }
       ],
@@ -4847,9 +4924,9 @@
           "type": "subset",
           "status": "paper",
           "sourceIds": [
-            "simultaneous"
+            "thinMim"
           ],
-          "locator": "Section 3.1, following Definition 14"
+          "locator": "Theorem 9 (author preprint)"
         }
       ]
     },
@@ -4862,15 +4939,9 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "linear",
+          "sourceId": "twinContractions",
           "locators": [
-            "Introduction, linear width comparisons"
-          ]
-        },
-        {
-          "sourceId": "twinVariants",
-          "locators": [
-            "Section 3.3"
+            "Theorem 1; Section 3.1, Theorem 12"
           ]
         }
       ],
@@ -4881,14 +4952,9 @@
           "type": "equivalent",
           "status": "paper",
           "sourceIds": [
-            "linear",
-            "twinVariants"
+            "twinContractions"
           ],
-          "locator": "Introduction, linear width comparisons; Section 3.3",
-          "sourceLocators": {
-            "linear": "Introduction, linear width comparisons",
-            "twinVariants": "Section 3.3"
-          }
+          "locator": "Theorem 1; Section 3.1, Theorem 12"
         }
       ]
     },
@@ -5454,9 +5520,9 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "tied",
+          "sourceId": "graphMinorsX",
           "locators": [
-            "Theorem 1; Sections 6, 8, 9 and 12"
+            "Section 5, (5.1)"
           ]
         }
       ],
@@ -5467,9 +5533,9 @@
           "type": "equivalent",
           "status": "paper",
           "sourceIds": [
-            "tied"
+            "graphMinorsX"
           ],
-          "locator": "Theorem 1; Sections 6, 8, 9 and 12"
+          "locator": "Section 5, (5.1)"
         }
       ]
     },
@@ -5551,7 +5617,7 @@
         {
           "sourceId": "tied",
           "locators": [
-            "Theorem 1; Sections 6, 8, 9 and 12"
+            "Theorem 1; Sections 11 and 12"
           ]
         }
       ],
@@ -5564,7 +5630,7 @@
           "sourceIds": [
             "tied"
           ],
-          "locator": "Theorem 1; Sections 6, 8, 9 and 12"
+          "locator": "Theorem 1; Sections 11 and 12"
         }
       ]
     },
@@ -5577,9 +5643,15 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "tied",
+          "sourceId": "reed",
           "locators": [
-            "Theorem 1; Sections 6, 8, 9 and 12"
+            "Linkedness/bramble comparison; reprinted as Lemma 15 in Harvey and Wood"
+          ]
+        },
+        {
+          "sourceId": "bramble",
+          "locators": [
+            "Treewidth duality theorem"
           ]
         }
       ],
@@ -5590,9 +5662,14 @@
           "type": "equivalent",
           "status": "paper",
           "sourceIds": [
-            "tied"
+            "reed",
+            "bramble"
           ],
-          "locator": "Theorem 1; Sections 6, 8, 9 and 12"
+          "locator": "Linkedness/bramble comparison; reprinted as Lemma 15 in Harvey and Wood; Treewidth duality theorem",
+          "sourceLocators": {
+            "reed": "Linkedness/bramble comparison; reprinted as Lemma 15 in Harvey and Wood",
+            "bramble": "Treewidth duality theorem"
+          }
         }
       ]
     },
@@ -5605,9 +5682,9 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "tied",
+          "sourceId": "separators",
           "locators": [
-            "Section 5, Lemma 9"
+            "Theorem 1; introduction, sn(G) <= tw(G)+1"
           ]
         }
       ],
@@ -5618,9 +5695,9 @@
           "type": "equivalent",
           "status": "paper",
           "sourceIds": [
-            "tied"
+            "separators"
           ],
-          "locator": "Section 5, Lemma 9"
+          "locator": "Theorem 1; introduction, sn(G) <= tw(G)+1"
         }
       ]
     },
@@ -5689,9 +5766,9 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "tied",
+          "sourceId": "graphMinorsX",
           "locators": [
-            "Theorem 1; Sections 6, 8, 9 and 12"
+            "Section 5, (5.2); Section 4, (4.3)"
           ]
         }
       ],
@@ -5702,9 +5779,9 @@
           "type": "equivalent",
           "status": "paper",
           "sourceIds": [
-            "tied"
+            "graphMinorsX"
           ],
-          "locator": "Theorem 1; Sections 6, 8, 9 and 12"
+          "locator": "Section 5, (5.2); Section 4, (4.3)"
         }
       ]
     },
@@ -5773,9 +5850,21 @@
       "active": true,
       "citations": [
         {
+          "sourceId": "reed",
+          "locators": [
+            "Well-linked sets and linkage definitions"
+          ]
+        },
+        {
           "sourceId": "tied",
           "locators": [
-            "Theorem 1; Sections 6, 8, 9 and 12"
+            "Section 9, Lemmas 16 and 17"
+          ]
+        },
+        {
+          "sourceId": "bramble",
+          "locators": [
+            "Treewidth duality theorem"
           ]
         }
       ],
@@ -5786,9 +5875,16 @@
           "type": "equivalent",
           "status": "paper",
           "sourceIds": [
-            "tied"
+            "reed",
+            "tied",
+            "bramble"
           ],
-          "locator": "Theorem 1; Sections 6, 8, 9 and 12"
+          "locator": "Well-linked sets and linkage definitions; Section 9, Lemmas 16 and 17; Treewidth duality theorem",
+          "sourceLocators": {
+            "reed": "Well-linked sets and linkage definitions",
+            "tied": "Section 9, Lemmas 16 and 17",
+            "bramble": "Treewidth duality theorem"
+          }
         }
       ]
     },
@@ -6113,9 +6209,21 @@
       "active": true,
       "citations": [
         {
+          "sourceId": "reed",
+          "locators": [
+            "Well-linked sets and linkage definitions"
+          ]
+        },
+        {
           "sourceId": "tied",
           "locators": [
-            "Theorem 1; Sections 6, 8, 9 and 12"
+            "Section 9, Lemmas 16 and 17"
+          ]
+        },
+        {
+          "sourceId": "bramble",
+          "locators": [
+            "Treewidth duality theorem"
           ]
         }
       ],
@@ -6126,9 +6234,16 @@
           "type": "equivalent",
           "status": "paper",
           "sourceIds": [
-            "tied"
+            "reed",
+            "tied",
+            "bramble"
           ],
-          "locator": "Theorem 1; Sections 6, 8, 9 and 12"
+          "locator": "Well-linked sets and linkage definitions; Section 9, Lemmas 16 and 17; Treewidth duality theorem",
+          "sourceLocators": {
+            "reed": "Well-linked sets and linkage definitions",
+            "tied": "Section 9, Lemmas 16 and 17",
+            "bramble": "Treewidth duality theorem"
+          }
         }
       ]
     },
@@ -6646,13 +6761,13 @@
       "source": "Co-comparability",
       "target": "Perfect",
       "type": "subset",
-      "status": "paper",
+      "status": "derived",
       "active": true,
       "citations": [
         {
-          "sourceId": "perfect",
+          "sourceId": "dilworth",
           "locators": [
-            "Strong perfect graph theorem"
+            "Theorem 1.1, applied to each induced subposet"
           ]
         }
       ],
@@ -6661,11 +6776,11 @@
           "source": "Co-comparability",
           "target": "Perfect",
           "type": "subset",
-          "status": "paper",
+          "status": "derived",
           "sourceIds": [
-            "perfect"
+            "dilworth"
           ],
-          "locator": "Strong perfect graph theorem"
+          "locator": "Theorem 1.1, applied to each induced subposet"
         }
       ]
     },
@@ -7004,9 +7119,9 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "perfect",
+          "sourceId": "meyniel",
           "locators": [
-            "Strong perfect graph theorem"
+            "Main theorem"
           ]
         }
       ],
@@ -7025,9 +7140,9 @@
           "type": "subset",
           "status": "paper",
           "sourceIds": [
-            "perfect"
+            "meyniel"
           ],
-          "locator": "Strong perfect graph theorem"
+          "locator": "Main theorem"
         }
       ]
     },
@@ -7552,9 +7667,9 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "perfect",
+          "sourceId": "meyniel",
           "locators": [
-            "Strong perfect graph theorem"
+            "Main theorem"
           ]
         }
       ],
@@ -7565,9 +7680,9 @@
           "type": "subset",
           "status": "paper",
           "sourceIds": [
-            "perfect"
+            "meyniel"
           ],
-          "locator": "Strong perfect graph theorem"
+          "locator": "Main theorem"
         }
       ]
     },
@@ -7595,13 +7710,19 @@
       "source": "Monadically dependent \\cap Weakly sparse",
       "target": "Nowhere dense",
       "type": "equivalent",
-      "status": "paper",
+      "status": "derived",
       "active": true,
       "citations": [
         {
-          "sourceId": "flip",
+          "sourceId": "adler",
           "locators": [
-            "Fact 10.4 and Theorem 10.9"
+            "Theorems 7 and 9, including colored expansions"
+          ]
+        },
+        {
+          "sourceId": "inducedSubdivisions",
+          "locators": [
+            "Theorem 5, induced-subdivision characterization of nowhere denseness"
           ]
         }
       ],
@@ -7610,11 +7731,16 @@
           "source": "Monadically dependent \\cap Weakly sparse",
           "target": "Nowhere dense",
           "type": "equivalent",
-          "status": "paper",
+          "status": "derived",
           "sourceIds": [
-            "flip"
+            "adler",
+            "inducedSubdivisions"
           ],
-          "locator": "Fact 10.4 and Theorem 10.9"
+          "locator": "Theorems 7 and 9, including colored expansions; Theorem 5, induced-subdivision characterization of nowhere denseness",
+          "sourceLocators": {
+            "adler": "Theorems 7 and 9, including colored expansions",
+            "inducedSubdivisions": "Theorem 5, induced-subdivision characterization of nowhere denseness"
+          }
         }
       ]
     },
@@ -7699,13 +7825,19 @@
       "source": "Monadically stable \\cap Weakly sparse",
       "target": "Nowhere dense",
       "type": "equivalent",
-      "status": "paper",
+      "status": "derived",
       "active": true,
       "citations": [
         {
-          "sourceId": "flip",
+          "sourceId": "adler",
           "locators": [
-            "Section 10.1, Facts 10.4-10.5"
+            "Theorems 7 and 9, including colored expansions"
+          ]
+        },
+        {
+          "sourceId": "inducedSubdivisions",
+          "locators": [
+            "Theorem 5, induced-subdivision characterization of nowhere denseness"
           ]
         }
       ],
@@ -7714,11 +7846,16 @@
           "source": "Monadically stable \\cap Weakly sparse",
           "target": "Nowhere dense",
           "type": "equivalent",
-          "status": "paper",
+          "status": "derived",
           "sourceIds": [
-            "flip"
+            "adler",
+            "inducedSubdivisions"
           ],
-          "locator": "Section 10.1, Facts 10.4-10.5"
+          "locator": "Theorems 7 and 9, including colored expansions; Theorem 5, induced-subdivision characterization of nowhere denseness",
+          "sourceLocators": {
+            "adler": "Theorems 7 and 9, including colored expansions",
+            "inducedSubdivisions": "Theorem 5, induced-subdivision characterization of nowhere denseness"
+          }
         }
       ]
     },
@@ -7970,13 +8107,19 @@
       "source": "Nowhere dense",
       "target": "Monadically dependent \\cap Weakly sparse",
       "type": "equivalent",
-      "status": "paper",
+      "status": "derived",
       "active": true,
       "citations": [
         {
-          "sourceId": "flip",
+          "sourceId": "adler",
           "locators": [
-            "Fact 10.4 and Theorem 10.9"
+            "Theorems 7 and 9, including colored expansions"
+          ]
+        },
+        {
+          "sourceId": "inducedSubdivisions",
+          "locators": [
+            "Theorem 5, induced-subdivision characterization of nowhere denseness"
           ]
         }
       ],
@@ -7985,11 +8128,16 @@
           "source": "Nowhere dense",
           "target": "Monadically dependent \\cap Weakly sparse",
           "type": "equivalent",
-          "status": "paper",
+          "status": "derived",
           "sourceIds": [
-            "flip"
+            "adler",
+            "inducedSubdivisions"
           ],
-          "locator": "Fact 10.4 and Theorem 10.9"
+          "locator": "Theorems 7 and 9, including colored expansions; Theorem 5, induced-subdivision characterization of nowhere denseness",
+          "sourceLocators": {
+            "adler": "Theorems 7 and 9, including colored expansions",
+            "inducedSubdivisions": "Theorem 5, induced-subdivision characterization of nowhere denseness"
+          }
         }
       ]
     },
@@ -7998,13 +8146,19 @@
       "source": "Nowhere dense",
       "target": "Monadically stable \\cap Weakly sparse",
       "type": "equivalent",
-      "status": "paper",
+      "status": "derived",
       "active": true,
       "citations": [
         {
-          "sourceId": "flip",
+          "sourceId": "adler",
           "locators": [
-            "Section 10.1, Facts 10.4-10.5"
+            "Theorems 7 and 9, including colored expansions"
+          ]
+        },
+        {
+          "sourceId": "inducedSubdivisions",
+          "locators": [
+            "Theorem 5, induced-subdivision characterization of nowhere denseness"
           ]
         }
       ],
@@ -8013,11 +8167,16 @@
           "source": "Nowhere dense",
           "target": "Monadically stable \\cap Weakly sparse",
           "type": "equivalent",
-          "status": "paper",
+          "status": "derived",
           "sourceIds": [
-            "flip"
+            "adler",
+            "inducedSubdivisions"
           ],
-          "locator": "Section 10.1, Facts 10.4-10.5"
+          "locator": "Theorems 7 and 9, including colored expansions; Theorem 5, induced-subdivision characterization of nowhere denseness",
+          "sourceLocators": {
+            "adler": "Theorems 7 and 9, including colored expansions",
+            "inducedSubdivisions": "Theorem 5, induced-subdivision characterization of nowhere denseness"
+          }
         }
       ]
     },
@@ -8049,9 +8208,15 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "flip",
+          "sourceId": "adler",
           "locators": [
-            "Fact 10.4 and Theorem 10.9"
+            "Theorems 7 and 9, including colored expansions"
+          ]
+        },
+        {
+          "sourceId": "inducedSubdivisions",
+          "locators": [
+            "Theorem 5, induced-subdivision characterization of nowhere denseness"
           ]
         }
       ],
@@ -8060,11 +8225,16 @@
           "source": "Nowhere dense",
           "target": "Monadically dependent \\cap Weakly sparse",
           "type": "equivalent",
-          "status": "paper",
+          "status": "derived",
           "sourceIds": [
-            "flip"
+            "adler",
+            "inducedSubdivisions"
           ],
-          "locator": "Fact 10.4 and Theorem 10.9"
+          "locator": "Theorems 7 and 9, including colored expansions; Theorem 5, induced-subdivision characterization of nowhere denseness",
+          "sourceLocators": {
+            "adler": "Theorems 7 and 9, including colored expansions",
+            "inducedSubdivisions": "Theorem 5, induced-subdivision characterization of nowhere denseness"
+          }
         },
         {
           "source": "Monadically dependent \\cap Weakly sparse",
@@ -8147,13 +8317,19 @@
       "source": "Parity",
       "target": "Perfect",
       "type": "subset",
-      "status": "paper",
+      "status": "derived",
       "active": true,
       "citations": [
         {
-          "sourceId": "perfect",
+          "sourceId": "parity",
           "locators": [
-            "Strong perfect graph theorem"
+            "Theorem 1, odd-cycle characterization"
+          ]
+        },
+        {
+          "sourceId": "meyniel",
+          "locators": [
+            "Main theorem"
           ]
         }
       ],
@@ -8162,11 +8338,16 @@
           "source": "Parity",
           "target": "Perfect",
           "type": "subset",
-          "status": "paper",
+          "status": "derived",
           "sourceIds": [
-            "perfect"
+            "parity",
+            "meyniel"
           ],
-          "locator": "Strong perfect graph theorem"
+          "locator": "Theorem 1, odd-cycle characterization; Main theorem",
+          "sourceLocators": {
+            "parity": "Theorem 1, odd-cycle characterization",
+            "meyniel": "Main theorem"
+          }
         }
       ]
     },
@@ -9352,13 +9533,13 @@
       "source": "Structurally nowhere dense",
       "target": "Monadically stable",
       "type": "subset",
-      "status": "paper",
+      "status": "derived",
       "active": true,
       "citations": [
         {
-          "sourceId": "flip",
+          "sourceId": "adler",
           "locators": [
-            "Section 10.1"
+            "Theorem 7; preservation under FO transductions"
           ]
         }
       ],
@@ -9367,11 +9548,11 @@
           "source": "Structurally nowhere dense",
           "target": "Monadically stable",
           "type": "subset",
-          "status": "paper",
+          "status": "derived",
           "sourceIds": [
-            "flip"
+            "adler"
           ],
-          "locator": "Section 10.1"
+          "locator": "Theorem 7; preservation under FO transductions"
         }
       ]
     },
@@ -9631,9 +9812,9 @@
       "active": true,
       "citations": [
         {
-          "sourceId": "perfect",
+          "sourceId": "weaklyChordal",
           "locators": [
-            "Strong perfect graph theorem"
+            "Main perfectness theorem"
           ]
         }
       ],
@@ -9644,9 +9825,9 @@
           "type": "subset",
           "status": "paper",
           "sourceIds": [
-            "perfect"
+            "weaklyChordal"
           ],
-          "locator": "Strong perfect graph theorem"
+          "locator": "Main perfectness theorem"
         }
       ]
     },
