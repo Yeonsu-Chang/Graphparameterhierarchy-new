@@ -11,15 +11,15 @@
     "unchecked": "Not verified here; does not assert an open problem or a conjecture."
   },
   "counts": {
-    "classes": 189,
+    "classes": 190,
     "references": 50,
-    "rawRelations": 401,
-    "supported": 392,
+    "rawRelations": 422,
+    "supported": 413,
     "excluded": 9,
     "unchecked": 0,
     "byStatus": {
       "elementary": 167,
-      "definition": 66,
+      "definition": 87,
       "paper": 130,
       "incorrect": 9,
       "derived": 29
@@ -9647,6 +9647,405 @@
             "perfect"
           ],
           "locator": "Strong perfect graph theorem"
+        }
+      ]
+    },
+    {
+      "id": "relation-401",
+      "source": "\\chi - bounded",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "\\chi - bounded",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-402",
+      "source": "Bounded average distance",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Bounded average distance",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-403",
+      "source": "Bounded chordality",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Bounded chordality",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-404",
+      "source": "Bounded cochromatic number",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Bounded cochromatic number",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-405",
+      "source": "Bounded distance to Block",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Bounded distance to Block",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-406",
+      "source": "Bounded distance to Disconnected",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Bounded distance to Disconnected",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-407",
+      "source": "Bounded distance to Perfect",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Bounded distance to Perfect",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-408",
+      "source": "Bounded domatic number",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Bounded domatic number",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-409",
+      "source": "Bounded girth",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Bounded girth",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-410",
+      "source": "Bounded interval number",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Bounded interval number",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-411",
+      "source": "Bounded max diameter of components",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Bounded max diameter of components",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-412",
+      "source": "Bounded maximum clique",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Bounded maximum clique",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-413",
+      "source": "Bounded sim-width",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Bounded sim-width",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-414",
+      "source": "Bounded 𝑐-closure",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Bounded 𝑐-closure",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-415",
+      "source": "Bounded 𝑟-flip-width",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Bounded 𝑟-flip-width",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-416",
+      "source": "Circle",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Circle",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-417",
+      "source": "Circular-arc",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Circular-arc",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-418",
+      "source": "Claw-free",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Claw-free",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-419",
+      "source": "Monadically dependent",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Monadically dependent",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-420",
+      "source": "Trapezoid",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Trapezoid",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
+        }
+      ]
+    },
+    {
+      "id": "relation-421",
+      "source": "Weakly sparse",
+      "target": "All graphs",
+      "type": "subset",
+      "status": "definition",
+      "active": true,
+      "citations": [],
+      "steps": [
+        {
+          "source": "Weakly sparse",
+          "target": "All graphs",
+          "type": "subset",
+          "status": "definition",
+          "sourceIds": [],
+          "locator": "Universal graph class"
         }
       ]
     }

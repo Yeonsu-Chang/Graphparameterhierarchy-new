@@ -9,6 +9,7 @@ window.GRAPH_CLASS_EXAMPLE = {
   // Add graph classes or parameter-defined classes here, sorted alphabetically.
   classes: [
     "\\chi - bounded",
+    "All graphs",
     "Bipartite",
     "Bipartite chain",
     "Bipartite permutation",
@@ -205,6 +206,7 @@ window.GRAPH_CLASS_EXAMPLE = {
       id: "basic-graph-classes",
       label: "Basic graph classes",
       classes: [
+        "All graphs",
         "Bipartite",
         "Bipartite chain",
         "Bipartite permutation",
@@ -904,6 +906,27 @@ window.GRAPH_CLASS_EXAMPLE = {
     { source: "Wall", target: "Bounded crossing number" },
     { source: "Wall", target: "Bounded maximum degree" },
     { source: "Wall", target: "Planar" },
-    { source: "Weakly chordal", target: "Perfect" }
+    { source: "Weakly chordal", target: "Perfect" },
+    { source: "\\chi - bounded", target: "All graphs" },
+    { source: "Bounded average distance", target: "All graphs" },
+    { source: "Bounded chordality", target: "All graphs" },
+    { source: "Bounded cochromatic number", target: "All graphs" },
+    { source: "Bounded distance to Block", target: "All graphs" },
+    { source: "Bounded distance to Disconnected", target: "All graphs" },
+    { source: "Bounded distance to Perfect", target: "All graphs" },
+    { source: "Bounded domatic number", target: "All graphs" },
+    { source: "Bounded girth", target: "All graphs" },
+    { source: "Bounded interval number", target: "All graphs" },
+    { source: "Bounded max diameter of components", target: "All graphs" },
+    { source: "Bounded maximum clique", target: "All graphs" },
+    { source: "Bounded sim-width", target: "All graphs" },
+    { source: "Bounded 𝑐-closure", target: "All graphs" },
+    { source: "Bounded 𝑟-flip-width", target: "All graphs" },
+    { source: "Circle", target: "All graphs" },
+    { source: "Circular-arc", target: "All graphs" },
+    { source: "Claw-free", target: "All graphs" },
+    { source: "Monadically dependent", target: "All graphs" },
+    { source: "Trapezoid", target: "All graphs" },
+    { source: "Weakly sparse", target: "All graphs" }
   ]
 };

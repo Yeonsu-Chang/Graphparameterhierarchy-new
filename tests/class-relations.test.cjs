@@ -12,6 +12,21 @@ vm.runInNewContext(source, context);
 const graph = context.window.GRAPH_CLASS_EXAMPLE;
 const citations = context.window.GRAPH_CLASS_RELATION_SOURCES;
 
+test("All graphs is the universal superclass with supported paths from every class", () => {
+  assert.equal(graph.classes.filter((name) => name === "All graphs").length, 1);
+  assert.equal(graph.classLabels.filter((group) => group.classes.includes("All graphs")).length, 1);
+  assert.ok(!graph.relations.some((edge) => edge.source === "All graphs"));
+  for (const name of graph.classes) {
+    if (name === "All graphs") continue;
+    const proof = citations.trace(name, "All graphs");
+    assert.ok(["definition", "derived"].includes(proof.kind), name);
+    assert.equal(proof.steps.at(-1).target, "All graphs", name);
+    assert.equal(proof.steps.at(-1).kind, "definition", name);
+    assert.equal(citations.trace("All graphs", name).kind, "unchecked", name);
+    assert.equal(citations.trace(name, "All graphs", "equivalent").kind, "unchecked", name);
+  }
+});
+
 test("the saved audit matches the current evidence model", () => {
   const { buildAudit } = require("../research/export-class-relation-audit.cjs");
   const saved = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "research", "class-relation-audit-2026-10-26.json"), "utf8"));

@@ -369,6 +369,10 @@
     const source = normalize(edge.source);
     const target = normalize(edge.target);
     if (edge.type !== "equivalent") {
+      if (target === "all graphs") return {
+        kind: "definition", sourceIds: [], locator: "Universal graph class",
+        note: "Every graph in the source class is a graph, so the source class is contained in All graphs."
+      };
       if (target === `bounded distance to ${source}`) return {
         kind: "definition", sourceIds: [], locator: "Deletion-distance definition",
         note: "The graph already belongs to the target base class, so the deletion distance is zero."

@@ -38,11 +38,15 @@ survey is in `../research/class-complexity-survey-2026-10-26.md`.
 
 The catalog contains 20 graph problems and three model-checking problems. List
 Coloring uses arbitrary input lists, not the list chromatic number. Edge Dominating
-Set and Induced Matching are distinct from Maximum Matching. General-graph FPT
-results are retained alongside class-specific hardness, with their own parameters.
-Each finding with `origin: "All graphs"` displays a small `All graphs` label beside
-its complexity badge in both tabs. The label applies to that finding only, not
-the whole problem row; class-dependent bounds in the same row remain unmarked.
+Set and Induced Matching are distinct from Maximum Matching. General-graph
+algorithms are recorded only in the `All graphs` class, including FPT(k) for
+Vertex Cover, k-Path, Feedback Vertex Set, Odd Cycle Transversal, Edge Dominating
+Set and unweighted Max-Cut, FPT(t) for Steiner Tree, polynomial Matching, and
+quasipolynomial Graph Isomorphism. Other classes show their class-specific
+findings, without these automatic general-graph fallbacks. Empty cells remain
+`Unchecked`; they do not assert that no general algorithm is known. Provenance
+stays in the data and tooltips, without repeating the selected class beside each
+badge. `?class=All+graphs#complexity` opens the common results directly.
 
 Graph problems have separate Optimization and Decision tabs. Optimization uses
 Maximum/Minimum names (16 problems); Decision uses k-Independent Set, k-Vertex
@@ -132,8 +136,13 @@ labeled `(2r-1)-merge-width` and the target `r-flip-width`. This records the pro
 radius adjustment, not a same-radius comparison. Old r-merge and track-number
 class links redirect to their corrected nodes through the recorded label aliases.
 
-The expanded audit registers 50 references. Of 401 raw relation records (including
-reciprocal equivalence records), 392 have a supported direct or composed argument,
+`All graphs` is the universal superclass. The previously maximal components
+connect to it by definition; the remaining classes reach it through the existing
+supported inclusions and equivalences. No paper citation is invented for these
+definitional relations.
+
+The expanded audit registers 50 references. Of 422 raw relation records (including
+reciprocal equivalence records), 413 have a supported direct or composed argument,
 9 are excluded, and none remain Unchecked. Excluded records are retained for audit
 but do not enter graph reduction, equivalence groups, or citation proof paths.
 Homepage parameter edges are checked against these exclusions and every shared

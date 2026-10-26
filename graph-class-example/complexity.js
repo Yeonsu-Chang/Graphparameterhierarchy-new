@@ -76,13 +76,6 @@
         const resultLine = document.createElement("div");
         resultLine.className = "complexity-result-line";
         resultLine.appendChild(badge);
-        if (finding.origin === "All graphs") {
-          const scope = document.createElement("span");
-          scope.className = "complexity-general-scope";
-          scope.textContent = "All graphs";
-          scope.title = "This result holds on general graphs, with the displayed parameter; it does not use a restriction to this graph class.";
-          resultLine.appendChild(scope);
-        }
         item.appendChild(resultLine);
         if (conjecture) {
           const note = document.createElement("span");

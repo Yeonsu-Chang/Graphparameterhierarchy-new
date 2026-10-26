@@ -2,7 +2,7 @@
 
 ## Scope and Standard
 
-All 189 class labels and both problem-form projections were checked for parameter
+All 190 class labels and both problem-form projections were checked for parameter
 and form consistency. The affected scientific claims below were checked against
 the primary paper's theorem, proof or publisher abstract, not just its title.
 This ledger records the targeted re-verification; it is not a claim that every
@@ -45,8 +45,9 @@ reference, not an assertion that the elementary 2^k branching bound originated i
 Proper interval Maximum Cut had an explicit `Unchecked` result object containing
 a paper link and a claim about the current literature status. The object and its
 live bibliography entry were removed. Optimization now has an empty cell rendered
-as `Unchecked`, with no paper. Decision still has the independently justified
-general unweighted FPT(k) algorithm. No P, hardness, or currently-open assertion
+as `Unchecked`, with no paper. The independently justified general unweighted
+FPT(k) algorithm now lives only in `All graphs`, not in the Proper interval row.
+No P, hardness, or currently-open assertion
 is made for unrestricted Maximum Cut on this class.
 
 Empty cells are not scientific open-problem claims. Correctly sourced conjectures
@@ -97,3 +98,15 @@ remain explicitly labeled CONJECTURE / Not proved, not as established algorithms
 - No `Unchecked` finding object remains; empty cells have no attached assertions.
 - New result and paper tooltips contain the checked theorem locations.
 - Existing hierarchy and equivalence tests remain part of the test run.
+
+## General Results Consolidation
+
+`All graphs` is now a selectable basic graph class and the universal superclass.
+The nine existing general-graph algorithm findings are recorded only there; no
+new scientific claim is added. General fallback results and their citations no
+longer populate every class automatically, including equivalent parameter
+profiles. Class-specific algorithms, lower bounds, conjectures, and supplied
+representation conditions are unchanged. An empty class-specific entry remains
+`Unchecked` and does not assert that the general-graph problem is unresolved.
+Optimization/Decision filtering and the k/t parameter distinctions still apply
+inside `All graphs`.
