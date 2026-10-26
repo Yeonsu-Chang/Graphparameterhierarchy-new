@@ -708,6 +708,14 @@ input[type="search"] {
   min-width: 0;
 }
 
+.complexity-general-scope {
+  max-width: 100%;
+  color: #667085;
+  font-size: 10px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
 .complexity-status {
   display: inline-block;
   max-width: 100%;

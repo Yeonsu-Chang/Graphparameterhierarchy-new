@@ -295,6 +295,7 @@
     });
     const parameterName = (label.includes("\\cap") ? profile.canonical : label).replace(/^Bounded\s+/i, "");
     const copy = (rows) => rows.map((row) => ({ ...row, findings: row.findings.map((finding) => {
+      if (finding.origin === "All graphs") return { ...finding, sourceIds: [...finding.sourceIds] };
       const parameters = (finding.parameter || "").split(/[+,]/).map((symbol) => symbol.trim());
       let name = finding.parameterName;
       if (parameters.includes("w") && !name?.startsWith("supplied ")) {
@@ -358,10 +359,12 @@
       });
     }
 
-    if (name === "all graphs") {
-      set("matching", "P", ["matching"], { origin: "All graphs" });
-      set("graph-isomorphism", "Quasipolynomial", ["gi"], { origin: "All graphs" });
-    }
+    // General algorithms remain available unless a class has a specialization.
+    set("matching", "P", ["matching"], { origin: "All graphs" });
+    set("vertex-cover", "FPT", ["vertexCover"], { parameter: "k", parameterName: "solution size", origin: "All graphs", explanation: "Branching on either endpoint of an uncovered edge already gives an elementary FPT algorithm; the cited paper gives a stronger parameter-k algorithm." });
+    set("longest-path", "FPT", ["colorCoding"], { parameter: "k", parameterName: "number of vertices in the requested path", origin: "All graphs" });
+    set("steiner-tree", "FPT", ["steiner"], { parameter: "t", parameterName: "number of terminals", origin: "All graphs" });
+    set("graph-isomorphism", "Quasipolynomial", ["gi"], { origin: "All graphs" });
 
     if (basicTreewidth.has(name)) {
       set([...fixedWidthProblems, "longest-path"], "P", ["msoTree", "mso"], { origin: "Constant treewidth" });
@@ -674,7 +677,7 @@
       });
     });
 
-    // General algorithms live only in the universal class, not in each specialization.
+    // A classical lower bound does not cancel an algorithm for a different parameter.
     const generalFPT = [
       ["vertex-cover", ["vertexCover"], "k", "solution size"],
       ["longest-path", ["colorCoding"], "k", "number of vertices in the requested path"],
@@ -684,7 +687,9 @@
       ["odd-cycle-transversal", ["oct"], "k", "deletion set size"],
       ["edge-dominating-set", ["edgeDS"], "k", "number of selected edges"]
     ];
-    if (name === "all graphs") generalFPT.forEach(([id, sourceIds, parameter, parameterName]) => {
+    generalFPT.forEach(([id, sourceIds, parameter, parameterName]) => {
+      const known = rows.get(id).findings;
+      if (known.some((result) => result.status === "P" || (result.status === "FPT" && result.parameter === parameter))) return;
       const explanation = {
         "vertex-cover": "Branching on either endpoint of an uncovered edge already gives an elementary FPT algorithm; the cited paper gives a stronger parameter-k algorithm.",
         "max-cut": "If m >= 2k, a cut of at least k edges exists by the random-cut bound. Otherwise at most 4k vertices are incident with edges, so enumerate their bipartitions. This is an unweighted, size-k decision algorithm."

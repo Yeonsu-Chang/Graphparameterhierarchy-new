@@ -267,7 +267,7 @@ Distance-to-C 그래프에는 C 전체가 distance 0으로 포함되므로 hardn
 
 | Class Map 항목 | 연결할 결과 | 조건 또는 추가 확인 |
 | --- | --- | --- |
-| `All graphs` | 일반 그래프 공통 알고리즘 | 기존 공통 결과 9개를 이 항목에만 표시. 클래스별 결과로 반복하지 않음 |
+| `All graphs` | 일반 그래프 공통 알고리즘 | 공통 결과 9개를 모아 표시. 다른 클래스에서도 해당 결과에 `All graphs` 라벨을 붙여 구분 |
 | `Bipartite` | BIP | 위 결과 묶음의 문제·parameter·입력 조건 적용 |
 | `Bipartite chain` | BPERM | 위 결과 묶음의 문제·parameter·입력 조건 적용 |
 | `Bipartite permutation` | BPERM | 위 결과 묶음의 문제·parameter·입력 조건 적용 |

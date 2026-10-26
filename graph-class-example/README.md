@@ -39,14 +39,16 @@ survey is in `../research/class-complexity-survey-2026-10-26.md`.
 The catalog contains 20 graph problems and three model-checking problems. List
 Coloring uses arbitrary input lists, not the list chromatic number. Edge Dominating
 Set and Induced Matching are distinct from Maximum Matching. General-graph
-algorithms are recorded only in the `All graphs` class, including FPT(k) for
+algorithms are collected in the `All graphs` class, including FPT(k) for
 Vertex Cover, k-Path, Feedback Vertex Set, Odd Cycle Transversal, Edge Dominating
 Set and unweighted Max-Cut, FPT(t) for Steiner Tree, polynomial Matching, and
-quasipolynomial Graph Isomorphism. Other classes show their class-specific
-findings, without these automatic general-graph fallbacks. Empty cells remain
-`Unchecked`; they do not assert that no general algorithm is known. Provenance
-stays in the data and tooltips, without repeating the selected class beside each
-badge. `?class=All+graphs#complexity` opens the common results directly.
+quasipolynomial Graph Isomorphism. These algorithms also remain available in
+other classes rather than leaving known general results `Unchecked`. Each such
+finding displays an `All graphs` scope label; a class-dependent finding in the
+same row does not inherit that label. The universal class omits the redundant
+scope labels beside its own results. Unconditional class-specific P algorithms
+take precedence over general FPT fallbacks, while different parameterizations
+remain distinct. `?class=All+graphs#complexity` opens the common results directly.
 
 Graph problems have separate Optimization and Decision tabs. Optimization uses
 Maximum/Minimum names (16 problems); Decision uses k-Independent Set, k-Vertex

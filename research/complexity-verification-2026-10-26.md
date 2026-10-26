@@ -45,8 +45,8 @@ reference, not an assertion that the elementary 2^k branching bound originated i
 Proper interval Maximum Cut had an explicit `Unchecked` result object containing
 a paper link and a claim about the current literature status. The object and its
 live bibliography entry were removed. Optimization now has an empty cell rendered
-as `Unchecked`, with no paper. The independently justified general unweighted
-FPT(k) algorithm now lives only in `All graphs`, not in the Proper interval row.
+as `Unchecked`, with no paper. Decision retains the independently justified
+general unweighted FPT(k) algorithm, visibly labeled `All graphs`.
 No P, hardness, or currently-open assertion
 is made for unrestricted Maximum Cut on this class.
 
@@ -99,14 +99,16 @@ remain explicitly labeled CONJECTURE / Not proved, not as established algorithms
 - New result and paper tooltips contain the checked theorem locations.
 - Existing hierarchy and equivalence tests remain part of the test run.
 
-## General Results Consolidation
+## General Results and Provenance
 
 `All graphs` is now a selectable basic graph class and the universal superclass.
-The nine existing general-graph algorithm findings are recorded only there; no
-new scientific claim is added. General fallback results and their citations no
-longer populate every class automatically, including equivalent parameter
-profiles. Class-specific algorithms, lower bounds, conjectures, and supplied
-representation conditions are unchanged. An empty class-specific entry remains
-`Unchecked` and does not assert that the general-graph problem is unresolved.
-Optimization/Decision filtering and the k/t parameter distinctions still apply
-inside `All graphs`.
+The nine existing general-graph algorithm findings are collected there; no new
+scientific claim is added. General fallback results and their citations also
+remain available in other classes, including equivalent parameter profiles, so
+known algorithms do not become `Unchecked`. Each general finding has an
+`All graphs` scope label outside the universal class. Structural results in the
+same row remain unmarked, and general algorithms do not acquire class-equivalence
+citations. Unconditional class-specific P algorithms take precedence over the
+general FPT fallback. Class-specific lower bounds, conjectures, supplied-input
+conditions and the universal hierarchy node are unchanged. Optimization/Decision
+filtering and the k/t parameter distinctions still apply in every class.

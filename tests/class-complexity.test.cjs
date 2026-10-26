@@ -105,7 +105,7 @@ test("new matching and domination variants use their own results", () => {
   assert.ok(has("Split", "total-dominating-set", "NP-complete"));
   assert.ok(has("Split", "independent-dominating-set", "P"));
   assert.ok(has("All graphs", "matching", "P"));
-  assert.equal(findings("Bipartite", "matching").length, 0);
+  assert.ok(has("Bipartite", "matching", "P"));
   assert.ok(has("Bipartite", "induced-matching", "NP-complete"));
   assert.ok(has("Chordal bipartite", "induced-matching", "P"));
   assert.ok(has("Bounded clique-width", "edge-dominating-set", "XP"));
@@ -138,18 +138,20 @@ test("previously unchecked classical cells have primary sources", () => {
   assert.ok(has("Chordal", "fo", "AW[*]-complete"));
 });
 
-test("general algorithms move to All graphs without removing class-specific hardness", () => {
-  for (const [id, parameter] of [["vertex-cover", "k"], ["longest-path", "k"], ["steiner-tree", "t"], ["feedback-vertex-set", "k"], ["odd-cycle-transversal", "k"], ["edge-dominating-set", "k"], ["max-cut", "k"]]) {
-    assert.ok(findings("All graphs", id).some((result) => result.status === "FPT" && result.parameter === parameter), id);
+test("known general algorithms prevent unchecked cells without removing class-specific bounds", () => {
+  for (const name of context.window.GRAPH_CLASS_EXAMPLE.classes) {
+    for (const [id, parameter] of [["vertex-cover", "k"], ["longest-path", "k"], ["steiner-tree", "t"], ["feedback-vertex-set", "k"], ["odd-cycle-transversal", "k"], ["edge-dominating-set", "k"], ["max-cut", "k"]]) {
+      assert.ok(has(name, id, "P") || findings(name, id).some((result) => result.status === "FPT" && result.parameter === parameter), `${name}: ${id}`);
+    }
   }
   assert.ok(has("Planar", "feedback-vertex-set", "NP-complete"));
-  assert.ok(!has("Planar", "feedback-vertex-set", "FPT"));
+  assert.ok(has("Planar", "feedback-vertex-set", "FPT"));
   assert.ok(has("Bipartite", "odd-cycle-transversal", "P"));
 });
 
 test("isomorphism separates general, bounded-width and special-class bounds", () => {
   assert.ok(has("All graphs", "graph-isomorphism", "Quasipolynomial"));
-  assert.equal(findings("Perfect", "graph-isomorphism").length, 0);
+  assert.ok(has("Perfect", "graph-isomorphism", "Quasipolynomial"));
   for (const name of ["Interval", "Permutation", "Circle", "Planar"]) assert.ok(has(name, "graph-isomorphism", "P"));
   assert.ok(has("Bounded tree-width", "graph-isomorphism", "FPT"));
   assert.ok(has("Bounded clique-width", "graph-isomorphism", "XP"));
@@ -253,12 +255,14 @@ test("structural algorithms and terminal-parameterized optimization retain their
     const independent = variantRow("Bounded clique-width", form, "independent-set");
     assert.ok(independent.findings.some((finding) => finding.status === "FPT" && finding.parameter === "w"));
     assert.ok(independent.findings.some((finding) => finding.sourceIds.includes("mso")));
-    const steiner = variantRow("All graphs", form, "steiner-tree");
-    assert.ok(steiner.findings.some((finding) => finding.status === "FPT" && finding.parameter === "t"));
+    for (const name of ["All graphs", "Planar"]) {
+      const steiner = variantRow(name, form, "steiner-tree");
+      assert.ok(steiner.findings.some((finding) => finding.status === "FPT" && finding.parameter === "t" && finding.origin === "All graphs"));
+    }
   }
   const longest = variantRow("Bounded boxicity", "optimization", "longest-path");
   assert.equal(longest.findings.length, 0);
-  assert.equal(variantRow("Bounded boxicity", "decision", "longest-path").findings.length, 0);
+  assert.ok(variantRow("Bounded boxicity", "decision", "longest-path").findings.some((finding) => finding.status === "FPT" && finding.parameter === "k"));
   assert.ok(variantRow("All graphs", "decision", "longest-path").findings.some((finding) => finding.status === "FPT" && finding.parameter === "k"));
 });
 
@@ -294,7 +298,7 @@ test("form projection preserves the source catalog and existing uncertainty meta
   data.getProblemRows(results, "decision");
   assert.equal(JSON.stringify(results), before);
   assert.equal(variantRow("Proper interval", "optimization", "max-cut").findings.length, 0);
-  assert.equal(variantRow("Proper interval", "decision", "max-cut").findings.length, 0);
+  assert.ok(variantRow("Proper interval", "decision", "max-cut").findings.some((finding) => finding.status === "FPT" && finding.parameter === "k"));
   assert.ok(data.getResults("Monadically dependent").logic.find((row) => row.id === "fo").findings.every((finding) => finding.certainty === "conjecture"));
 });
 
@@ -313,7 +317,7 @@ test("independent-set/vertex-cover duality transfers classical and structural bo
   }
   const independent = variantRow("Bounded boxicity", "decision", "independent-set");
   assert.ok(!independent.findings.some((finding) => finding.status === "FPT" && finding.parameter === "k"));
-  assert.equal(variantRow("Bounded boxicity", "decision", "vertex-cover").findings.length, 0);
+  assert.ok(variantRow("Bounded boxicity", "decision", "vertex-cover").findings.some((finding) => finding.status === "FPT" && finding.parameter === "k"));
   assert.ok(variantRow("All graphs", "decision", "vertex-cover").findings.some((finding) => finding.status === "FPT" && finding.parameter === "k"));
 });
 
@@ -348,22 +352,23 @@ test("treewidth and treedepth equivalents retain their own parameter names", () 
   assert.equal(linear.parameterName, "supplied linear expression width");
 });
 
-test("Hamiltonian Path lower bounds do not become parameter-k lower bounds", () => {
+test("Hamiltonian Path lower bounds remain in optimization, not beside parameter-k decision results", () => {
   for (const name of ["Planar", "Bipartite", "Chordal", "Bounded distance to Planar"]) {
     const optimization = variantRow(name, "optimization", "longest-path");
     const decision = variantRow(name, "decision", "longest-path");
     assert.ok(optimization.findings.some((finding) => finding.status === "NP-hard" && finding.inference.includes("Hamiltonian Path")), name);
-    assert.ok(decision.findings.some((finding) => finding.status === "NP-complete" && !finding.parameter), name);
+    assert.ok(!decision.findings.some((finding) => finding.status === "NP-complete" && !finding.parameter), name);
     assert.ok(findings(name, "longest-path").some((finding) => finding.status === "NP-complete" && finding.inference.includes("Hamiltonian Path")), name);
-    assert.ok(!decision.findings.some((finding) => finding.parameter === "k"), name);
+    assert.ok(decision.findings.some((finding) => finding.status === "FPT" && finding.parameter === "k"), name);
     assert.ok(!optimization.findings.some((finding) => finding.parameter === "k"), name);
   }
   assert.ok(variantRow("Interval", "optimization", "longest-path").findings.every((finding) => finding.status === "P"));
 });
 
-test("unweighted size-k Max-Cut is recorded only in All graphs, not unrestricted optimization", () => {
+test("unweighted size-k Max-Cut stays available on every class, not unrestricted optimization", () => {
   for (const name of context.window.GRAPH_CLASS_EXAMPLE.classes) {
-    if (name !== "All graphs") assert.ok(!findings(name, "max-cut").some((finding) => finding.origin === "All graphs"), name);
+    const decision = variantRow(name, "decision", "max-cut");
+    assert.ok(decision.findings.some((finding) => finding.status === "P" || (finding.status === "FPT" && finding.parameter === "k")), name);
     assert.ok(!variantRow(name, "optimization", "max-cut").findings.some((finding) => finding.parameter === "k"), name);
   }
   const elementary = variantRow("All graphs", "decision", "max-cut").findings.find((finding) => finding.parameter === "k");
@@ -412,8 +417,7 @@ test("twin-width size-bounded entries do not reintroduce optimization hardness",
   for (const id of ["independent-set", "vertex-cover", "dominating-set"]) {
     const decision = variantRow("Bounded twin-width", "decision", id);
     const optimization = variantRow("Bounded twin-width", "optimization", id);
-    if (id !== "vertex-cover") assert.ok(decision.findings.some((finding) => finding.status === "FPT"), id);
-    else assert.equal(decision.findings.length, 0);
+    assert.ok(decision.findings.some((finding) => finding.status === "FPT"), id);
     assert.ok(!decision.findings.some((finding) => ["NP-hard", "NP-complete"].includes(finding.status)), id);
     assert.ok(!decision.findings.some((finding) => finding.sourceIds.includes("twwColor") || finding.condition === "Already at twin-width 4"), id);
     assert.equal(optimization.findings.filter((finding) => finding.status === "NP-hard").length, 1, id);
@@ -527,7 +531,7 @@ test("verified fixed-three-color hardness is explicit and cannot leak into optim
 
 test("unverified cells have no result objects or attached claims, rather than sourced unchecked placeholders", () => {
   assert.equal(variantRow("Proper interval", "optimization", "max-cut").findings.length, 0);
-  assert.equal(variantRow("Proper interval", "decision", "max-cut").findings.length, 0);
+  assert.ok(variantRow("Proper interval", "decision", "max-cut").findings.some((finding) => finding.status === "FPT" && finding.parameter === "k" && !finding.sourceIds.length));
   assert.ok(!data.sources.properCut);
   for (const name of context.window.GRAPH_CLASS_EXAMPLE.classes) {
     const results = data.getResults(name);
@@ -551,15 +555,15 @@ test("cocomparability Hamiltonian Path cites a path algorithm rather than a cycl
   assert.ok(variantRow("Co-comparability", "decision", "hamiltonian-cycle").findings.every((finding) => finding.sourceIds.includes("cocoHamilton")));
 });
 
-test("general-graph results occur only in All graphs, including equivalent class profiles", () => {
+test("general provenance remains separate from structural bounds in all class profiles", () => {
   const expected = new Set(["matching", "vertex-cover", "longest-path", "steiner-tree", "graph-isomorphism", "feedback-vertex-set", "odd-cycle-transversal", "edge-dominating-set", "max-cut"]);
   for (const name of context.window.GRAPH_CLASS_EXAMPLE.classes) {
     for (const form of ["optimization", "decision"]) {
       for (const row of variants(name, form)) {
         row.findings.filter((finding) => finding.origin === "All graphs").forEach((finding) => {
-          assert.equal(name, "All graphs", `${name}: ${row.title}`);
           assert.ok(expected.has(row.baseId), `${name}: ${row.title}`);
           assert.ok(!/[wdr]|\u03c6/.test(finding.parameter || ""), `${name}: ${row.title}`);
+          assert.ok(finding.sourceIds.every((id) => !id.startsWith("equivalence-")), `${name}: ${row.title}`);
         });
       }
     }
@@ -568,9 +572,11 @@ test("general-graph results occur only in All graphs, including equivalent class
   assert.equal(general.flatMap((row) => row.findings).filter((finding) => finding.origin === "All graphs").length, 9);
   assert.equal(variants("All graphs", "optimization").flatMap((row) => row.findings).filter((finding) => finding.origin === "All graphs").length, 2);
   const cover = variantRow("Bounded clique-width", "decision", "vertex-cover");
-  assert.ok(!cover.findings.some((finding) => finding.parameter === "k"));
+  assert.ok(cover.findings.some((finding) => finding.parameter === "k" && finding.origin === "All graphs"));
   assert.ok(cover.findings.some((finding) => finding.parameter === "w" && finding.origin !== "All graphs"));
   assert.ok(variantRow("Bounded twin-width", "decision", "independent-set").findings.every((finding) => finding.origin !== "All graphs"));
+  assert.equal(variants("Bounded twin-width", "decision").flatMap((row) => row.findings).filter((finding) => finding.origin === "All graphs").length, 9);
+  assert.equal(variants("Bounded twin-width", "optimization").flatMap((row) => row.findings).filter((finding) => finding.origin === "All graphs").length, 2);
 });
 
 test("every general parameter-k Vertex Cover result retains its algorithm citation", () => {
