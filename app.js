@@ -117,6 +117,7 @@
   });
 
   const labelsInNormal = new Set();
+  (graph.nodes || []).forEach((label) => labelsInNormal.add(label));
   normalEdges.forEach((edge) => {
     labelsInNormal.add(edge.data.sLabel);
     labelsInNormal.add(edge.data.tLabel);

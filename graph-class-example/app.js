@@ -1,5 +1,6 @@
 (function () {
   const data = window.GRAPH_CLASS_EXAMPLE;
+  const relationSources = window.GRAPH_CLASS_RELATION_SOURCES;
 
   if (!data) throw new Error("GRAPH_CLASS_EXAMPLE is missing. Check data.js.");
 
@@ -27,17 +28,15 @@
     graphViewButtons: Array.from(document.querySelectorAll(".graph-view-button")),
     relationCards: Array.from(document.querySelectorAll(".relation-card")),
     graphCount: document.getElementById("graph-count"),
+    relationSourceSelect: document.getElementById("relation-source-select"),
+    relationEvidence: document.getElementById("relation-evidence"),
+    relationSources: document.getElementById("relation-sources"),
     graph: document.getElementById("class-graph")
   };
 
   function toId(name) {
-    const normalizedLabel = String(name).trim().toLowerCase().replace(/^bounded\s+/, "");
-    const aliases = {
-      "merge-width": "𝑟-merge-width",
-      "flip-width": "𝑟-flip-width"
-    };
-
-    return (aliases[normalizedLabel] || normalizedLabel)
+    const normalizedLabel = String(relationSources?.resolveClassLabel(name) || name).trim().toLowerCase().replace(/^bounded\s+/, "");
+    return normalizedLabel
       .replace(/[^a-z0-9가-힣α-ω∞𝑐𝑟ℎ]+/gi, "-")
       .replace(/^-+|-+$/g, "");
   }
@@ -61,6 +60,7 @@
 
   function displayLabel(label) {
     return String(label)
+      .replace(/^Bounded chordality$/, "Bounded chordality (intersection)")
       .replace(/\\cap/g, "⋂")
       .replace(/\\cup/g, "∪")
       .replace(/\\Delta/g, "Δ")
@@ -136,6 +136,7 @@
       });
       (data.relations || []).forEach((edge, index) => {
         if (isDirectedParameter(edge.source) || isDirectedParameter(edge.target)) return;
+        if (relationSources && !relationSources.isActive(index)) return;
         addEdge({
           id: `relation-${index}`,
           source: addNode(edge.source, "Unlabeled classes"),
@@ -233,11 +234,14 @@
     "bounded vertex cover number",
     "bounded cut-width",
     "bounded linear clique-width",
-    "bounded track number",
+    "bounded track layout number",
     "bounded tree-partition-width"
   ];
   const preferredEquivalentIds = new Map(preferredEquivalentLabels.map((label, index) => [toId(label), index]));
+  const requestedClass = new URLSearchParams(window.location.search).get("class");
+  const requestedClassId = requestedClass ? toId(requestedClass) : null;
   let selectedId =
+    (nodeById.has(requestedClassId) ? requestedClassId : null) ||
     graphData.nodes.find((node) => node.label.toLowerCase() === "monadically dependent")?.id ||
     graphData.nodes[0].id;
   let localGraphView = "all";
@@ -246,6 +250,7 @@
   let zoomFrame = null;
   let viewportFrame = null;
   let mobilePanel = "list";
+  let evidenceOptions = [];
 
   function subsetEdges() {
     return graphData.edges.filter((edge) => edge.type !== "equivalent");
@@ -402,6 +407,9 @@
     if (!nodeById.has(id)) return;
     selectedId = id;
     const selected = nodeById.get(id);
+    const classUrl = new URL(window.location.href);
+    classUrl.searchParams.set("class", selected.label);
+    window.history.replaceState(null, "", classUrl);
     const equivalents = equivalentClasses(id);
     const relationRoots = [id, ...equivalents];
     const subclasses = reachableFromMany(relationRoots, "sub").filter((item) => !relationRoots.includes(item));
@@ -421,6 +429,7 @@
     renderRelationList(ui.superclassList, ui.superclassCount, superclasses);
     renderClassList();
     renderLocalGraph(id, { relationRoots, equivalents, subclasses, superclasses, neighbors });
+    window.renderClassComplexity?.(selected.label);
     if (options.revealDetail && isMobileLayout()) setMobilePanel("detail", { scroll: true });
   }
 
@@ -559,7 +568,7 @@
           target: edge.target,
           label: edge.type
         },
-        classes: edge.type
+        classes: `${edge.type}${relationSources?.trace(nodeById.get(edge.source).label, nodeById.get(edge.target).label, edge.type).kind === "unchecked" ? " unchecked" : ""}`
       }))
     ];
 
@@ -581,6 +590,97 @@
       refreshGraphViewport();
     });
     layout.run();
+    renderEvidenceOptions(localEdges, id, relations);
+  }
+
+  function relationLabel(source, target, type) {
+    return `${displayLabel(source)} ${type === "equivalent" ? "\u2261" : "\u2286"} ${displayLabel(target)}`;
+  }
+
+  function renderEvidenceOptions(edges, selected, relations) {
+    if (!relationSources || !ui.relationSourceSelect) return;
+    const visible = edges.map((edge) => ({
+      source: nodeById.get(edge.source).label,
+      target: nodeById.get(edge.target).label,
+      type: edge.type,
+      edgeId: edge.id
+    }));
+    const labels = (ids) => (ids || []).map((id) => nodeById.get(id).label);
+    evidenceOptions = relationSources.optionsForClass(nodeById.get(selected).label, {
+      equivalents: labels(relations.equivalents),
+      subclasses: labels(relations.subclasses),
+      superclasses: labels(relations.superclasses)
+    }, visible);
+    ui.relationSourceSelect.replaceChildren();
+    ui.relationSources.hidden = evidenceOptions.length === 0;
+    evidenceOptions.forEach((relation, index) => {
+      const option = document.createElement("option");
+      option.value = String(index);
+      option.textContent = relationLabel(relation.source, relation.target, relation.type);
+      ui.relationSourceSelect.appendChild(option);
+    });
+    if (!evidenceOptions.length) return;
+    const preferred = evidenceOptions.findIndex((relation) => {
+      const proof = relationSources.trace(relation.source, relation.target, relation.type);
+      return proof.kind !== "unchecked" && proof.sourceIds.length;
+    });
+    const index = preferred < 0 ? 0 : preferred;
+    const relation = evidenceOptions[index];
+    showRelationEvidence(relation.source, relation.target, relation.type);
+  }
+
+  function showRelationEvidence(source, target, type, reveal = false) {
+    if (!relationSources || !ui.relationEvidence) return;
+    const relationKey = relationSources.key(source, target, type);
+    let index = evidenceOptions.findIndex((relation) => relationSources.key(relation.source, relation.target, relation.type) === relationKey);
+    if (index < 0) {
+      index = evidenceOptions.push({ source, target, type }) - 1;
+      const option = document.createElement("option");
+      option.value = String(index);
+      option.textContent = relationLabel(source, target, type);
+      ui.relationSourceSelect.appendChild(option);
+    }
+    ui.relationSources.hidden = false;
+    ui.relationSourceSelect.value = String(index);
+    const proof = relationSources.trace(source, target, type);
+    const labels = { paper: "Cited", definition: "By definition", elementary: "Elementary", derived: "Derived", unchecked: "Unchecked", incorrect: "Excluded", conditional: "Conditional" };
+    const fragment = document.createDocumentFragment();
+    const status = document.createElement("span");
+    status.className = `relation-evidence-status ${proof.kind}`;
+    status.textContent = labels[proof.kind];
+    fragment.appendChild(status);
+    const list = document.createElement("ul");
+    list.className = "relation-proof-steps";
+    relationSources.citations(proof).forEach(({ reference, locators }) => {
+      const item = document.createElement("li");
+      const link = document.createElement("a");
+      link.href = reference[3];
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = `${reference[0]} (${reference[1]}). ${reference[2]}`;
+      item.appendChild(link);
+      if (locators.length) {
+        const location = document.createElement("p");
+        location.className = "relation-proof-locator";
+        location.textContent = locators.join("; ");
+        item.appendChild(location);
+      }
+      list.appendChild(item);
+    });
+    if (proof.sourceIds.length) fragment.appendChild(list);
+    proof.steps.filter((step) => ["incorrect", "conditional"].includes(step.kind) || (step.kind === "unchecked" && step.sourceIds.length)).forEach((step) => {
+      const warning = document.createElement("p");
+      warning.className = "relation-proof-warning";
+      warning.textContent = step.note;
+      fragment.appendChild(warning);
+    });
+    ui.relationEvidence.replaceChildren(fragment);
+    if (cy) {
+      cy.edges().removeClass("source-selected");
+      const edgeId = evidenceOptions[index].edgeId;
+      if (edgeId) cy.getElementById(edgeId).addClass("source-selected");
+    }
+    if (reveal) ui.relationSources.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   function localGraphEdges(selected, idSet, edgeTypes, relations) {
@@ -737,11 +837,23 @@
             "line-color": "#7c3aed",
             "target-arrow-color": "#7c3aed"
           }
+        },
+        {
+          selector: "edge.unchecked",
+          style: { "line-style": "dashed", "line-color": "#a46a0b", "target-arrow-color": "#a46a0b" }
+        },
+        {
+          selector: "edge.source-selected",
+          style: { "width": 4, "line-color": "#1769e0", "target-arrow-color": "#1769e0", "z-index": 2 }
         }
       ]
     });
 
     cy.on("tap", "node", (event) => selectClass(event.target.id(), { revealDetail: true }));
+    cy.on("tap", "edge", (event) => {
+      const edge = event.target;
+      showRelationEvidence(nodeById.get(edge.source().id()).label, nodeById.get(edge.target().id()).label, edge.hasClass("equivalent") ? "equivalent" : "subset", true);
+    });
   }
 
   function fitGraph() {
@@ -802,9 +914,17 @@
   initGraph();
   renderClassList();
   selectClass(selectedId);
+  if (requestedClass && isMobileLayout()) setMobilePanel("detail");
+  if (requestedClass && window.location.hash === "#complexity") {
+    window.requestAnimationFrame(() => document.getElementById("complexity").scrollIntoView());
+  }
   syncZoomSlider();
 
   ui.search.addEventListener("input", renderClassList);
+  ui.relationSourceSelect?.addEventListener("change", () => {
+    const relation = evidenceOptions[Number(ui.relationSourceSelect.value)];
+    if (relation) showRelationEvidence(relation.source, relation.target, relation.type);
+  });
   ui.fit.addEventListener("click", fitGraph);
   ui.reset.addEventListener("click", resetGraph);
   ui.zoomSlider.addEventListener("input", () => {

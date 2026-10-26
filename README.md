@@ -33,6 +33,14 @@
 
 - 일반 방향 관계: `{ source: "A", target: "B" }`
 - 동치 관계: `{ source: "A", target: "B", type: "equivalent" }`
+- 관계가 없는 파라미터는 `graph.nodes`에 이름을 기록하면 목록에 유지됩니다.
+
+비연결 그래프의 서로 다른 component 사이 거리는 무한대로 취급합니다.
+`diameter`와 `max diameter of components`는 별도 항목이며, 유한한 diameter에서
+average distance와 maximum component diameter로 가는 관계만 사용합니다.
+반지름 비교는 `(2r-1)-merge-width -> r-flip-width`로 표시합니다.
+Class Map에서 제외한 관계가 메인 hierarchy에 다시 들어오지 않는지
+`node --test tests/*.test.cjs`로 확인할 수 있습니다.
 
 ### 3. 동치 기준(anchor) 조정하기
 

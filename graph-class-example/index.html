@@ -5,12 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Graph Class Map</title>
   <link rel="icon" href="../graph-hierarchy-icon.svg?v=20260514" type="image/svg+xml" />
-  <link rel="stylesheet" href="./styles.css?v=20260514-local-two-hop1" />
+  <link rel="stylesheet" href="./styles.css?v=20261026-general1" />
   <script src="https://unpkg.com/cytoscape@3.27.0/dist/cytoscape.min.js"></script>
   <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
   <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
-  <script src="./data.js?v=20260514-local-two-hop1"></script>
-  <script defer src="./app.js?v=20260514-local-two-hop1"></script>
+  <script src="./data.js?v=20261026-audit1"></script>
+  <script src="./relation-sources.js?v=20261026-audit1"></script>
+  <script src="./complexity-data.js?v=20261026-vertexcover1"></script>
+  <script defer src="./complexity.js?v=20261026-general1"></script>
+  <script defer src="./app.js?v=20261026-audit1"></script>
 </head>
 <body>
   <main class="shell explorer-shell">
@@ -92,6 +95,48 @@
             </div>
           </div>
           <div id="class-graph" class="class-graph"></div>
+        </section>
+
+        <section id="relation-sources" class="relation-sources" aria-labelledby="relation-sources-title">
+          <div class="relation-sources-heading">
+            <h3 id="relation-sources-title">Relation sources</h3>
+            <select id="relation-source-select" aria-label="Relation to cite"></select>
+          </div>
+          <div id="relation-evidence" aria-live="polite"></div>
+        </section>
+
+        <section id="complexity" class="complexity-section" aria-labelledby="complexity-title">
+          <div class="complexity-heading">
+            <h2 id="complexity-title">Complexity <span id="complexity-class-label"></span></h2>
+            <time datetime="2026-10-26">26 Oct 2026</time>
+          </div>
+          <dl id="complexity-parameters" class="complexity-parameters" aria-label="Parameters in parentheses"></dl>
+          <div class="complexity-columns">
+            <section class="complexity-group" aria-labelledby="graph-problems-title">
+              <div class="complexity-group-heading">
+                <h3 id="graph-problems-title">Graph problems</h3>
+                <div class="complexity-form-tabs" role="tablist" aria-label="Problem form">
+                  <button id="complexity-optimization-tab" class="complexity-form-tab" type="button" role="tab" aria-selected="true" aria-controls="complexity-problem-panel" data-form="optimization">Optimization</button>
+                  <button id="complexity-decision-tab" class="complexity-form-tab" type="button" role="tab" aria-selected="false" aria-controls="complexity-problem-panel" tabindex="-1" data-form="decision">Decision</button>
+                </div>
+              </div>
+              <div id="complexity-problem-panel" role="tabpanel" aria-labelledby="complexity-optimization-tab">
+                <table class="complexity-table">
+                  <colgroup><col class="problem-column" /><col class="result-column" /><col class="paper-column" /></colgroup>
+                  <thead><tr><th scope="col">Problem</th><th scope="col">Complexity</th><th scope="col">Paper</th></tr></thead>
+                  <tbody id="complexity-problems"></tbody>
+                </table>
+              </div>
+            </section>
+            <section class="complexity-group" aria-labelledby="model-checking-title">
+              <h3 id="model-checking-title">Model checking</h3>
+              <table class="complexity-table">
+                <colgroup><col class="problem-column" /><col class="result-column" /><col class="paper-column" /></colgroup>
+                <thead><tr><th scope="col">Logic</th><th scope="col">Complexity</th><th scope="col">Paper</th></tr></thead>
+                <tbody id="complexity-logic"></tbody>
+              </table>
+            </section>
+          </div>
         </section>
       </section>
 

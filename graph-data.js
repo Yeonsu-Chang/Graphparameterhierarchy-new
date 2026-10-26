@@ -81,11 +81,11 @@ window.GRAPH_DATA = {
     ]
   },
   graph: {
+    nodes: ["girth"],
     edges: [
       { source: "acyclic chromatic number", target: "boxicity" },
       { source: "acyclic chromatic number", target: "degeneracy" },
       { source: "average degree", target: "minimum degree" },
-      { source: "average distance", target: "girth" },
       { source: "bandwidth", target: "bisection width" },
       { source: "bandwidth", target: "cut-width" },
       { source: "bandwidth", target: "track layout number" },
@@ -118,6 +118,8 @@ window.GRAPH_DATA = {
       { source: "degeneracy", target: "arboricity", type: "equivalent" },
       { source: "degeneracy", target: "average degree" },
       { source: "degeneracy", target: "chromatic number" },
+      { source: "diameter", target: "average distance" },
+      { source: "diameter", target: "max diameter of components" },
       { source: "directed path-width", target: "Kelly-width" },
       { source: "distance to Bipartite", target: "chromatic number" },
       { source: "distance to Bipartite", target: "distance to Perfect" },
@@ -131,9 +133,7 @@ window.GRAPH_DATA = {
       { source: "distance to Cluster", target: "distance to Cograph" },
       { source: "distance to Cluster", target: "distance to Interval" },
       { source: "distance to Co-Cluster", target: "distance to Cograph" },
-      { source: "distance to Cograph", target: "chordality" },
       { source: "distance to Cograph", target: "clique-width" },
-      { source: "distance to Cograph", target: "diameter" },
       { source: "distance to Cograph", target: "distance to Perfect" },
       { source: "distance to Cograph", target: "max diameter of components" },
       { source: "distance to Interval", target: "distance to Chordal" },
@@ -146,7 +146,6 @@ window.GRAPH_DATA = {
       { source: "distance to Outerplanar", target: "tree-width" },
       { source: "distance to Planar", target: "acyclic chromatic number" },
       { source: "distance to Planar", target: "twin-width" },
-      { source: "domination number", target: "diameter" },
       { source: "domination number", target: "max diameter of components" },
       { source: "domination number", target: "tree-γ" },
       { source: "edge clique cover number", target: "neighborhood diversity" },
@@ -159,6 +158,7 @@ window.GRAPH_DATA = {
       { source: "feedback vertex set number", target: "distance to Bipartite" },
       { source: "feedback vertex set number", target: "distance to Chordal" },
       { source: "feedback vertex set number", target: "distance to Outerplanar" },
+      { source: "flip-width", target: "𝑟-flip-width" },
       { source: "genus", target: "stack number" },
       { source: "genus", target: "row treewidth" },
       { source: "genus", target: "twin-width" },
@@ -172,7 +172,6 @@ window.GRAPH_DATA = {
       { source: "linear clique-width", target: "reduced max-leaf" },
       { source: "linear mim-width", target: "mim-width" },
       { source: "linear rank-width", target: "total twin-width", type: "equivalent" },
-      { source: "max diameter of components", target: "average distance" },
       { source: "max leaf number", target: "bandwidth" },
       { source: "max leaf number", target: "distance to Linear forest" },
       { source: "max leaf number", target: "feedback edge set number" },
@@ -180,7 +179,9 @@ window.GRAPH_DATA = {
       { source: "maximum degree", target: "𝑐-closure" },
       { source: "maximum independent set", target: "domination number" },
       { source: "maximum independent set", target: "maximum induced matching" },
-      { source: "maximum induced matching", target: "diameter" },
+      { source: "maximum induced matching", target: "max diameter of components" },
+      { source: "merge-width", target: "flip-width" },
+      { source: "merge-width", target: "(2𝑟-1)-merge-width" },
       { source: "mim-width", target: "o-mim-width" },
       { source: "minimum degree", target: "distance to Disconnected" },
       { source: "minimum degree", target: "domatic number" },
@@ -220,7 +221,6 @@ window.GRAPH_DATA = {
       { source: "tree bandwidth", target: "tree-width" },
       { source: "tree-cut width", target: "tree-partition-width" },
       { source: "tree-depth", target: "branch-depth", type: "equivalent" },
-      { source: "tree-depth", target: "diameter" },
       { source: "tree-depth", target: "max diameter of components" },
       { source: "tree-depth", target: "path-width" },
       { source: "tree-depth", target: "shrub-depth" },
@@ -252,7 +252,8 @@ window.GRAPH_DATA = {
       { source: "twin-cover", target: "distance to Cluster" },
       { source: "twin-cover", target: "linear clique-width" },
       { source: "twin-cover", target: "modular-width" },
-      { source: "twin-width", target: "𝑟-merge-width" },
+      { source: "twin-width", target: "merge-width" },
+      { source: "twin-width", target: "(2𝑟-1)-merge-width" },
       { source: "vertex cover number", target: "distance to Co-Cluster" },
       { source: "vertex cover number", target: "distance to Linear forest" },
       { source: "vertex cover number", target: "maximum matching", type: "equivalent" },
@@ -264,7 +265,7 @@ window.GRAPH_DATA = {
       { source: "vertex integrity", target: "tree-depth" },
       { source: "α-edge-crossing width", target: "tree-partition-width" },
       { source: "ℎ-index", target: "acyclic chromatic number" },
-      { source: "𝑟-merge-width", target: "𝑟-flip-width" }
+      { source: "(2𝑟-1)-merge-width", target: "𝑟-flip-width" }
     ]
   }
 };
