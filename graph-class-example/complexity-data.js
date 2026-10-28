@@ -45,6 +45,7 @@
     treeMu: ["Bodlaender, Fomin & Korhonen", 2026, "Finding sparse induced subgraphs on graphs of bounded induced matching treewidth", "https://arxiv.org/abs/2507.07975"],
     twwFO: ["Bonnet et al.", 2022, "Twin-width I: tractable FO model checking", "https://arxiv.org/abs/2004.14789v3"],
     twwAlgorithms: ["Bonnet et al.", 2021, "Twin-width III: Max Independent Set, Min Dominating Set, and Coloring", "https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.ICALP.2021.35"],
+    reduced: ["Bonnet, Chang, Duron, Geniet & Kwon", 2026, "Moderately Beyond Clique-Width: Reduced Component Max-Leaf and Related Parameters", "https://arxiv.org/abs/2604.19138"],
     twwColor: ["Bonnet", 2026, "Coloring Hardness on Low Twin-Width Graphs", "https://arxiv.org/abs/2512.23680v2"],
     merge: ["Dreier & Torunczyk", 2025, "Merge-width and First-Order Model Checking", "https://arxiv.org/abs/2502.18065v2"],
     mergeFast: ["Bonnet et al.", 2026, "Fast Shortest Path in Graphs with Sparse Signed Tree Models and Applications", "https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.ICALP.2026.40"],
@@ -555,6 +556,22 @@
         add(id, name === "bounded linear mim-width" ? "XNLP-complete" : "W[1]-hard", ["xnlp"], { parameter: "w", parameterName: "supplied decomposition width", condition: "Decomposition given" });
       });
     }
+    if (["bounded reduced component max-leaf", "bounded reduced max-leaf"].includes(name)) {
+      const options = {
+        parameter: "w", parameterName: label.replace(/^Bounded\s+/i, ""),
+        condition: "Contraction sequence given", form: "both",
+        locator: "Theorems 1.4 and 6.5; Section 6.1",
+        ...(name === "bounded reduced max-leaf" ? {
+          inference: "In each red graph, component max-leaf <= max(1, total max-leaf). Keep the same sequence."
+        } : {})
+      };
+      set("independent-set", "XP", ["reduced"], { ...options, explanation: "Finite sigma-Neighborhood with sigma = {0}." });
+      set("induced-matching", "XP", ["reduced"], { ...options, explanation: "Use sigma = {1}; 2k selected vertices give k induced matching edges." });
+      set("clique", "XP", ["reduced"], {
+        ...options, locator: "Section 6, opening complement argument; Theorems 1.4 and 6.5",
+        explanation: "Solve MIS in the complement. Complementation preserves every red graph of the supplied sequence."
+      });
+    }
     if (["bounded tree-independence number", "bounded path-independence number"].includes(name)) {
       set("independent-set", "XP", ["treeInd"], { parameter: "w", parameterName: "tree-independence number", explanation: "No decomposition is required as input." });
       set("feedback-vertex-set", "XP", ["treeMu"], { parameter: "w", parameterName: "tree-independence number" });
@@ -714,5 +731,5 @@
     return { problems: finalize(problems), logic: finalize(logics) };
   }
 
-  window.GRAPH_CLASS_COMPLEXITY = { checkedOn: "2026-10-26", sources, problems, logics, problemForms, getResults, getProblemRows, getParameterLegend };
+  window.GRAPH_CLASS_COMPLEXITY = { checkedOn: "2026-10-28", sources, problems, logics, problemForms, getResults, getProblemRows, getParameterLegend };
 })();

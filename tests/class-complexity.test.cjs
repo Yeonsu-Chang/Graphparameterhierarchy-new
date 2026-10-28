@@ -68,6 +68,68 @@ test("witness-dependent results retain their input requirements", () => {
   assert.ok(has("Bounded sim-width", "independent-set", "Quasipolynomial"));
 });
 
+test("reduced max-leaf algorithms appear in both problem forms with their witness", () => {
+  for (const name of ["Bounded reduced component max-leaf", "Bounded reduced max-leaf"]) {
+    for (const id of ["independent-set", "clique", "induced-matching"]) {
+      const raw = findings(name, id);
+      assert.equal(raw.length, 1, `${name}: ${id}`);
+      assert.equal(raw[0].status, "XP");
+      assert.equal(raw[0].form, "both");
+      for (const form of ["optimization", "decision"]) {
+        const result = variantRow(name, form, id).findings.find((finding) => finding.sourceIds.includes("reduced"));
+        assert.ok(result, `${name}: ${form}: ${id}`);
+        assert.equal(result.parameter, "w");
+        assert.equal(result.condition, "Contraction sequence given");
+        assert.match(result.locator, /6\.5/);
+        assert.notEqual(result.origin, "All graphs");
+      }
+    }
+  }
+});
+
+test("sigma-Neighborhood specializations distinguish matching edges and the clique complement", () => {
+  const name = "Bounded reduced component max-leaf";
+  assert.match(findings(name, "independent-set")[0].explanation, /sigma = \{0\}/);
+  assert.match(findings(name, "induced-matching")[0].explanation, /sigma = \{1\}.*2k.*k induced matching edges/);
+  const clique = findings(name, "clique")[0];
+  assert.match(clique.locator, /complement argument/);
+  assert.match(clique.explanation, /complement.*preserves every red graph/);
+  assert.ok(!clique.explanation.includes("sigma = {"));
+  assert.ok(!findings(name, "matching").some((finding) => finding.sourceIds.includes("reduced")));
+});
+
+test("reduced max-leaf structural vertex cover bounds coexist with general parameter-k algorithms", () => {
+  const name = "Bounded reduced component max-leaf";
+  for (const form of ["optimization", "decision"]) {
+    const results = variantRow(name, form, "vertex-cover").findings;
+    const structural = results.find((finding) => finding.status === "XP" && finding.parameter === "w");
+    assert.ok(structural.sourceIds.includes("reduced"));
+    assert.match(structural.inference, /tau\(G\)/);
+    assert.equal(structural.condition, "Contraction sequence given");
+    assert.equal(results.some((finding) => finding.status === "FPT" && finding.parameter === "k" && finding.origin === "All graphs"), form === "decision");
+  }
+});
+
+test("the finite-sigma theorem does not classify unrelated problems or wider reduced parameters", () => {
+  for (const id of ["dominating-set", ...["connected", "total", "independent"].map((prefix) => `${prefix}-dominating-set`), "coloring", "feedback-vertex-set", "mso1", "mso2"]) {
+    assert.ok(!findings("Bounded reduced component max-leaf", id).some((finding) => finding.sourceIds.includes("reduced")), id);
+  }
+  for (const name of ["All graphs", "Bounded twin-width", "Bounded reduced bandwidth", "Bounded reduced cut-width", "Bounded stretch-width"]) {
+    for (const id of ["independent-set", "clique", "induced-matching"]) {
+      assert.ok(!findings(name, id).some((finding) => finding.sourceIds.includes("reduced")), `${name}: ${id}`);
+    }
+  }
+});
+
+test("reduced max-leaf width names and the isolated-vertex convention survive display", () => {
+  for (const name of ["Bounded reduced component max-leaf", "Bounded reduced max-leaf"]) {
+    const results = data.getResults(name);
+    const legend = data.getParameterLegend({ ...results, problems: data.getProblemRows(results, "optimization") });
+    assert.equal(legend.find((entry) => entry.symbol === "w").description, name.replace(/^Bounded /, ""));
+  }
+  assert.match(findings("Bounded reduced max-leaf", "independent-set")[0].inference, /max\(1, total max-leaf\)/);
+});
+
 test("hardness is not inherited from a superclass to a restricted subclass", () => {
   assert.ok(!has("Bounded sparse twin-width", "independent-set", "NP-hard"));
   assert.ok(!has("Monadically stable bounded twin-width", "coloring", "NP-hard"));

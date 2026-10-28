@@ -117,6 +117,12 @@ construction when no expression is supplied.
 
 Use `?class=interval#complexity` to link directly to a class's complexity section.
 
+Reduced component max-leaf records MIS and Maximum Induced Matching through
+finite sigma-Neighborhood, and Maximum Clique through complementation. These
+are `XP(w)` with a supplied contraction sequence, in both problem forms; Vertex
+Cover also follows by solution complementation. The same sequence gives the
+bound for reduced max-leaf. See `../research/reduced-max-leaf-complexity-2026-10-28.md`.
+
 ## Hierarchy sources
 
 `relation-sources.js` records evidence for inclusion and functional-equivalence
