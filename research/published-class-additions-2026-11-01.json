@@ -1,0 +1,49 @@
+{
+  "checkedOn": "2026-11-01",
+  "scope": "Publish non-free additions; defer newly proposed induced-exclusion classes and their intersection nodes. Existing forbidden classes remain.",
+  "addedClasses": [
+    "Almost linear neighborhood complexity",
+    "Bounded dissociation deletion number",
+    "Bounded functionality",
+    "Bounded induced P3-packing treewidth",
+    "Bounded proper mixed-thinness",
+    "Bounded r-CoC (fixed r ≥ 2)",
+    "Bounded tree-chromatic number",
+    "Bounded tree-independence number \\cap Bounded tree-chromatic number",
+    "Bounded VC-dimension",
+    "Bounded vertex integrity",
+    "Linear neighborhood complexity",
+    "Non-crossing H-graphs (fixed H)",
+    "Twin-width at most 2"
+  ],
+  "deferredClasses": [
+    "(2P3, C4, C6)-free",
+    "(P3 + P2)-free",
+    "(P4 + P1)-free",
+    "(P4 + P2)-free",
+    "(P5, K4)-free",
+    "(P6, C4)-free",
+    "(P6, K3,3)-free",
+    "(P6, K3)-free",
+    "(P7, C4)-free",
+    "(P7, K4)-free",
+    "(Pt, Ks,s)-free (fixed t, s)",
+    "2P2-free",
+    "2P3-free",
+    "2P4-free",
+    "3PC-free",
+    "Even-hole-free",
+    "Odd-hole-free",
+    "P5-free",
+    "P6-free",
+    "P7-free",
+    "P8-free",
+    "S(2,2,2)-free",
+    "S(t,t,t)-free (fixed t)",
+    "Twin-width at most 2 \\cap Semi-induced half-graph-free"
+  ],
+  "retainedExistingFreeClasses": [
+    "Claw-free"
+  ],
+  "localDeferredArchive": "output/deferred-2026-11-01/free-classes.json (not published)"
+}

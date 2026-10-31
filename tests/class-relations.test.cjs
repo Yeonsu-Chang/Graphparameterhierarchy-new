@@ -29,7 +29,7 @@ test("All graphs is the universal superclass with supported paths from every cla
 
 test("the saved audit matches the current evidence model", () => {
   const { buildAudit } = require("../research/export-class-relation-audit.cjs");
-  const saved = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "research", "class-relation-audit-2026-10-26.json"), "utf8"));
+  const saved = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "research", "class-relation-audit-2026-11-01.json"), "utf8"));
   assert.deepEqual(saved, buildAudit());
 });
 

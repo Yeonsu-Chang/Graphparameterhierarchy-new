@@ -83,12 +83,42 @@
 
   const toDisplayText = (text) => {
     if (!text) return text;
-    return text
+    text = settings.displayLabels?.[text] || text;
+    if (window.GRAPH_NOTATION) return window.GRAPH_NOTATION.toPlain(text);
+    return String(text)
       .replace(/<->|<=>/g, "↔")
       .replace(/-->/g, "→")
       .replace(/<-{1,2}/g, "←")
       .replace(/-{1,2}>/g, "→");
   };
+
+  function normalizeParameterName(value) {
+    const text = window.GRAPH_NOTATION?.searchText(value) ?? String(value).normalize("NFKD").toLowerCase().replace(/[_\s{}]/g, "");
+    return text.replace(/[−–]/g, "-");
+  }
+
+  function createParameterNameIndex(labels, aliases = {}) {
+    const canonical = new Map(labels.map((label) => [normalizeParameterName(label), label]));
+    const aliasTargets = new Map();
+    const names = new Map(labels.map((label) => [label, [label]]));
+    for (const [alias, target] of Object.entries(aliases)) {
+      const label = canonical.get(normalizeParameterName(target));
+      if (!label) continue;
+      aliasTargets.set(normalizeParameterName(alias), label);
+      names.get(label).push(alias);
+    }
+    function matches(label, query) {
+      const normalized = normalizeParameterName(query);
+      return !normalized || (names.get(label) || [label]).some((name) => normalizeParameterName(name).includes(normalized));
+    }
+    function resolve(value, allowPartial = true) {
+      const normalized = normalizeParameterName(value);
+      if (!normalized) return null;
+      return canonical.get(normalized) || aliasTargets.get(normalized)
+        || (allowPartial ? labels.find((label) => matches(label, value)) : null) || null;
+    }
+    return Object.freeze({ resolve, matches, aliasesFor: (label) => (names.get(label) || []).slice(1) });
+  }
 
   const idSymbols = { "α": "alpha", "γ": "gamma", "μ": "mu", "χ": "chi" };
   const toId = (label) => label
@@ -579,6 +609,7 @@
 
   function getNodeByName(name) {
     if (!name) return cy.collection();
+    name = normalizeKnownLabel(name);
 
     const byId = cy.getElementById(toId(name));
     if (byId && byId.length) return byId;
@@ -596,10 +627,11 @@
   );
   const preferredAnchors = settings.preferredAnchors || [];
   let knownLabelByLower = new Map();
+  let parameterNames;
 
   function normalizeKnownLabel(label) {
     if (!label) return label;
-    return knownLabelByLower.get(String(label).toLowerCase()) || label;
+    return parameterNames?.resolve(label, false) || knownLabelByLower.get(String(label).toLowerCase()) || label;
   }
 
   function equivalentComponentNames(label) {
@@ -704,13 +736,28 @@
 
   const allNodeLabels = Array.from(new Set([...Array.from(labelsInNormal), ...allBiLabels])).sort((a, b) => a.localeCompare(b));
   knownLabelByLower = new Map(allNodeLabels.map((label) => [label.toLowerCase(), label]));
+  parameterNames = createParameterNameIndex(allNodeLabels, {
+    ...Object.fromEntries(Object.entries(settings.displayLabels || {}).map(([label, display]) => [display, label])),
+    ...(settings.parameterAliases || {})
+  });
   ui.nodeCount.textContent = `(${allNodeLabels.length})`;
   ui.parameterTotal.textContent = String(allNodeLabels.length);
   ui.relationTotal.textContent = String((graph.edges || []).length);
   allNodeLabels.forEach((label) => {
     const option = document.createElement("option");
-    option.value = label;
+    option.value = toDisplayText(label);
     ui.nodeOptions.appendChild(option);
+    const listedNames = new Set([normalizeParameterName(toDisplayText(label))]);
+    parameterNames.aliasesFor(label).forEach((alias) => {
+      const displayed = toDisplayText(alias);
+      const key = normalizeParameterName(displayed);
+      if (listedNames.has(key)) return;
+      listedNames.add(key);
+      const aliasOption = document.createElement("option");
+      aliasOption.value = displayed;
+      aliasOption.label = toDisplayText(label);
+      ui.nodeOptions.appendChild(aliasOption);
+    });
   });
 
   function setQuickSearchClearVisibility() {
@@ -726,6 +773,7 @@
   }
 
   function updateSelectionSummary(label, anchorName = resolveAnchorName(label)) {
+    label = normalizeKnownLabel(label);
     const anchorId = toId(anchorName);
     const equivalentCount = Math.max(0, equivalentComponentNames(label).size - 1);
 
@@ -736,6 +784,11 @@
     renderEquivalentPanel(label, anchorName);
     ui.selectionDock.hidden = false;
     ui.quickSearch.value = toDisplayText(label);
+    const classMapUrl = new URL("./graph-class-example/index.html", window.location.href);
+    const classLabel = settings.classMapLabels?.[label];
+    if (classLabel) classMapUrl.searchParams.set("class", classLabel);
+    ui.classMapLink.href = classMapUrl.href;
+    syncParameterUrl(label);
     setQuickSearchClearVisibility();
   }
 
@@ -746,6 +799,8 @@
     ui.outgoingCount.textContent = "0";
     ui.equivalentCount.textContent = "0";
     ui.selectedNodeLabel.textContent = "";
+    ui.classMapLink.href = "./graph-class-example/index.html";
+    syncParameterUrl(null);
     clearEquivalentPanel();
   }
 
@@ -790,7 +845,9 @@
     const filter = (filterValue || "").trim().toLowerCase();
     ui.nodeListEl.innerHTML = "";
 
-    const items = allNodeLabels.filter((label) => toDisplayText(label).toLowerCase().includes(toDisplayText(filter)));
+    const items = allNodeLabels.filter((label) => parameterNames
+      ? parameterNames.matches(label, filter)
+      : toDisplayText(label).toLowerCase().includes(toDisplayText(filter)));
     filteredNodeLabels = items;
     keyboardNodeIndex = -1;
     updateNodeFilterMeta(items.length, filter);
@@ -864,6 +921,7 @@
   }
 
   function selectNodeByLabel(label) {
+    label = normalizeKnownLabel(label);
     const anchorName = resolveAnchorName(label);
     const anchor = getNodeByName(anchorName);
     if (!anchor || !anchor.length) return false;
@@ -1010,13 +1068,33 @@
   function resolveInputLabel(value) {
     const raw = (value || "").trim();
     if (!raw) return null;
+    if (parameterNames) return parameterNames.resolve(raw);
 
-    const lower = raw.toLowerCase();
-    const exact = allNodeLabels.find((label) => toDisplayText(label).toLowerCase() === lower || label.toLowerCase() === lower);
+    const normalize = window.GRAPH_NOTATION?.searchText || ((text) => String(text).toLowerCase());
+    const lower = normalize(raw);
+    const exact = allNodeLabels.find((label) => normalize(label) === lower);
     if (exact) return exact;
 
-    const partial = allNodeLabels.find((label) => toDisplayText(label).toLowerCase().includes(lower) || label.toLowerCase().includes(lower));
+    const partial = allNodeLabels.find((label) => normalize(label).includes(lower));
     return partial || null;
+  }
+
+  function syncParameterUrl(label) {
+    if (!window.history?.replaceState) return;
+    const url = new URL(window.location.href);
+    url.searchParams.delete("class");
+    if (label) url.searchParams.set("parameter", normalizeKnownLabel(label));
+    else url.searchParams.delete("parameter");
+    if (url.href !== window.location.href) window.history.replaceState(null, "", url.href);
+  }
+
+  function requestedParameter() {
+    const params = new URL(window.location.href).searchParams;
+    const value = params.get("parameter") || params.get("class");
+    if (!value) return null;
+    return parameterNames?.resolve(value, false)
+      || parameterNames?.resolve(value.replace(/^bounded\s+/i, ""), false)
+      || null;
   }
 
   function handleFindPath() {
@@ -1279,6 +1357,8 @@
     } else {
       refreshViewport();
     }
+    const requested = requestedParameter();
+    if (requested) selectNodeByLabel(requested);
   });
 
   window.addEventListener("resize", () => queueViewportRefresh({ refit: false }));

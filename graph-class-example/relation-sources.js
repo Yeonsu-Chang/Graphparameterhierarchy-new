@@ -63,7 +63,41 @@
     transductions: ["Braunfeld, Nesetril, Ossona de Mendez & Siebertz", 2025, "On first-order transductions of classes of graphs", "https://lmcs.episciences.org/15918"],
     sparsity: ["Nesetril & Ossona de Mendez", 2012, "Sparsity: Graphs, Structures, and Algorithms", "https://doi.org/10.1007/978-3-642-27875-4"],
     adler: ["Adler & Adler", 2014, "Interpreting nowhere dense graph classes as a classical notion of model theory", "https://eprints.whiterose.ac.uk/id/eprint/101104/1/adlersquare-ejc.pdf"],
-    inducedSubdivisions: ["Dvorak", 2018, "Induced subdivisions and bounded expansion", "https://arxiv.org/abs/1706.05766"]
+    inducedSubdivisions: ["Dvorak", 2018, "Induced subdivisions and bounded expansion", "https://arxiv.org/abs/1706.05766"],
+    gyarfasPathChi: ["András Gyárfás",1987,"Problems from the world surrounding perfect graphs","https://www.renyi.hu/~gyarfas/Cikkek/25_Gyarfas_ProblemsFromTheWorldSurroundingPerfectGraphs.pdf"],
+    packingTreewidth: ["Nikabadi & Rzążewski",2026,"Induced packing treewidth","https://arxiv.org/html/2607.07595v1"],
+    packingTreewidthII: ["Nikabadi & Rzążewski",2026,"Induced packing treewidth II. Excluding a clique or a biclique","https://arxiv.org/html/2609.21615v1"],
+    treeChromatic: ["Seymour",2016,"Tree-chromatic number","https://doi.org/10.1016/j.jctb.2015.08.002"],
+    treeChromaticProduct: ["Lin",2026,"Treewidth and the Product of Tree-Independence and Tree-Chromatic Numbers","https://arxiv.org/html/2610.20407v1"],
+    smallTwinWL: ["Heinrich, Lichter, Pakhomenko & Raßmann",2026,"Weisfeiler-Leman on graphs of small twin-width","https://arxiv.org/html/2601.05892v1"],
+    neighborhoodMerge: ["Bonamy & Geniet",2025,"χ-Boundedness and Neighbourhood Complexity of Bounded Merge-Width Graphs","https://arxiv.org/html/2504.08266v2"],
+    neighborhoodDependent: ["Dreier, Mählmann, McCarty, Pilipczuk & Toruńczyk",2026,"Neighborhood Complexity and Radius-1 Merge-Width in Monadically Dependent Graph Classes","https://arxiv.org/html/2607.10941v1"],
+    neighborhoodTwin: ["Bonnet, Foucaud, Lehtilä & Parreau",2024,"Neighbourhood complexity of graphs of bounded twin-width","https://arxiv.org/abs/2301.04217v2"],
+    neighborhoodExpansion: ["Reidl, Sánchez Villaamil & Stavropoulos",2019,"Characterising bounded expansion by neighbourhood complexity","https://doi.org/10.1016/j.ejc.2018.08.001"],
+    linearNeighborhoodAlgorithms: ["Bonnet, Duron, Pilipczuk, Sokołowski & Toruńczyk",2026,"Time-Optimal APSP and Matrix Multiplication in Classes of Linear Neighborhood Complexity","https://arxiv.org/abs/2608.25212"],
+    graphVCTwin: ["Biedl, LaGrange & Spirkl",2026,"The Twin-Width of Graphs of Bounded VC-Dimension","https://arxiv.org/abs/2606.21640"],
+    properMixedThin: ["Balabán, Hliněný & Jedelský",2022,"Twin-width and Transductions of Proper k-Mixed-Thin Graphs","https://arxiv.org/html/2202.12536v2"],
+    nonCrossingH: ["Bonomo-Braberman, Brettell, Köhler, Munaro & Paulusma",2025,"Non-crossing H-graphs: a generalization of proper interval graphs admitting FPT algorithms","https://arxiv.org/html/2501.11192v3"],
+    twinAlgorithms: ["Bonnet, Geniet, Kim, Thomassé & Watrigant", 2021, "Twin-width III: Max Independent Set, Min Dominating Set, and Coloring", "https://perso.ens-lyon.fr/edouard.bonnet/publi/twin-width3.pdf"],
+    treeChromaticJoint: ["Koutsoutis, Krause, Liu, Redzic & Ueckerdt", 2025, "On the Relation Between Treewidth, Tree-Independence Number, and Tree-Chromatic Number of Graphs", "https://arxiv.org/html/2504.19751v2"],
+    circleChi2022: ["James Davies",2022,"Improved bounds for colouring circle graphs","https://arxiv.org/html/2107.03585v2"],
+    clawList2012: ["Esperet, Gyárfás & Maffray",2012,"List-coloring claw-free graphs with small clique number","https://oc.g-scop.grenoble-inp.fr/esperet/publications/clawfree.pdf"],
+    shannon1949: ["Claude E. Shannon",1949,"A Theorem on Coloring the Lines of a Network","https://doi.org/10.1002/sapm1949281148"],
+    vizing1964: ["Vadim G. Vizing",1964,"On an estimate of chromatic class of a p-graph (authorized English translation reprinted 2012)","https://www.tu-ilmenau.de/fileadmin/Bereiche/MN/komgra/BackMatterWiley.pdf"],
+    fourColor1997: ["Robertson, Sanders, Seymour & Thomas",1997,"The Four-Colour Theorem","https://doi.org/10.1006/jctb.1997.1750"],
+    erdos1959: ["Paul Erdős",1959,"Graph theory and probability","https://doi.org/10.4153/CJM-1959-003-9"],
+    twinPolyChi: ["Bourneuf & Thomassé",2025,"Bounded Twin-Width Graphs are Polynomially χ-Bounded","https://doi.org/10.19086/aic.2025.2"],
+    inducedMatchingChi: ["Abrishami, Briański, Czyżewska, McCarty, Milanič, Rzążewski & Walczak",2025,"Excluding a clique or a biclique in graphs of bounded induced matching treewidth","https://arxiv.org/html/2405.04617v2"],
+    inducedMatchingRevisited: ["Alon, Milanič & Rzążewski",2025,"Induced matching treewidth and tree-independence number, revisited","https://web.math.princeton.edu/~nalon/PDFS/polyyolov1.pdf"],
+    treeChromaticNotes: ["Huynh, Reed, Wood & Yepremyan",2020,"Notes on Tree- and Path-chromatic Number","https://arxiv.org/html/2002.05363v1"],
+    mimChiQuestion: ["Cook & Wood (maintainers), question from O-joung Kwon",2023,"MATRIX–IBS Structural Graph Theory Downunder III: List of Open Problems","https://dimag.ibs.re.kr/home/cook/wp-content/uploads/sites/14/2023/04/Open_Problems_Matrix_IBS_2023-10.pdf"],
+    hLinearMim: ["Fomin, Golovach & Raymond",2020,"On the tractability of optimization problems on H-graphs","https://arxiv.org/html/1709.09737v4"],
+    functionality2021: ["Alecu, Atminas & Lozin",2021,"Graph functionality","https://wrap.warwick.ac.uk/id/eprint/144973/1/WRAP-Graph-functionality-Lozin-2020.pdf"],
+    auditFunctionalityBoxes2024: ["Dallard, Lozin, Milanič, Štorgel & Zamaraev",2024,"Functionality of Box Intersection Graphs","https://doi.org/10.1007/s00025-023-02075-2"],
+    auditFunctionalityRandom2024: ["Sylvester, Zamaraev & Zhukovskii",2024,"Functionality of Random Graphs","https://arxiv.org/abs/2412.19771"],
+    cocEnumPreprint2025: ["Christian Komusiewicz, Diptapriyo Majumdar & Frank Sommer",2025,"Polynomial-Size Enumeration Kernelizations for Long Path Enumeration","https://arxiv.org/html/2502.21164v1"],
+    dissociationMaximum2026: ["Pingshan Li, Jue Wu, Wei Jin & Min Xu",2026,"The characterization of the lower bound on the dissociation number of trees","https://doi.org/10.1016/j.disc.2025.114854"],
+    cocStructural2026: ["Jakob Greilhuber & Roohani Sharma",2026,"A Dividing Line for Structural Kernelization of Component Order Connectivity via Distance to Bounded Pathwidth","https://arxiv.org/html/2603.22240v1"]
   };
 
   function normalize(label) {
@@ -71,6 +105,8 @@
   }
 
   function resolveClassLabel(label) {
+    const classAlias = Object.entries(data.classAliases || {}).find(([alias]) => normalize(alias) === normalize(label));
+    if (classAlias) return classAlias[1];
     const bare = normalize(label).replace(/^bounded\s+/, "");
     const replacement = data.labelAliases?.[bare];
     return replacement ? `Bounded ${replacement}` : label;
@@ -83,11 +119,11 @@
   }
 
   const evidence = new Map();
-  function record(pairs, type, kind, sourceIds, locator, note) {
+  function record(pairs, type, kind, sourceIds, locator, note, checkedOn = "2026-10-26") {
     const sourceLocators = typeof locator === "object" ? locator : undefined;
     pairs.forEach(([source, target]) => evidence.set(key(source, target, type), {
       kind, sourceIds, locator: sourceLocators ? Object.values(sourceLocators).join("; ") : locator,
-      ...(sourceLocators ? { sourceLocators } : {}), note, checkedOn: "2026-10-26"
+      ...(sourceLocators ? { sourceLocators } : {}), note, checkedOn
     }));
   }
   function paper(pairs, sourceIds, locator, note, type = "subset") {
@@ -114,7 +150,7 @@
   record([["Monadically dependent \\cap Weakly sparse", "Nowhere dense"], ["Monadically stable \\cap Weakly sparse", "Nowhere dense"]], "equivalent", "derived", ["adler", "inducedSubdivisions"], { adler: "Theorems 7 and 9, including colored expansions", inducedSubdivisions: "Theorem 5, induced-subdivision characterization of nowhere denseness" }, "Combine the original nowhere-dense stability theorem with the induced-subdivision characterization in weakly sparse classes. Stability implies dependence. The flip-width paper records this as an older consequence, not a new flip-width theorem.");
   record([["Structurally nowhere dense", "Monadically stable"]], "subset", "derived", ["adler"], "Theorem 7; preservation under FO transductions", "Nowhere dense classes remain stable under unary expansions. Translate formulas through the witnessing FO transduction; this is a consequence of the original stability result, not a new flip-width result.");
   paper([["Bounded twin-width", "Bounded merge-width"]], ["merge"], "Theorem 1.4; Lemma 7.2", "Bounded twin-width gives bounded radius-r merge-width for every fixed r. No converse is claimed.");
-  paper([["Bounded merge-width", "Bounded flip-width"]], ["merge"], "Theorem 1.7; Theorem 7.6", "A class with bounded radius-r merge-width for every fixed r has bounded radius-r flip-width for every fixed r. The reverse implication is not asserted.");
+  paper([["Bounded merge-width", "Bounded flip-width"]], ["merge"], "Theorem 1.7; Theorem 7.6", "For each fixed target radius s, Theorem 7.6 uses the source bound at radius 2s-1. All-radius bounded merge-width therefore implies all-radius bounded flip-width. The reverse implication is not asserted.");
   paper([["Bounded twin-width", "Bounded (2\ud835\udc5f-1)-merge-width"]], ["merge"], "Lemma 7.2", "A contraction sequence gives a merge sequence of width bounded in terms of twin-width and any fixed radius, including 2r-1.");
   paper([["Bounded (2\ud835\udc5f-1)-merge-width", "Bounded \ud835\udc5f-flip-width"]], ["merge"], "Theorem 7.6", "For every positive integer r, fw_r(G) <= 4^(mw_(2r-1)(G)). The source node uses radius 2r-1; no same-radius comparison is asserted.");
   paper([["Bounded tree-depth", "Bounded shrub-depth"]], ["shrub"], "Proposition 3(a)", "Classes of bounded tree-depth have bounded shrub-depth.");
@@ -378,6 +414,85 @@
   record([["Bounded max leaf number", "Bounded feedback edge set number"]], "subset", "derived", ["maxLeaf"], "Section 5, proof of Theorem 5, bounded subdivision core; subdivision-invariance consequence", "Suppressing a degree-two chain preserves |E|-|V|+cc, the feedback edge set number. The bounded core therefore bounds this number. For disconnected graphs use the total leaf count of a spanning forest, not component max-leaf, and add the component bounds; isolated vertices contribute zero.");
   record([["Bounded linear rank-width", "Bounded reduced max-leaf"]], "subset", "derived", ["twinContractions"], "Theorem 1; Section 3.1, Theorem 12; red-edge leaf-count consequence", "The original linear-rank-width/total-twin-width characterization bounds the number of red edges along a contraction sequence. Every red graph has at most twice that many degree-one leaves; isolated red vertices are not counted. No 2026 quantitative improvement is needed.");
   elementary([["Bounded maximum induced matching", "Bounded max diameter of components"]], "A geodesic of length d contains an induced matching with at least floor((d+2)/3) edges; hence every component diameter is bounded by the induced matching number.");
+
+  // Research-class expansion: definitions, elementary arguments and paper theorems stay distinct.
+  record([["Almost linear neighborhood complexity", "Bounded VC-dimension"]], "subset", "elementary", [], "Shattering versus polynomial trace growth", "Fix ε = 1 and its uniform constant c. A shattered set of size d would have 2^d traces, contradicting 2^d ≤ cd^2 for all sufficiently large d.", "2026-10-29");
+  record([["Bounded chromatic number", "Bounded tree-chromatic number"]], "subset", "elementary", [], "One-bag tree decomposition", "Use V(G) as the only bag; tree-χ(G) is at most χ(G).", "2026-10-29");
+  record([["Bounded expansion", "Linear neighborhood complexity"]], "subset", "derived", ["neighborhoodExpansion"], "Theorems 1–3, specialize the neighborhood radius to one", "The bounded-expansion neighborhood-complexity bound implies a linear bound at radius one.", "2026-10-29");
+  record([["Bounded flip-width", "Linear neighborhood complexity"]], "subset", "paper", ["neighborhoodMerge"], "Theorem 1.6", "Radius-2 flip-width k bounds the number of traces of vertices outside A by 2^(2k+1)|A|; including vertices inside A adds at most |A|. All-radius bounded flip-width supplies the radius-2 bound.", "2026-10-29");
+  record([["Bounded induced P3-packing treewidth", "\\chi - bounded"]], "subset", "paper", ["packingTreewidthII"], "Theorem 1.5, t = 3", "For each fixed packing-width bound, chromatic number is bounded by a function of clique number.", "2026-10-29");
+  record([["Bounded merge-width", "Linear neighborhood complexity"]], "subset", "paper", ["neighborhoodMerge"], "Theorem 1.5", "Use the paper's linear neighborhood-complexity theorem; all-radius merge-width supplies its fixed-radius bound.", "2026-10-29");
+  record([["Bounded minor-matching hypertree-width", "Bounded induced P3-packing treewidth"]], "subset", "paper", ["packingTreewidth"], "Lemma 3.2(3), t = 2; P2 case is induced matching treewidth", "Induced path-packing treewidth cannot increase when the forbidden path length increases from two to three vertices.", "2026-10-29");
+  record([["Bounded proper mixed-thinness", "Bounded twin-width"]], "subset", "paper", ["properMixedThin"], "Theorem 4.1", "Every proper k-mixed-thin graph has twin-width at most 9k.", "2026-10-29");
+  record([["Bounded tree-chromatic number", "All graphs"]], "subset", "definition", [], "Universal class", "Every graph with this bounded parameter is a graph.", "2026-10-29");
+  record([["Bounded tree-independence number", "Bounded induced P3-packing treewidth"]], "subset", "derived", ["packingTreewidth"], "Lemma 3.2(3), applied twice from P1 to P3", "The P1 parameter is tree-independence number.", "2026-10-29");
+  record([["Bounded tree-independence number \\cap Bounded tree-chromatic number", "Bounded tree-chromatic number"]], "subset", "definition", [], "Intersection of class properties", "Drop the tree-independence-number condition.", "2026-10-29");
+  record([["Bounded tree-independence number \\cap Bounded tree-chromatic number", "Bounded tree-independence number"]], "subset", "definition", [], "Intersection of class properties", "Drop the tree-chromatic-number condition.", "2026-10-29");
+  record([["Bounded tree-independence number \\cap Bounded tree-chromatic number", "Bounded tree-width"]], "equivalent", "derived", ["treeChromaticJoint", "treeChromaticProduct"], { treeChromaticJoint: "Proposition 2 (January 2026 version of the 2025 preprint)", treeChromaticProduct: "Theorem 1.3" }, "The earlier tw+1 <= (tree-alpha)^2 tree-chi bound already gives this boundedness equivalence. Lin improves it to tw+1 <= ac(1+floor(log2 a)), where a = tree-alpha and c = tree-chi. Conversely, a width-w decomposition bounds both bag parameters by w+1.", "2026-10-29");
+  record([["Bounded tree-width", "Bounded tree-chromatic number"]], "subset", "elementary", [], "Tree-decomposition definitions", "A width-w decomposition has bags with at most w+1 vertices, hence each bag is (w+1)-colorable.", "2026-10-29");
+  record([["Bounded twin-width", "Linear neighborhood complexity"]], "subset", "paper", ["neighborhoodTwin"], "Theorem 1, upper bound on ν(d,k)", "The explicit bound for twin-width d is (d+2)2^(d+1)|A| on outside-A neighborhoods. Our all-vertices convention adds at most |A|. This improves an existing 2022 linear bound; it is not a claim of priority.", "2026-10-29");
+  record([["Bounded VC-dimension", "All graphs"]], "subset", "definition", [], "Universal class", "This is a condition on a graph's neighborhood set system.", "2026-10-29");
+  record([["Cluster", "Bounded induced P3-packing treewidth"]], "subset", "definition", [], "Introduction and Section 3, zero-width characterization", "Cluster graphs are exactly P3-free graphs, so their induced P3-packing treewidth is zero.", "2026-10-29");
+  record([["Cograph", "Twin-width at most 2"]], "subset", "elementary", [], "Twin merging in a cograph cotree", "Repeatedly merge a pair of twins given by a deepest cotree node; no red edge is created, yielding twin-width zero.", "2026-10-29");
+  record([["Linear neighborhood complexity", "Almost linear neighborhood complexity"]], "subset", "elementary", [], "Growth-rate definitions", "For |A| ≥ 1 and every ε > 0, c|A| ≤ c|A|^(1+ε).", "2026-10-29");
+  record([["Monadically dependent", "Almost linear neighborhood complexity"]], "subset", "paper", ["neighborhoodDependent"], "Theorem 2", "For every ε > 0, the number of traces is at most c(C,ε)|A|^(1+ε), uniformly over graphs and nonempty sets A.", "2026-10-29");
+  record([["Monadically low VC-density", "Almost linear neighborhood complexity"]], "subset", "definition", [], "Specialize to the edge formula E(x,y)", "Low VC-density for every formula in unary expansions bounds the edge formula's VC-density by one; the infimum need not be attained.", "2026-10-29");
+  record([["Non-crossing H-graphs (fixed H)", "Bounded proper mixed-thinness"]], "subset", "paper", ["nonCrossingH"], "Theorem 8", "For each fixed multigraph H, proper mixed-thinness is bounded by a function of |E(H)|. The model-to-representation construction requires a supplied non-crossing H-representation.", "2026-10-29");
+  record([["Proper circular-arc", "Bounded proper mixed-thinness"]], "subset", "paper", ["nonCrossingH"], "Lemma 20", "Every proper circular-arc graph is inversion-free proper 2-mixed-thin.", "2026-10-29");
+  record([["Proper interval", "Bounded proper mixed-thinness"]], "subset", "definition", [], "Definition 1 and Section 3", "A proper interval ordering gives a proper 1-mixed-thin representation with one part.", "2026-10-29");
+  record([["Tree", "Bounded proper mixed-thinness"]], "subset", "paper", ["properMixedThin"], "Proposition 3.2(c)", "Every tree is inversion-free proper 3-mixed-thin.", "2026-10-29");
+  record([["Twin-width at most 2", "Bounded reduced component max-leaf"]], "subset", "paper", ["reduced"], "Introduction, paragraph following Theorem 1.4", "A 2-sequence has red components that are paths, cycles or isolated vertices, each with component max-leaf at most two.", "2026-10-29");
+  record([["Twin-width at most 2", "Bounded twin-width"]], "subset", "definition", [], "Fixed threshold versus boundedness", "The uniform twin-width bound is two.", "2026-10-29");
+
+  record([["Proper interval", "Twin-width at most 2"]], "subset", "paper", ["twinAlgorithms"], "Lemma 13 (ICALP 2021 author version)", "Proper interval graphs are unit interval graphs. The universal unit-interval construction in Lemma 13 has a 2-contraction sequence.", "2026-10-29");
+  record([["Proper interval", "Non-crossing H-graphs (fixed H)"]], "subset", "definition", [], "Definition 3, fixed host H = K2", "Use a subdivision of K2 for a proper interval model. No interval properly contains another, so the difference of either model interval from the other is connected or empty. This specializes the fixed-host family to K2; it is not an inclusion into every arbitrary fixed-host H class.", "2026-10-29");
+
+  record([["Bounded merge-width","\\chi - bounded"]], "subset", "paper", ["neighborhoodMerge"], "Theorem 1.2 (arXiv v2)", "For radius-2 merge-width at most k and clique number at most t, chi <= (t+1)! k^(2t-2). All-radius bounded merge-width supplies this radius-2 bound. Polynomiality remains Conjecture 1.3.", "2026-10-29");
+  record([["Bounded twin-width","Polynomially \\chi - bounded"]], "subset", "paper", ["twinPolyChi"], "Theorem 1.2; DOI 10.19086/aic.2025.2", "Every fixed twin-width threshold gives a polynomial chi-bound. Theorem 1.1 is the older quasi-polynomial result, not this polynomial theorem.", "2026-10-29");
+  record([["Bounded maximum induced matching","Bounded minor-matching hypertree-width"]], "subset", "elementary", [], "Definition of tree-pi(P2) = tree-mu; one-bag tree decomposition", "A single bag containing V(G) gives tree-mu(G) at most the global induced-matching number. This uses the current tree-mu alias of the target.", "2026-10-29");
+  record([["Bounded maximum independent set","Bounded tree-independence number"]], "subset", "elementary", [], "Definition of tree-independence number; one-bag tree decomposition", "The one-bag decomposition gives tree-alpha(G) <= alpha(G).", "2026-10-29");
+  record([["Non-crossing H-graphs (fixed H)","Bounded linear mim-width"]], "subset", "derived", ["nonCrossingH","hLinearMim"], {"nonCrossingH":"Definition 3 (v3): every non-crossing H-graph is an H-graph","hLinearMim":"Theorem 1 (v4): caterpillar decomposition of mim-width at most max{1,2|E(H)|}"}, "Each non-crossing H-graph is an H-graph. Theorem 1 gives a caterpillar decomposition of mim-width <= max{1,2|E(H)|}. H is fixed across the class. Computing the decomposition requires the stated H-representation; structural existence does not require it as input.", "2026-10-29");
+  record([["Bounded tree-chromatic number","Bounded maximum clique"]], "subset", "elementary", [], "Helly property of vertex subtrees in a tree decomposition", "Every clique occurs in one bag of every tree decomposition. Thus omega(G) <= tree-chi(G). This implication does not bound chi(G).", "2026-10-29");
+  record([["Bounded tree-independence number","Polynomially \\chi - bounded"]], "subset", "derived", ["treeInd"], "Lemma 3.2; Ramsey recurrence and chi <= tw+1", "If tree-alpha <= a, then chi <= R(a+1,omega+1)-1 <= binom(a+omega,a)-1, a polynomial in omega for fixed a.", "2026-10-29");
+  record([["Line graph","Linearly \\chi - bounded"]], "subset", "derived", ["shannon1949"], "Main theorem, pp. 148-152; line-graph translation", "A line graph of a loopless multigraph H satisfies chi(L(H)) = chi-prime(H) <= floor(3 Delta(H)/2) <= floor(3 omega(L(H))/2). This also covers simple root graphs.", "2026-10-29");
+  record([["Claw-free","Polynomially \\chi - bounded"]], "subset", "derived", ["gyarfasPathChi"], "Theorem 2.2, forbidden star K1,3; neighborhood Ramsey argument", "Each neighborhood has neither an independent triple nor an omega-clique. Greedy coloring gives chi <= R(3,omega) <= binom(omega+1,2).", "2026-10-29");
+  record([["Circular-arc","Linearly \\chi - bounded"]], "subset", "elementary", [], "Cut-at-a-point argument in a circular-arc model", "Arcs covering a point form a clique of size at most omega. Deleting them leaves an interval graph requiring at most omega colors. Give the deleted clique a disjoint palette, obtaining chi <= 2 omega.", "2026-10-29");
+
+  record([["Circle","Polynomially \\chi - bounded"]], "subset", "derived", ["circleChi2022"], "Theorem 1 (February 2022 author version)", "The bound 2 omega log2 omega + 2 omega log2 log2 omega + 10 omega for omega>=2 is O(omega log omega), hence polynomial. Set f(1)=1. Theorem 2 rules out a linear binding function for the entire class.", "2026-10-29");
+  record([["Bounded cochromatic number","Linearly \\chi - bounded"]], "subset", "elementary", [], "Cochromatic partition", "If at most k clique or independent-set parts cover the vertices, color each with a separate palette of at most omega colors, obtaining chi <= k omega.", "2026-10-29");
+  record([["Bounded distance to Perfect","Linearly \\chi - bounded"]], "subset", "elementary", [], "Color after a bounded deletion set", "After deleting at most k vertices the perfect remainder uses at most omega colors; give deleted vertices fresh colors. Thus chi <= omega+k, and the same holds for every induced subgraph.", "2026-10-29");
+
+  record([["Bounded degeneracy","Bounded functionality"]], "subset", "elementary", [], "Functionality definition", "A vertex of degree at most d is determined by its at most d neighbors using the constant-zero function; hence fun(G)≤degeneracy(G).", "2026-10-29");
+  record([["Bounded twin-width","Bounded functionality"]], "subset", "derived", ["auditFunctionalityBoxes2024"], "Section 2, symmetric difference and functionality", "In each induced subgraph, the first merge of a d-sequence finds two vertices with at most d distinguishing vertices. Either vertex is determined by the other and those distinguishers, giving fun(G)≤d+1.", "2026-10-29");
+  record([["Bounded clique-width","Bounded functionality"]], "subset", "paper", ["functionality2021"], "Theorem 1 (accepted manuscript)", "Functionality is at most twice clique-width minus one.", "2026-10-29");
+  record([["Interval","Bounded functionality"]], "subset", "paper", ["auditFunctionalityBoxes2024"], "Theorem 3.2", "Every interval graph has functionality at most 8.", "2026-10-29");
+  record([["Proper interval","Bounded functionality"]], "subset", "paper", ["functionality2021"], "Theorem 4 (accepted manuscript)", "Unit interval graphs, equivalently proper interval graphs, have functionality at most 2.", "2026-10-29");
+  record([["Permutation","Bounded functionality"]], "subset", "paper", ["functionality2021"], "Theorem 5 (accepted manuscript)", "Permutation graphs have functionality at most 8.", "2026-10-29");
+  record([["Line graph","Bounded functionality"]], "subset", "paper", ["functionality2021"], "Theorem 7 (accepted manuscript)", "Line graphs have functionality at most 6. Parallel edges in a multigraph root give true twins of functionality at most one; if there are no such twins, apply the simple-root theorem.", "2026-10-29");
+  record([["Bounded functionality","Bounded VC-dimension"]], "subset", "derived", ["functionality2021"], "Theorem 9 (accepted manuscript); open/closed-neighborhood conversion", "The theorem bounds VC-dimension for closed neighborhoods. Boundedness is equivalent for open neighborhoods: if an open-neighborhood system shatters a set A of size a, retain B⊂A of size a−ceil(log₂(a+1)); every trace on B has more than a distinct witnesses on A, so one lies outside A and has the same closed-neighborhood trace. Thus unbounded open VC-dimension would force unbounded closed VC-dimension.", "2026-10-29");
+  record([["Bounded functionality","All graphs"]], "subset", "definition", [], "Universal graph class", "Every graph of bounded functionality is a graph.", "2026-10-29");
+
+  record([["Bounded vertex cover number","Bounded dissociation deletion number"]], "subset", "definition", [], "Deletion definitions", "kappa_2(G) <= vc(G), since deleting a vertex cover leaves an edgeless graph.", "2026-11-01");
+  record([["Bounded dissociation deletion number","Bounded r-CoC (fixed r ≥ 2)"]], "subset", "definition", [], "Deletion definitions, uniformly fixed r >= 2", "For every fixed r >= 2, kappa_r(G) <= kappa_2(G). The inclusion is an equality at r=2, and can be strict for every r>=3.", "2026-11-01");
+  record([["Bounded dissociation deletion number","Bounded distance to Cluster"]], "subset", "definition", [], "Deletion definitions", "A disjoint union of isolated vertices and edges is a cluster graph, so cluster-deletion distance <= kappa_2.", "2026-11-01");
+  record([["Bounded dissociation deletion number","Bounded distance to Linear forest"]], "subset", "definition", [], "Deletion definitions", "A disjoint union of isolated vertices and edges is a linear forest, so linear-forest deletion distance <= kappa_2.", "2026-11-01");
+  record([["Bounded dissociation deletion number","Bounded feedback vertex set number"]], "subset", "definition", [], "Deletion definitions", "The graph remaining after kappa_2 deletions is acyclic, so fvs(G) <= kappa_2(G).", "2026-11-01");
+  record([["Bounded dissociation deletion number","Bounded distance to Bipartite"]], "subset", "definition", [], "Deletion definitions", "The graph remaining after kappa_2 deletions is bipartite, so bipartite-deletion distance <= kappa_2.", "2026-11-01");
+  record([["Bounded dissociation deletion number","Bounded tree-depth"]], "subset", "elementary", [], "Elimination-forest construction", "If |X|<=k and Delta(G-X)<=1, put X on one ancestor chain and put the remaining isolated vertices and edges below it. This gives td(G)<=k+2.", "2026-11-01");
+  record([["Bounded dissociation deletion number","Bounded path-width"]], "subset", "elementary", [], "Path-decomposition construction", "Use one bag X union V(C) for each component C of G-X. Every bag has at most k+2 vertices, so pw(G)<=k+1.", "2026-11-01");
+  record([["Bounded r-CoC (fixed r ≥ 2)","Bounded tree-depth"]], "subset", "elementary", [], "Elimination-forest construction", "For |X|<=k leaving components of order at most fixed r, put X on a chain above elimination forests of the components, each of height at most r. Thus td(G)<=k+r.", "2026-11-01");
+  record([["Bounded r-CoC (fixed r ≥ 2)","Bounded path-width"]], "subset", "elementary", [], "Path-decomposition construction", "Use bags X union V(C) for the components C of G-X. Bag size is at most k+r, so pw(G)<=k+r-1.", "2026-11-01");
+  record([["Bounded dissociation deletion number","All graphs"]], "subset", "definition", [], "Universal graph class", "Every graph satisfying this fixed structural condition is a graph.", "2026-11-01");
+  record([["Bounded dissociation deletion number","Bounded chromatic number"]], "subset", "elementary", [], "Coloring after vertex deletion", "If κ₂(G) ≤ k, color the matching-and-isolated-vertex remainder with two colors and the at most k deleted vertices with fresh colors. Thus χ(G) ≤ k+2, uniformly over the class.", "2026-11-01");
+  record([["Bounded r-CoC (fixed r ≥ 2)","All graphs"]], "subset", "definition", [], "Universal graph class", "Every graph satisfying this fixed structural condition is a graph.", "2026-11-01");
+  record([["Bounded r-CoC (fixed r ≥ 2)","Bounded chromatic number"]], "subset", "elementary", [], "Coloring after vertex deletion", "If κ_r(G) ≤ k for fixed r ≥ 2, reuse r colors across all residual components and use k fresh colors for the deletion set. Thus χ(G) ≤ k+r; both k and r are uniform class constants.", "2026-11-01");
+
+  record([["Bounded vertex cover number","Bounded vertex integrity"]], "subset", "elementary", [], "Vertex-cover and vertex-integrity definitions", "A k-vertex cover leaves components of order at most one. Thus vi(G) ≤ k+1.", "2026-11-01");
+  record([["Bounded dissociation deletion number","Bounded vertex integrity"]], "subset", "elementary", [], "2-CoC and vertex-integrity definitions", "A deletion set of size k leaving components of order at most two witnesses vi(G) ≤ k+2.", "2026-11-01");
+  record([["Bounded r-CoC (fixed r ≥ 2)","Bounded vertex integrity"]], "subset", "elementary", [], "Fixed-r CoC and vertex-integrity definitions", "A deletion set of size k leaving components of order at most fixed r witnesses vi(G) ≤ k+r. Both k and r are uniform class constants.", "2026-11-01");
+  record([["Bounded vertex integrity","Bounded tree-depth"]], "subset", "elementary", [], "Elimination-forest construction", "For a set S attaining vertex integrity v, place S on one ancestor chain and attach each remaining component below it using a forest of height at most its order. The resulting height is at most |S|+max|C|=v, so td(G) ≤ vi(G).", "2026-11-01");
+  record([["Bounded vertex integrity","Bounded chromatic number"]], "subset", "elementary", [], "Coloring from a vertex-integrity modulator", "For a set S witnessing vi(G) ≤ v, color S with |S| fresh colors and reuse at most max|C| colors across residual components. Hence χ(G) ≤ v.", "2026-11-01");
+  record([["Bounded vertex integrity","All graphs"]], "subset", "definition", [], "Universal graph class", "Every graph with bounded vertex integrity is a graph.", "2026-11-01");
 
   function getEvidence(edge) {
     const explicit = evidence.get(key(edge.source, edge.target, edge.type));

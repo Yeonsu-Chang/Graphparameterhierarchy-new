@@ -1205,3 +1205,5 @@ input[type="search"]::-webkit-search-cancel-button {
     transition-duration: 0.01ms !important;
   }
 }
+/* Keep graph indices compact without increasing the surrounding line height. */
+.graph-subscript { font-size: 0.75em; line-height: 0; }

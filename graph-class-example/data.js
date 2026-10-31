@@ -3,17 +3,62 @@ window.GRAPH_CLASS_EXAMPLE = {
   subtitle: "If parameter A bounded implies parameter B bounded, then the graph class with bounded A is contained in the graph class with bounded B.",
   labelAliases: {
     "track number": "track layout number",
-    "𝑟-merge-width": "(2𝑟-1)-merge-width"
+    "𝑟-merge-width": "(2𝑟-1)-merge-width",
+    "(2r-1)-merge-width": "(2𝑟-1)-merge-width"
+  },
+
+  // Alternate names resolve to existing nodes without creating duplicate classes.
+  classAliases: {
+    "P4-free": "Cograph",
+    "Bounded induced P₃-packing treewidth": "Bounded induced P3-packing treewidth",
+    "Bounded tree-pi-P3": "Bounded induced P3-packing treewidth",
+    "Bounded tree-χ": "Bounded tree-chromatic number",
+    "Bounded tree-chi": "Bounded tree-chromatic number",
+    "Twin-width ≤ 2": "Twin-width at most 2",
+    "Twin-width 2": "Twin-width at most 2",
+    "tww at most 2": "Twin-width at most 2",
+    "Linear neighbourhood complexity": "Linear neighborhood complexity",
+    "Almost linear neighbourhood complexity": "Almost linear neighborhood complexity",
+    "Bounded VC dimension": "Bounded VC-dimension",
+    "Bounded neighborhood VC-dimension": "Bounded VC-dimension",
+    "Proper k-mixed-thin": "Bounded proper mixed-thinness",
+    "Bounded proper mixed thinness": "Bounded proper mixed-thinness",
+    "Noncrossing H-graphs": "Non-crossing H-graphs (fixed H)",
+    "Non-crossing fixed-host H-graphs": "Non-crossing H-graphs (fixed H)",
+    "Bounded induced matching treewidth": "Bounded minor-matching hypertree-width",
+    "Bounded induced matching tree-width": "Bounded minor-matching hypertree-width",
+    "Bounded tree-μ": "Bounded minor-matching hypertree-width",
+    "Bounded graph functionality": "Bounded functionality",
+    "Bounded 2-CoC": "Bounded dissociation deletion number",
+    "2-CoC": "Bounded dissociation deletion number",
+    "Bounded 2-CoC number": "Bounded dissociation deletion number",
+    "2-CoC number": "Bounded dissociation deletion number",
+    "Bounded 2-component order connectivity": "Bounded dissociation deletion number",
+    "Bounded 3-path vertex-cover number": "Bounded dissociation deletion number",
+    "Bounded dissociation number (deletion)": "Bounded dissociation deletion number",
+    "Bounded distance to maximum degree 1": "Bounded dissociation deletion number",
+    "Dissociation deletion number": "Bounded dissociation deletion number",
+    "Bounded r-CoC": "Bounded r-CoC (fixed r ≥ 2)",
+    "r-CoC": "Bounded r-CoC (fixed r ≥ 2)",
+    "Bounded r-CoC (fixed r)": "Bounded r-CoC (fixed r ≥ 2)",
+    "Bounded r-CoC number (fixed r)": "Bounded r-CoC (fixed r ≥ 2)",
+    "Bounded r-component order connectivity (fixed r)": "Bounded r-CoC (fixed r ≥ 2)",
+    "Bounded r-component-order connectivity (fixed r)": "Bounded r-CoC (fixed r ≥ 2)",
+    "Bounded r-CoC (fixed r >= 2)": "Bounded r-CoC (fixed r ≥ 2)",
+    "Bounded vertex-integrity": "Bounded vertex integrity",
+    "Bounded (2r-1)-merge-width": "Bounded (2𝑟-1)-merge-width"
   },
 
   // Add graph classes or parameter-defined classes here, sorted alphabetically.
   classes: [
     "\\chi - bounded",
     "All graphs",
+    "Almost linear neighborhood complexity",
     "Bipartite",
     "Bipartite chain",
     "Bipartite permutation",
     "Block",
+    "Bounded (2𝑟-1)-merge-width",
     "Bounded ∞-flip-width",
     "Bounded acyclic chromatic number",
     "Bounded arboricity",
@@ -40,6 +85,7 @@ window.GRAPH_CLASS_EXAMPLE = {
     "Bounded cut-width",
     "Bounded degeneracy",
     "Bounded diameter",
+    "Bounded dissociation deletion number",
     "Bounded distance to Bipartite",
     "Bounded distance to Block",
     "Bounded distance to Chordal",
@@ -64,10 +110,12 @@ window.GRAPH_CLASS_EXAMPLE = {
     "Bounded flip-width",
     "Bounded flip-width \\cap Weakly sparse",
     "Bounded fractional Hadwiger number",
+    "Bounded functionality",
     "Bounded genus",
     "Bounded geometric thickness",
     "Bounded girth",
     "Bounded ℎ-index",
+    "Bounded induced P3-packing treewidth",
     "Bounded interval number",
     "Bounded interval track number",
     "Bounded linear clique-width",
@@ -95,9 +143,10 @@ window.GRAPH_CLASS_EXAMPLE = {
     "Bounded path-width",
     "Bounded path-width \\cap Bounded max-degree",
     "Bounded polynomial expansion",
+    "Bounded proper mixed-thinness",
     "Bounded queue number",
+    "Bounded r-CoC (fixed r ≥ 2)",
     "Bounded 𝑟-flip-width",
-    "Bounded (2𝑟-1)-merge-width",
     "Bounded rank-depth",
     "Bounded rank-width",
     "Bounded reduced bandwidth",
@@ -120,14 +169,18 @@ window.GRAPH_CLASS_EXAMPLE = {
     "Bounded total twin-width",
     "Bounded track layout number",
     "Bounded tree bandwidth",
+    "Bounded tree-chromatic number",
     "Bounded tree-cut width",
     "Bounded tree-depth",
     "Bounded tree-independence number",
+    "Bounded tree-independence number \\cap Bounded tree-chromatic number",
     "Bounded tree-partition-width",
     "Bounded tree-width",
     "Bounded twin-cover",
     "Bounded twin-width",
+    "Bounded VC-dimension",
     "Bounded vertex cover number",
+    "Bounded vertex integrity",
     "Bounded weak ∞-coloring number",
     "Bounded well-linked number",
     "Bounded α-edge-crossing width",
@@ -154,6 +207,7 @@ window.GRAPH_CLASS_EXAMPLE = {
     "Interval",
     "Line graph",
     "Linear forest",
+    "Linear neighborhood complexity",
     "Linearly \\chi - bounded",
     "Low linear rank-width covers",
     "Low rank-width covers",
@@ -168,6 +222,7 @@ window.GRAPH_CLASS_EXAMPLE = {
     "Monadically stable bounded merge-width",
     "Monadically stable bounded shrub-depth",
     "Monadically stable bounded twin-width",
+    "Non-crossing H-graphs (fixed H)",
     "Nowhere dense",
     "Outerplanar",
     "Parity",
@@ -176,8 +231,8 @@ window.GRAPH_CLASS_EXAMPLE = {
     "Permutation",
     "Planar",
     "Polynomially \\chi - bounded",
-    "Proper circular-arc",
     "Proper chordal",
+    "Proper circular-arc",
     "Proper interval",
     "Ptolemaic",
     "Series-parallel",
@@ -192,9 +247,10 @@ window.GRAPH_CLASS_EXAMPLE = {
     "Structurally bounded tree-width",
     "Structurally nowhere dense",
     "Threshold",
-    "Tree",
     "Trapezoid",
+    "Tree",
     "Trivially perfect",
+    "Twin-width at most 2",
     "Wall",
     "Weakly chordal",
     "Weakly sparse"
@@ -203,9 +259,9 @@ window.GRAPH_CLASS_EXAMPLE = {
   // Primary categories: each class should belong to exactly one of these groups.
   classLabels: [
     {
-      id: "basic-graph-classes",
-      label: "Basic graph classes",
-      classes: [
+      "id": "basic-graph-classes",
+      "label": "Basic graph classes",
+      "classes": [
         "All graphs",
         "Bipartite",
         "Bipartite chain",
@@ -233,6 +289,7 @@ window.GRAPH_CLASS_EXAMPLE = {
         "Line graph",
         "Linear forest",
         "Meyniel",
+        "Non-crossing H-graphs (fixed H)",
         "Outerplanar",
         "Parity",
         "Path",
@@ -252,14 +309,16 @@ window.GRAPH_CLASS_EXAMPLE = {
         "Trapezoid",
         "Tree",
         "Trivially perfect",
+        "Twin-width at most 2",
         "Wall",
         "Weakly chordal"
       ]
     },
     {
-      id: "width-parameter-classes",
-      label: "Width parameter classes",
-      classes: [
+      "id": "width-parameter-classes",
+      "label": "Width parameter classes",
+      "classes": [
+        "Bounded (2𝑟-1)-merge-width",
         "Bounded ∞-flip-width",
         "Bounded bandwidth",
         "Bounded bisection width",
@@ -275,6 +334,7 @@ window.GRAPH_CLASS_EXAMPLE = {
         "Bounded edge-cut width",
         "Bounded flip-width",
         "Bounded fractional Hadwiger number",
+        "Bounded induced P3-packing treewidth",
         "Bounded linear clique-width",
         "Bounded linear mim-width",
         "Bounded linear NLC-width",
@@ -289,9 +349,9 @@ window.GRAPH_CLASS_EXAMPLE = {
         "Bounded o-mim-width",
         "Bounded path-independence number",
         "Bounded path-width",
+        "Bounded proper mixed-thinness",
         "Bounded queue number",
         "Bounded 𝑟-flip-width",
-        "Bounded (2𝑟-1)-merge-width",
         "Bounded rank-depth",
         "Bounded rank-width",
         "Bounded reduced bandwidth",
@@ -309,6 +369,7 @@ window.GRAPH_CLASS_EXAMPLE = {
         "Bounded total twin-width",
         "Bounded track layout number",
         "Bounded tree bandwidth",
+        "Bounded tree-chromatic number",
         "Bounded tree-cut width",
         "Bounded tree-depth",
         "Bounded tree-independence number",
@@ -320,9 +381,9 @@ window.GRAPH_CLASS_EXAMPLE = {
       ]
     },
     {
-      id: "graph-parameter-classes",
-      label: "Graph parameter classes",
-      classes: [
+      "id": "graph-parameter-classes",
+      "label": "Graph parameter classes",
+      "classes": [
         "Bounded acyclic chromatic number",
         "Bounded arboricity",
         "Bounded average degree",
@@ -337,6 +398,7 @@ window.GRAPH_CLASS_EXAMPLE = {
         "Bounded crossing number",
         "Bounded degeneracy",
         "Bounded diameter",
+        "Bounded dissociation deletion number",
         "Bounded distance to Bipartite",
         "Bounded distance to Block",
         "Bounded distance to Chordal",
@@ -355,6 +417,7 @@ window.GRAPH_CLASS_EXAMPLE = {
         "Bounded edge clique cover number",
         "Bounded feedback edge set number",
         "Bounded feedback vertex set number",
+        "Bounded functionality",
         "Bounded genus",
         "Bounded geometric thickness",
         "Bounded girth",
@@ -369,23 +432,28 @@ window.GRAPH_CLASS_EXAMPLE = {
         "Bounded maximum matching",
         "Bounded minimum degree",
         "Bounded neighborhood diversity",
+        "Bounded r-CoC (fixed r ≥ 2)",
         "Bounded simultaneous interval number",
         "Bounded strong ∞-coloring number",
         "Bounded thickness",
         "Bounded twin-cover",
         "Bounded vertex cover number",
+        "Bounded vertex integrity",
         "Bounded weak ∞-coloring number"
       ]
     },
     {
-      id: "model-theoretic-classes",
-      label: "Model-theoretic classes",
-      classes: [
+      "id": "model-theoretic-classes",
+      "label": "Model-theoretic classes",
+      "classes": [
+        "Almost linear neighborhood complexity",
         "Bounded expansion",
         "Bounded polynomial expansion",
         "Bounded sparse twin-width",
+        "Bounded VC-dimension",
         "Excluded minor",
         "Excluded topological minor",
+        "Linear neighborhood complexity",
         "Low linear rank-width covers",
         "Low rank-width covers",
         "Monadically dependent",
@@ -407,23 +475,24 @@ window.GRAPH_CLASS_EXAMPLE = {
       ]
     },
     {
-      id: "chi-bounded-classes",
-      label: "χ-bounded classes",
-      classes: [
+      "id": "chi-bounded-classes",
+      "label": "χ-bounded classes",
+      "classes": [
         "\\chi - bounded",
         "Linearly \\chi - bounded",
         "Polynomially \\chi - bounded"
       ]
     },
     {
-      id: "combined-classes",
-      label: "Combined classes",
-      classes: [
+      "id": "combined-classes",
+      "label": "Combined classes",
+      "classes": [
         "Bounded clique-width \\cap Weakly sparse",
         "Bounded flip-width \\cap Weakly sparse",
         "Bounded linear clique-width \\cap Weakly sparse",
         "Bounded path-width \\cap Bounded max-degree",
         "Bounded shrub-depth \\cap Weakly sparse",
+        "Bounded tree-independence number \\cap Bounded tree-chromatic number",
         "Monadically dependent \\cap Weakly sparse",
         "Monadically stable \\cap Weakly sparse"
       ]
@@ -503,6 +572,189 @@ window.GRAPH_CLASS_EXAMPLE = {
       classes: []
     }
   ],
+
+  // Definitions and class bibliographies; relation proofs remain in relation-sources.js.
+  classDetails: {
+    "Bounded induced P3-packing treewidth": {
+      "description": "Classes with a uniform bound on induced P3-packing treewidth: minimize over tree decompositions the largest number of pairwise anticomplete induced three-vertex paths that each intersect one bag. A path need only intersect the bag; it need not be contained in it.",
+      "references": [
+        {
+          "sourceId": "packingTreewidth",
+          "locator": "Section 3, definitions and Lemma 3.2"
+        },
+        {
+          "sourceId": "packingTreewidthII",
+          "locator": "Theorem 1.5 and Section 5.3"
+        }
+      ]
+    },
+    "Bounded tree-chromatic number": {
+      "description": "Classes with a uniform bound on the minimum, over tree decompositions, of the largest chromatic number of a graph induced by a bag. The minimizing decomposition may differ from one minimizing tree-independence number.",
+      "references": [
+        {
+          "sourceId": "treeChromaticNotes",
+          "locator": "Lemma 2.2: path-chromatic number two does not imply bounded chromatic number"
+        },
+        {
+          "sourceId": "treeChromatic",
+          "locator": "Definition of tree-chromatic number"
+        },
+        {
+          "sourceId": "treeChromaticProduct",
+          "locator": "Introduction, definitions and Theorem 1.3"
+        }
+      ]
+    },
+    "Bounded tree-independence number \\cap Bounded tree-chromatic number": {
+      "description": "Both tree-independence number and tree-chromatic number are uniformly bounded, possibly using different decompositions. This class property is equivalent to bounded treewidth; it does not assert a product equality of the parameter values.",
+      "references": [
+        {
+          "sourceId": "treeChromaticJoint",
+          "locator": "Proposition 2 (v2); original boundedness consequence"
+        },
+        {
+          "sourceId": "treeChromaticProduct",
+          "locator": "Theorem 1.3"
+        }
+      ]
+    },
+    "Twin-width at most 2": {
+      "description": "The fixed-threshold hereditary class of graphs G with tww(G) at most 2. This is narrower than the family of classes with an arbitrary fixed twin-width bound.",
+      "references": [
+        {
+          "sourceId": "twinAlgorithms",
+          "locator": "Corollary 12 and Lemma 13 (ICALP 2021 author version)"
+        },
+        {
+          "sourceId": "smallTwinWL",
+          "locator": "Section 5"
+        },
+        {
+          "sourceId": "reduced",
+          "locator": "Introduction, paragraph following Theorem 1.4"
+        }
+      ]
+    },
+    "Linear neighborhood complexity": {
+      "description": "There is a class-dependent constant c such that for every graph G in the class and every nonempty A contained in V(G), the number of distinct sets N_G(v) intersect A, over all v in V(G), is at most c|A|. This concerns the edge-neighborhood set system.",
+      "references": [
+        {
+          "sourceId": "neighborhoodMerge",
+          "locator": "Theorems 1.5 and 1.6"
+        },
+        {
+          "sourceId": "linearNeighborhoodAlgorithms",
+          "locator": "Abstract and class definition"
+        }
+      ]
+    },
+    "Almost linear neighborhood complexity": {
+      "description": "For every ε > 0 there is a constant c depending on the class and ε such that every nonempty A in every graph G has at most c|A|^(1+ε) distinct edge-neighborhood traces N_G(v) intersect A. The constants are uniform over G and A.",
+      "references": [
+        {
+          "sourceId": "neighborhoodDependent",
+          "locator": "Theorem 2 and the definition immediately preceding it"
+        }
+      ]
+    },
+    "Bounded VC-dimension": {
+      "description": "The neighborhood set systems (V(G), {N_G(v): v in V(G)}) have uniformly bounded VC-dimension. Only the edge relation is tested; this is weaker than requiring NIP for all formulas in all unary expansions.",
+      "references": [
+        {
+          "sourceId": "graphVCTwin",
+          "locator": "Introduction and neighborhood VC-dimension definition"
+        }
+      ]
+    },
+    "Bounded proper mixed-thinness": {
+      "description": "Classes of proper k-mixed-thin graphs for a fixed class-wide k, in the partition-and-pair-orders representation of Balabán, Hliněný and Jedelský. The qualifier proper is part of the definition; bounded ordinary thinness does not imply this condition.",
+      "references": [
+        {
+          "sourceId": "properMixedThin",
+          "locator": "Definition 1 and Theorem 4.1"
+        }
+      ]
+    },
+    "Non-crossing H-graphs (fixed H)": {
+      "description": "For each fixed multigraph H, intersection graphs of a non-crossing family of connected vertex sets in a subdivision of H: both A minus B and B minus A are connected for every pair of model sets, with empty differences allowed. H is uniform throughout a class, and width bounds may depend on H. This node is a schema for fixed-host classes, not the union over arbitrary input hosts H.",
+      "references": [
+        {
+          "sourceId": "nonCrossingH",
+          "locator": "Definition 3 and Theorem 8"
+        }
+      ]
+    },
+    "Bounded minor-matching hypertree-width": {
+      "description": "Existing parameter node, also called induced matching treewidth. Minimize over tree decompositions the maximum number of edges in an induced matching with each edge intersecting one bag; edges need not lie wholly inside the bag.",
+      "references": [
+        {
+          "sourceId": "packingTreewidth",
+          "locator": "Introduction, induced matching treewidth and Yolov's original name"
+        }
+      ]
+    },
+    "Bounded functionality": {
+      "description": "There is a uniform k such that every nonempty induced subgraph H has a vertex y and at most k other vertices x₁,…,xₖ whose adjacency bits determine adjacency to y: A_H(y,z)=f(A_H(x₁,z),…,A_H(xₖ,z)) for every z outside {y,x₁,…,xₖ}, for a Boolean function f.",
+      "references": [
+        {
+          "sourceId": "functionality2021",
+          "locator": "Definitions 1 and 2; accepted manuscript"
+        },
+        {
+          "sourceId": "auditFunctionalityBoxes2024",
+          "locator": "Section 2; Theorem 3.2"
+        },
+        {
+          "sourceId": "auditFunctionalityRandom2024",
+          "locator": "Abstract and main theorems"
+        }
+      ]
+    },
+    "Bounded dissociation deletion number": {
+      "description": "A uniform constant k bounds κ₂(G) = min{|S| : Δ(G−S) ≤ 1}. After deletion, only isolated vertices and edges remain. This is 2-CoC, also called the minimum 3-path vertex-cover number, where P3 means an ordinary subgraph. It is not induced-P3 deletion (Cluster deletion). It is also not the maximum size d of a set D with Δ(G[D]) ≤ 1: κ₂(G) = |V(G)| − d.",
+      "references": [
+        {
+          "sourceId": "cocEnumPreprint2025",
+          "locator": "Section 2, Graph Parameters: minimum-deletion definition; Theorem 1.2"
+        },
+        {
+          "sourceId": "dissociationMaximum2026",
+          "locator": "Abstract and Introduction: contrasting maximum retained-set convention"
+        }
+      ]
+    },
+    "Bounded r-CoC (fixed r ≥ 2)": {
+      "description": "For one fixed integer r ≥ 2, a uniform constant k bounds κᵣ(G), the minimum number of vertices whose deletion leaves every connected component with at most r vertices. Both k and r are fixed throughout the selected graph class; r cannot grow with the input graph. The case r=2 is dissociation deletion. The case r=1 is vertex cover, represented by the existing vertex-cover node. This family is not declared equivalent to its r=2 specialization.",
+      "references": [
+        {
+          "sourceId": "cocEnumPreprint2025",
+          "locator": "Section 2, Graph Parameters; Corollary 1; Section 4.5 (constant r)"
+        },
+        {
+          "sourceId": "cocStructural2026",
+          "locator": "Introduction, definition of COC and fixed d-COC; Main Theorem 1"
+        }
+      ]
+    },
+    "Bounded vertex integrity": {
+      "description": "A uniform constant v bounds vi(G) = min_S (|S| + max{|C| : C is a connected component of G−S}), with maximum zero for an empty remainder. A set attaining the bound places its vertices on an ancestor chain above the remaining components, giving treedepth at most v. Fixed-r CoC at most k gives vertex integrity at most k+r; a vertex cover of size k gives at most k+1.",
+      "references": [
+        {
+          "sourceId": "cocEnumPreprint2025",
+          "locator": "Section 2, Graph Parameters: vertex integrity and r-component order connectivity definitions"
+        }
+      ]
+    },
+    "Bounded (2𝑟-1)-merge-width": {
+      "description": "For one fixed positive integer r, graphs have a uniform bound on merge-width at radius 2r−1. This radius is retained so that Theorem 7.6 gives bounded flip-width at radius r. All-radius bounded merge-width is a separate condition; the theorem does not assert a same-radius comparison for arbitrary r.",
+      "references": [
+        {
+          "sourceId": "merge",
+          "locator": "Definition 3.2; Theorem 7.6 and Lemma 7.11: fw_r(G) ≤ 4^(mw_(2r−1)(G)); June 2026 revision v2"
+        }
+      ]
+    }
+  },
 
   // Add inclusion/equivalence relations here, sorted by source then target.
   relations: [
@@ -927,6 +1179,79 @@ window.GRAPH_CLASS_EXAMPLE = {
     { source: "Claw-free", target: "All graphs" },
     { source: "Monadically dependent", target: "All graphs" },
     { source: "Trapezoid", target: "All graphs" },
-    { source: "Weakly sparse", target: "All graphs" }
+    { source: "Weakly sparse", target: "All graphs" },
+
+    // Research-class expansion, checked 29 October 2026.
+    { source: "Almost linear neighborhood complexity", target: "Bounded VC-dimension" },
+    { source: "Bounded chromatic number", target: "Bounded tree-chromatic number" },
+    { source: "Bounded expansion", target: "Linear neighborhood complexity" },
+    { source: "Bounded flip-width", target: "Linear neighborhood complexity" },
+    { source: "Bounded induced P3-packing treewidth", target: "\\chi - bounded" },
+    { source: "Bounded merge-width", target: "Linear neighborhood complexity" },
+    { source: "Bounded minor-matching hypertree-width", target: "Bounded induced P3-packing treewidth" },
+    { source: "Bounded proper mixed-thinness", target: "Bounded twin-width" },
+    { source: "Bounded tree-chromatic number", target: "All graphs" },
+    { source: "Bounded tree-independence number", target: "Bounded induced P3-packing treewidth" },
+    { source: "Bounded tree-independence number \\cap Bounded tree-chromatic number", target: "Bounded tree-chromatic number" },
+    { source: "Bounded tree-independence number \\cap Bounded tree-chromatic number", target: "Bounded tree-independence number" },
+    { source: "Bounded tree-independence number \\cap Bounded tree-chromatic number", target: "Bounded tree-width", type: "equivalent" },
+    { source: "Bounded tree-width", target: "Bounded tree-chromatic number" },
+    { source: "Bounded twin-width", target: "Linear neighborhood complexity" },
+    { source: "Bounded VC-dimension", target: "All graphs" },
+    { source: "Cluster", target: "Bounded induced P3-packing treewidth" },
+    { source: "Cograph", target: "Twin-width at most 2" },
+    { source: "Linear neighborhood complexity", target: "Almost linear neighborhood complexity" },
+    { source: "Monadically dependent", target: "Almost linear neighborhood complexity" },
+    { source: "Monadically low VC-density", target: "Almost linear neighborhood complexity" },
+    { source: "Non-crossing H-graphs (fixed H)", target: "Bounded proper mixed-thinness" },
+    { source: "Proper circular-arc", target: "Bounded proper mixed-thinness" },
+    { source: "Proper interval", target: "Bounded proper mixed-thinness" },
+    { source: "Tree", target: "Bounded proper mixed-thinness" },
+    { source: "Twin-width at most 2", target: "Bounded reduced component max-leaf" },
+    { source: "Twin-width at most 2", target: "Bounded twin-width" },
+    { source: "Proper interval", target: "Twin-width at most 2" },
+    { source: "Proper interval", target: "Non-crossing H-graphs (fixed H)" },
+    {"source":"Bounded merge-width","target":"\\chi - bounded"},
+    {"source":"Bounded twin-width","target":"Polynomially \\chi - bounded"},
+    {"source":"Bounded maximum induced matching","target":"Bounded minor-matching hypertree-width"},
+    {"source":"Bounded maximum independent set","target":"Bounded tree-independence number"},
+    {"source":"Non-crossing H-graphs (fixed H)","target":"Bounded linear mim-width"},
+    {"source":"Bounded tree-chromatic number","target":"Bounded maximum clique"},
+    {"source":"Bounded tree-independence number","target":"Polynomially \\chi - bounded"},
+    {"source":"Line graph","target":"Linearly \\chi - bounded"},
+    {"source":"Claw-free","target":"Polynomially \\chi - bounded"},
+    {"source":"Circular-arc","target":"Linearly \\chi - bounded"},
+    {"source":"Circle","target":"Polynomially \\chi - bounded"},
+    {"source":"Bounded cochromatic number","target":"Linearly \\chi - bounded"},
+    {"source":"Bounded distance to Perfect","target":"Linearly \\chi - bounded"},
+    {"source":"Bounded degeneracy","target":"Bounded functionality"},
+    {"source":"Bounded twin-width","target":"Bounded functionality"},
+    {"source":"Bounded clique-width","target":"Bounded functionality"},
+    {"source":"Interval","target":"Bounded functionality"},
+    {"source":"Proper interval","target":"Bounded functionality"},
+    {"source":"Permutation","target":"Bounded functionality"},
+    {"source":"Line graph","target":"Bounded functionality"},
+    {"source":"Bounded functionality","target":"Bounded VC-dimension"},
+    {"source":"Bounded functionality","target":"All graphs"},
+    {"source":"Bounded vertex cover number","target":"Bounded dissociation deletion number"},
+    {"source":"Bounded dissociation deletion number","target":"Bounded r-CoC (fixed r ≥ 2)"},
+    {"source":"Bounded dissociation deletion number","target":"Bounded distance to Cluster"},
+    {"source":"Bounded dissociation deletion number","target":"Bounded distance to Linear forest"},
+    {"source":"Bounded dissociation deletion number","target":"Bounded feedback vertex set number"},
+    {"source":"Bounded dissociation deletion number","target":"Bounded distance to Bipartite"},
+    {"source":"Bounded dissociation deletion number","target":"Bounded tree-depth"},
+    {"source":"Bounded dissociation deletion number","target":"Bounded path-width"},
+    {"source":"Bounded r-CoC (fixed r ≥ 2)","target":"Bounded tree-depth"},
+    {"source":"Bounded r-CoC (fixed r ≥ 2)","target":"Bounded path-width"},
+    {"source":"Bounded dissociation deletion number","target":"All graphs"},
+    {"source":"Bounded dissociation deletion number","target":"Bounded chromatic number"},
+    {"source":"Bounded r-CoC (fixed r ≥ 2)","target":"All graphs"},
+    {"source":"Bounded r-CoC (fixed r ≥ 2)","target":"Bounded chromatic number"},
+    {"source":"Bounded vertex cover number","target":"Bounded vertex integrity"},
+    {"source":"Bounded dissociation deletion number","target":"Bounded vertex integrity"},
+    {"source":"Bounded r-CoC (fixed r ≥ 2)","target":"Bounded vertex integrity"},
+    {"source":"Bounded vertex integrity","target":"Bounded tree-depth"},
+    {"source":"Bounded vertex integrity","target":"Bounded chromatic number"},
+    {"source":"Bounded vertex integrity","target":"All graphs"}
   ]
 };

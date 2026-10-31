@@ -2,6 +2,7 @@
   "use strict";
 
   const data = window.GRAPH_CLASS_COMPLEXITY;
+  const displayText = (text) => window.GRAPH_NOTATION?.toPlain(text) ?? String(text);
   const problemBody = document.getElementById("complexity-problems");
   const logicBody = document.getElementById("complexity-logic");
   if (!data || !problemBody || !logicBody) return;
@@ -65,14 +66,14 @@
         const status = conjecture ? finding.status.replace(/^Conjectured\s+/i, "") : finding.status;
         badge.textContent = finding.parameter ? `${status}(${finding.parameter})` : status;
         if (conjecture) badge.setAttribute("aria-label", `Conjecture, not proved: ${badge.textContent}`);
-        badge.title = [
+        badge.title = displayText([
           finding.parameterName ? `Parameter: ${finding.parameterName}` : "",
           finding.origin ? `Applies via: ${finding.origin}` : "",
           finding.locator || "",
           finding.explanation || "",
           finding.inference || "",
           finding.condition || ""
-        ].filter(Boolean).join(". ");
+        ].filter(Boolean).join(". "));
         const resultLine = document.createElement("div");
         resultLine.className = "complexity-result-line";
         resultLine.appendChild(badge);
@@ -86,7 +87,8 @@
         if (finding.condition) {
           const note = document.createElement("span");
           note.className = "complexity-condition";
-          note.textContent = finding.condition;
+          if (window.GRAPH_NOTATION) window.GRAPH_NOTATION.setText(note, finding.condition);
+          else note.textContent = finding.condition;
           resultLine.appendChild(note);
         }
         item.appendChild(resultLine);
@@ -160,8 +162,10 @@
     }
     renderRows(problemBody, problemRows);
     renderRows(logicBody, results.logic);
-    document.getElementById("complexity-class-label").textContent = label.replace(/\\cap/g, "\u2229");
-    document.getElementById("complexity").setAttribute("aria-label", `Complexity on ${label}`);
+    const classLabel = document.getElementById("complexity-class-label");
+    if (window.GRAPH_NOTATION) window.GRAPH_NOTATION.setText(classLabel, label);
+    else classLabel.textContent = label.replace(/\\cap/g, "\u2229");
+    document.getElementById("complexity").setAttribute("aria-label", `Complexity on ${displayText(label)}`);
   };
 
   formTabs.forEach((tab, index) => {

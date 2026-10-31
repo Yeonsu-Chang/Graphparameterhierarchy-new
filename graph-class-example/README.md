@@ -1,8 +1,8 @@
-# Bounded Parameter Graph Classes Example
+# Graph Class Map
 
-This folder is independent from the homepage.
-
-Open `index.html` in a browser to view the mockup.
+Open `index.html` to explore the published Class Map. Its class data and evidence
+are maintained in this folder. The map shares `../graph-notation.js` with the
+homepage, and selected homepage parameters link to their canonical class entries.
 
 ## Mathematical convention
 
@@ -12,7 +12,9 @@ If bounded parameter A implies bounded parameter B, then:
 { graph classes with bounded A } subset { graph classes with bounded B }
 ```
 
-So the page uses nested Euler diagrams for known implications. A Venn-style overlap is used only when the example data does not record a clear inclusion.
+The graph displays supported inclusion and functional-equivalence relations.
+Transitive reduction can hide redundant edges without removing their evidence
+from the relation selector.
 
 ## Edit data
 
@@ -142,18 +144,18 @@ paths in the original relation data; citations are not copied to unrelated edges
 The path finder prefers fully supported paths over unchecked shortcuts.
 
 All-radius merge-width and flip-width classes are distinct from their fixed-radius
-counterparts. The merge/flip edge cites Theorem 7.6 with the source node explicitly
-labeled `(2r-1)-merge-width` and the target `r-flip-width`. This records the proved
-radius adjustment, not a same-radius comparison. Old r-merge and track-number
-class links redirect to their corrected nodes through the recorded label aliases.
+counterparts. The merge/flip edge keeps the explicit source radius
+`(2r-1)-merge-width` and target `r-flip-width`, matching Theorem 7.6. The
+all-radius merge/flip edge also retains its proof. The class bibliography
+explains the radius adjustment; navigation aliases do not change proof endpoints.
 
 `All graphs` is the universal superclass. The previously maximal components
 connect to it by definition; the remaining classes reach it through the existing
 supported inclusions and equivalences. No paper citation is invented for these
 definitional relations.
 
-The expanded audit registers 61 references. Of 422 raw relation records (including
-reciprocal equivalence records), 413 have a supported direct or composed argument,
+The published audit registers 95 references. Of 493 raw relation records (including
+reciprocal equivalence records), 484 have a supported direct or composed argument,
 9 are excluded, and none remain Unchecked. Excluded records are retained for audit
 but do not enter graph reduction, equivalence groups, or citation proof paths.
 Homepage parameter edges are checked against these exclusions and every shared
@@ -175,9 +177,132 @@ graphs uses the total leaf count of a spanning forest, not component max-leaf.
 For reduced max-leaf, isolated red vertices are not leaves, as specified by the
 user. This permits its bound through linear clique-width and total twin-width.
 
-The machine-readable audit is `../research/class-relation-audit-2026-10-26.json`.
+The current machine-readable audit is `../research/class-relation-audit-2026-11-01.json`.
 Regenerate it with `node research/export-class-relation-audit.cjs` after changing
 the relation data or evidence.
 
 Run `node --test tests/*.test.cjs` from the repository root to check the citation
 metadata, proof paths, equivalence groups and complexity catalog.
+
+## Published additions, 1 November 2026
+
+The published map contains 203 classes: the previous 190 classes and 13 additions.
+The authoritative scope is
+[`../research/published-class-additions-2026-11-01.json`](../research/published-class-additions-2026-11-01.json).
+It records the published and deferred class names separately.
+
+The additions cover these groups:
+
+- Neighborhoods: `Linear neighborhood complexity`, `Almost linear neighborhood
+  complexity`, and `Bounded VC-dimension`.
+- Tree decompositions: `Bounded induced P3-packing treewidth`, `Bounded
+  tree-chromatic number`, and the intersection of bounded tree-independence and
+  bounded tree-chromatic number.
+- Dense graph widths: `Twin-width at most 2`, `Bounded proper mixed-thinness`, and
+  `Non-crossing H-graphs (fixed H)`.
+- Functionality: `Bounded functionality`.
+- Deletion and component parameters: `Bounded dissociation deletion number`,
+  `Bounded r-CoC (fixed r ≥ 2)`, and `Bounded vertex integrity`.
+
+The 24 deferred additions involving induced exclusions, including the intersection
+node, are not part of this publication. Existing classes such as `Claw-free` remain.
+Deferred working material is preserved locally in
+`output/deferred-2026-11-01/free-classes.json`; it is not a published site asset.
+The older local research fragments are not the specification for this release.
+
+`classDetails` supplies definitions and expandable class bibliographies with
+source locations. These references are separate from the evidence for an
+individual inclusion. `classAliases` supports navigation without creating
+duplicate nodes or equivalence claims. The unfiltered list includes every class.
+Fixed hosts and structural parameter bounds are uniform throughout each
+represented graph class, rather than chosen separately for each input graph.
+
+Linear and almost-linear neighborhood complexity use traces N(v) intersect A
+for all vertices v, including vertices in A. The corresponding inclusions do not
+assert a converse to monadic dependence. Bounded VC-dimension does not imply
+bounded twin-width. Induced P3-packing treewidth and sim-width are not identified;
+the recorded comparisons retain their direction and hypotheses.
+
+Bounded functionality receives the recorded degeneracy, twin-width, clique-width
+and intersection-graph subclasses and implies bounded VC-dimension. The checked
+structural papers do not supply a verified χ-binding function for the full
+bounded-functionality family. Its χ panel therefore says `Unchecked`, without
+asserting a counterexample or a sourced open problem. These structural additions
+do not automatically add class-specific algorithms to the complexity catalog.
+
+## χ-binding functions
+
+`chi-binding-data.js` records 60 findings independently of coloring-algorithm
+complexity. `chi-binding.js` renders explicit functions, existential bounds,
+negative results, source-audit limitations and precisely scoped open questions.
+The convention is χ(H) ≤ f(ω(H)) for every nonempty induced subgraph H, with all
+structural parameters fixed uniformly across the class. Set χ=ω=0 for the empty
+graph; logarithmic expressions are used only in their stated domain.
+
+Width-dependent constants, unspecified coefficients and existential exponents
+stay symbolic. Additional hypotheses, such as a simple root for a line graph,
+appear separately and do not establish a bound for a larger class. The strongest
+recorded growth and a directly stated explicit bound remain visible when many
+superclass bounds are inherited. Upper bounds are not claimed optimal unless
+stated and do not imply exact coloring running times.
+
+Supported upper bounds transfer to subclasses; counterexample families transfer
+to superclasses. Open questions stay attached to their stated class, and a
+polynomial strengthening does not become an open ordinary χ-boundedness claim.
+Bounded tree-chromatic number is not χ-bounded, as witnessed by shift graphs.
+Its intersection with bounded tree-independence number has bounded treewidth
+and hence a constant chromatic bound.
+
+The 203 published classes split into 160 with verified upper bounds, 3 with
+verified counterexamples, 2 with a cited open ordinary χ-boundedness question,
+and 38 without an ordinary bound verified in this catalog. This coverage is a
+catalog audit, not a completeness theorem. Likewise, zero Unchecked inclusion
+records certifies evidence coverage; it does not mean every underlying paper
+proof has been independently re-proved.
+
+## Dissociation deletion and component order connectivity
+
+`Bounded dissociation deletion number` means a uniform bound k on the minimum
+vertex deletions leaving maximum degree at most one. Its aliases include
+`Bounded 2-CoC` and `Bounded 3-path vertex-cover number`. This removes ordinary
+P3 subgraphs, unlike induced-P3 removal for Cluster deletion. If d is the maximum
+size of a retained set inducing maximum degree at most one, the deletion number
+is n-d. No ambiguous bare dissociation-number alias is registered.
+
+`Bounded r-CoC (fixed r ≥ 2)` uses one fixed component-order limit r and one
+uniform deletion bound k for each represented class. The r=1 specialization is
+vertex cover. The family receives 2-CoC without a reverse equivalence: disjoint
+P3s distinguish the parameters when r≥3. Only the 2-CoC node has the recorded
+links to bounded deletion distance to Cluster, Linear forest and Bipartite, and
+to bounded feedback vertex set. These links are not claimed for arbitrary r≥3.
+
+Both classes imply bounded treedepth, pathwidth and chromatic number. The
+recorded elementary proofs give td≤k+r, pw≤k+r-1 and χ≤k+r, specialized to k+2,
+k+1 and k+2 for 2-CoC. Restricting the deletion set proves the coloring bound for
+every induced subgraph. Fixed r is essential.
+
+Vertex integrity is vi(G)=min_S (|S|+max_C |C|), where C ranges over components of
+G−S and an empty remainder has maximum zero. The explicit homepage chain is
+vertex cover → dissociation deletion → fixed-r CoC → vertex integrity → treedepth.
+The Class Map records the same supported inclusions and the constant bound
+f(ω)=v for a uniform vertex-integrity bound v. The source papers establish the
+parameter definitions and research context; the elementary coloring and
+decomposition arguments are not presented as paper theorems.
+
+## Display and navigation
+
+Both pages share `../graph-notation.js`. DOM labels use real subscripts, while
+canvas and select labels use Unicode indices. Search accepts ASCII, explicit
+underscore notation and Unicode subscripts. Canonical names, relation keys and
+URL class values are preserved. The renderer treats data as text and keeps
+formula exponents and parameter subscripts separate from graph-name formatting.
+
+Homepage search aliases include 2-CoC, r-CoC, treedepth and explicit merge-radius
+spelling variants. They do not create extra equivalence nodes. The homepage and
+Class Map retain `(2r-1)-merge-width` and its proved comparison to r-flip-width;
+plain r-merge-width is not an interchangeable radius. All-radius merge→flip and
+the recorded inputs from merge-width and twin-width remain supported.
+
+Selected homepage parameters with a recorded Class Map mapping link to their
+canonical classes. `?parameter=...` opens a homepage selection; `?class=...` opens
+a Class Map selection. All published classes continue to reach `All graphs`.

@@ -41,7 +41,7 @@ function buildAudit() {
     byStatus[relation.status] = (byStatus[relation.status] || 0) + 1;
   }
   const audit = {
-    checkedOn: "2026-10-26",
+    checkedOn: "2026-11-01",
     conventions: {
       scope: "Disconnected graphs are included.",
       distance: "Distance between vertices in different components is infinite.",
@@ -49,7 +49,11 @@ function buildAudit() {
       reducedMaxLeaf: "Isolated red vertices do not count as leaves.",
       chordality: "Minimum number of chordal graphs whose edge intersection is the graph.",
       tracks: "Interval-track number and track-layout number are distinct.",
-      radiusComparison: "fw_r(G) <= 4^(mw_(2r-1)(G)); the source node is explicitly radius 2r-1, not r.",
+      radiusComparison: "fw_r(G) <= 4^(mw_(2r-1)(G)); the source node explicitly keeps radius 2r-1. All-radius merge-width -> flip-width also remains.",
+      publicationScope: "Newly proposed H-free classes and their intersection nodes are deferred; the existing Claw-free class remains. The homepage hierarchy contains only undirected graph parameters.",
+      parameterFamilies: "Fixed-host and fixed-radius family nodes require uniform parameters throughout each represented graph class; they are not unrestricted unions.",
+      neighborhoodComplexity: "Count traces N_G(v) intersect A over all vertices, including v in A; A is nonempty.",
+      componentOrderConnectivity: "kappa_r is a minimum vertex-deletion number leaving components of order at most fixed r. The r-CoC family node has fixed r>=2 and a uniform deletion bound; r=1 is vertex cover. Dissociation deletion is kappa_2, not the maximum retained-set size.",
       unchecked: "Not verified here; does not assert an open problem or a conjecture."
     },
     counts: {
@@ -69,7 +73,7 @@ function buildAudit() {
 
 if (require.main === module) {
   const audit = buildAudit();
-  const destination = path.join(__dirname, "class-relation-audit-2026-10-26.json");
+  const destination = path.join(__dirname, "class-relation-audit-2026-11-01.json");
   fs.writeFileSync(destination, `${JSON.stringify(audit, null, 2)}\n`);
   console.log(JSON.stringify(audit.counts, null, 2));
 }

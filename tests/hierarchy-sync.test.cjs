@@ -52,3 +52,31 @@ test("removing unsupported relations does not remove isolated or earlier paramet
   const labels = new Set([...main.nodes, ...main.edges.flatMap((edge) => [edge.source, edge.target])]);
   for (const label of ["girth", "diameter", "average distance", "vertex integrity", "row treewidth", "layered treewidth", "tree-γ", "tree-χ", "tree-μ"]) assert.ok(labels.has(label), label);
 });
+
+test("the undirected homepage excludes deferred digraph parameters and their configuration", () => {
+  const directed = [
+    "cycle rank", "DAG-depth", "DAG-width", "directed path-width", "directed tree-width", "Kelly-width",
+    "weak (∞, →)-coloring number", "strong (∞, →)-coloring number"
+  ];
+  const labels = new Set([...main.nodes, ...main.edges.flatMap((edge) => [edge.source, edge.target])]);
+  const configuredNames = [];
+  const collectNames = (value) => {
+    if (typeof value === "string") configuredNames.push(value);
+    else if (Array.isArray(value)) value.forEach(collectNames);
+    else if (value && typeof value === "object") {
+      for (const [key, entry] of Object.entries(value)) {
+        configuredNames.push(key);
+        collectNames(entry);
+      }
+    }
+  };
+  collectNames(context.window.GRAPH_DATA.settings);
+  for (const label of directed) {
+    assert.ok(!labels.has(label), `${label}: deferred digraph node is still present`);
+    assert.ok(!configuredNames.includes(label), `${label}: deferred configuration remains`);
+  }
+  for (const label of labels) assert.doesNotMatch(label, /\bdirected\b|\bDAG[- ]|\bKelly[- ]|→/i);
+  for (const label of ["tree-depth", "tree-width", "path-width", "weak ∞-coloring number", "strong ∞-coloring number"]) {
+    assert.ok(labels.has(label), `${label}: the undirected parameter must remain`);
+  }
+});

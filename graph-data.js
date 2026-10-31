@@ -14,6 +14,34 @@ window.GRAPH_DATA = {
       rankSep: 120,
       edgeSep: 34
     },
+    parameterAliases: {
+      "2-CoC": "dissociation deletion number",
+      "2-CoC number": "dissociation deletion number",
+      "2-component order connectivity": "dissociation deletion number",
+      "dissociation deletion": "dissociation deletion number",
+      "dissociation number (deletion)": "dissociation deletion number",
+      "r-CoC": "r-CoC (fixed r ≥ 2)",
+      "r-CoC number": "r-CoC (fixed r ≥ 2)",
+      "r-CoC (fixed r)": "r-CoC (fixed r ≥ 2)",
+      "r-CoC (fixed r >= 2)": "r-CoC (fixed r ≥ 2)",
+      "r-component order connectivity": "r-CoC (fixed r ≥ 2)",
+      "r-component order connectivity (fixed r)": "r-CoC (fixed r ≥ 2)",
+      "vertex-integrity": "vertex integrity",
+      "treedepth": "tree-depth",
+      "(2r-1)-merge-width": "(2𝑟-1)-merge-width",
+      "(2r−1)-merge-width": "(2𝑟-1)-merge-width"
+    },
+    displayLabels: {
+      "dissociation deletion number": "dissociation deletion number (2-CoC)"
+    },
+    classMapLabels: {
+      "dissociation deletion number": "Bounded dissociation deletion number",
+      "r-CoC (fixed r ≥ 2)": "Bounded r-CoC (fixed r ≥ 2)",
+      "vertex integrity": "Bounded vertex integrity",
+      "vertex cover number": "Bounded vertex cover number",
+      "tree-depth": "Bounded tree-depth",
+      "(2𝑟-1)-merge-width": "Bounded (2𝑟-1)-merge-width"
+    },
     equivalentAliases: {
       "rank-width": "clique-width",
       "linear NLC-width": "linear clique-width",
@@ -40,9 +68,7 @@ window.GRAPH_DATA = {
       "maximum matching": "vertex cover number",
       "induced matching treewidth": "tree-μ",
       "minor-matching hypertree-width": "tree-μ",
-      "tree-chromatic number": "tree-χ",
-      "weak (∞, →)-coloring number": "cycle rank",
-      "strong (∞, →)-coloring number": "Kelly-width"
+      "tree-chromatic number": "tree-χ"
     },
     preferredAnchors: [
       "clique-width",
@@ -111,16 +137,11 @@ window.GRAPH_DATA = {
       { source: "crossing number", target: "genus" },
       { source: "cut-width", target: "carving-width" },
       { source: "cut-width", target: "path-width" },
-      { source: "cycle rank", target: "directed path-width" },
-      { source: "cycle rank", target: "weak (∞, →)-coloring number", type: "equivalent" },
-      { source: "DAG-depth", target: "cycle rank" },
-      { source: "DAG-width", target: "directed tree-width" },
       { source: "degeneracy", target: "arboricity", type: "equivalent" },
       { source: "degeneracy", target: "average degree" },
       { source: "degeneracy", target: "chromatic number" },
       { source: "diameter", target: "average distance" },
       { source: "diameter", target: "max diameter of components" },
-      { source: "directed path-width", target: "Kelly-width" },
       { source: "distance to Bipartite", target: "chromatic number" },
       { source: "distance to Bipartite", target: "distance to Perfect" },
       { source: "distance to Chordal", target: "chordality" },
@@ -163,8 +184,6 @@ window.GRAPH_DATA = {
       { source: "genus", target: "row treewidth" },
       { source: "genus", target: "twin-width" },
       { source: "geometric thickness", target: "thickness" },
-      { source: "Kelly-width", target: "DAG-width" },
-      { source: "Kelly-width", target: "strong (∞, →)-coloring number", type: "equivalent" },
       { source: "layered treewidth", target: "degeneracy" },
       { source: "linear clique-width", target: "clique-width" },
       { source: "linear clique-width", target: "linear NLC-width", type: "equivalent" },
@@ -265,7 +284,15 @@ window.GRAPH_DATA = {
       { source: "vertex integrity", target: "tree-depth" },
       { source: "α-edge-crossing width", target: "tree-partition-width" },
       { source: "ℎ-index", target: "acyclic chromatic number" },
-      { source: "(2𝑟-1)-merge-width", target: "𝑟-flip-width" }
+      { source: "(2𝑟-1)-merge-width", target: "𝑟-flip-width" },
+      {"source":"vertex cover number","target":"dissociation deletion number"},
+      {"source":"dissociation deletion number","target":"r-CoC (fixed r ≥ 2)"},
+      {"source":"dissociation deletion number","target":"vertex integrity"},
+      {"source":"r-CoC (fixed r ≥ 2)","target":"vertex integrity"},
+      {"source":"dissociation deletion number","target":"distance to Cluster"},
+      {"source":"dissociation deletion number","target":"distance to Linear forest"},
+      {"source":"dissociation deletion number","target":"feedback vertex set number"},
+      {"source":"dissociation deletion number","target":"distance to Bipartite"}
     ]
   }
 };

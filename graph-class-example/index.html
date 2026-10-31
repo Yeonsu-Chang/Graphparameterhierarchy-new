@@ -5,15 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Graph Class Map</title>
   <link rel="icon" href="../graph-hierarchy-icon.svg?v=20260514" type="image/svg+xml" />
-  <link rel="stylesheet" href="./styles.css?v=20261026-origins1" />
+  <link rel="stylesheet" href="./styles.css?v=20261101-undirected1" />
   <script src="https://unpkg.com/cytoscape@3.27.0/dist/cytoscape.min.js"></script>
   <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
   <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
-  <script src="./data.js?v=20261026-allgraphs1"></script>
-  <script src="./relation-sources.js?v=20261026-origins1"></script>
+  <script src="./data.js?v=20261101-undirected1"></script>
+  <script src="./relation-sources.js?v=20261101-undirected1"></script>
+  <script src="./chi-binding-data.js?v=20261101-undirected1"></script>
   <script src="./complexity-data.js?v=20261028-reduced1"></script>
-  <script defer src="./complexity.js?v=20261026-origins1"></script>
-  <script defer src="./app.js?v=20261026-audit1"></script>
+  <script src="../graph-notation.js?v=20261101-undirected1"></script>
+  <script defer src="./complexity.js?v=20261101-undirected1"></script>
+  <script defer src="./chi-binding.js?v=20261101-undirected1"></script>
+  <script defer src="./app.js?v=20261101-undirected1"></script>
 </head>
 <body>
   <main class="shell explorer-shell">
@@ -50,6 +53,7 @@
           </div>
         </div>
         <p id="selected-summary" class="selected-summary"></p>
+        <section id="class-definition" class="class-definition" aria-label="Class definition and references" hidden></section>
 
         <div class="relation-grid">
           <section class="relation-card">
@@ -103,6 +107,15 @@
             <select id="relation-source-select" aria-label="Relation to cite"></select>
           </div>
           <div id="relation-evidence" aria-live="polite"></div>
+        </section>
+
+        <section id="chi-binding" class="chi-binding-section" aria-labelledby="chi-binding-title">
+          <div class="chi-binding-heading">
+            <h2 id="chi-binding-title">χ-binding function</h2>
+            <span id="chi-binding-status" class="chi-binding-status"></span>
+          </div>
+          <p class="chi-binding-convention">χ(H) ≤ f(ω(H)) for every nonempty induced subgraph H; write ω = ω(H). Structural bounds and class-dependent constants are fixed uniformly. These are upper bounds; optimality is stated only when verified.</p>
+          <div id="chi-binding-content"></div>
         </section>
 
         <section id="complexity" class="complexity-section" aria-labelledby="complexity-title">

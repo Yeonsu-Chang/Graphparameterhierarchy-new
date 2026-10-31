@@ -12,6 +12,7 @@
     selectedTitle: document.getElementById("selected-title"),
     selectedProperties: document.getElementById("selected-properties"),
     selectedSummary: document.getElementById("selected-summary"),
+    classDefinition: document.getElementById("class-definition"),
     mobileListButton: document.getElementById("show-class-list"),
     mobileDetailButton: document.getElementById("show-class-detail"),
     detailPanel: document.querySelector(".detail-panel"),
@@ -58,7 +59,7 @@
     return String(label).startsWith("bounded ") ? label : `bounded ${label}`;
   }
 
-  function displayLabel(label) {
+  function baseDisplayLabel(label) {
     return String(label)
       .replace(/^Bounded chordality$/, "Bounded chordality (intersection)")
       .replace(/\\cap/g, "⋂")
@@ -74,11 +75,16 @@
       .trim();
   }
 
+  function displayLabel(label) {
+    const text = baseDisplayLabel(label);
+    return window.GRAPH_NOTATION?.toPlain(text) || text;
+  }
+
   function setDisplayLabel(element, label) {
-    const parts = displayLabel(label).split("∞");
+    const parts = baseDisplayLabel(label).split("∞");
     element.replaceChildren();
     parts.forEach((part, index) => {
-      if (part) element.appendChild(document.createTextNode(part));
+      if (part) element.appendChild(window.GRAPH_NOTATION?.toFragment(part) || document.createTextNode(part));
       if (index < parts.length - 1) {
         const symbol = document.createElement("span");
         symbol.className = "math-infinity";
@@ -368,10 +374,10 @@
   }
 
   function renderClassList() {
-    const query = ui.search.value.trim().toLowerCase();
+    const searchText = window.GRAPH_NOTATION?.searchText || ((text) => String(text).toLowerCase().replace(/[_\s{}]/g, "").replace(/[₀-₉]/g, (digit) => "₀₁₂₃₄₅₆₇₈₉".indexOf(digit)));
+    const query = searchText(ui.search.value.trim());
     const matches = graphData.nodes
-      .filter((node) => !query || node.label.toLowerCase().includes(query))
-      .slice(0, 180);
+      .filter((node) => !query || [node.label, ...Object.entries(data.classAliases || {}).filter(([, target]) => target === node.label).map(([alias]) => alias)].some((label) => searchText(label).includes(query)));
 
     ui.classList.innerHTML = "";
     matches.forEach((node) => {
@@ -424,13 +430,54 @@
     setDisplayLabel(ui.relationViewTitle, selected.label);
     renderPropertyTags(id);
     ui.selectedSummary.textContent = relationSummary(equivalents, subclasses, superclasses);
+    renderClassDefinition(selected.label);
     renderRelationList(ui.equivalentList, ui.equivalentCount, equivalents);
     renderRelationList(ui.subclassList, ui.subclassCount, subclasses);
     renderRelationList(ui.superclassList, ui.superclassCount, superclasses);
     renderClassList();
     renderLocalGraph(id, { relationRoots, equivalents, subclasses, superclasses, neighbors });
+    window.renderClassChiBinding?.(selected.label);
     window.renderClassComplexity?.(selected.label);
     if (options.revealDetail && isMobileLayout()) setMobilePanel("detail", { scroll: true });
+  }
+
+  function renderClassDefinition(label) {
+    if (!ui.classDefinition) return;
+    const details = data.classDetails?.[label];
+    ui.classDefinition.replaceChildren();
+    ui.classDefinition.hidden = !details;
+    if (!details) return;
+    const description = document.createElement("p");
+    description.appendChild(window.GRAPH_NOTATION?.toFragment(details.description) || document.createTextNode(details.description));
+    ui.classDefinition.appendChild(description);
+    const references = details.references || [];
+    if (!references.length) return;
+    const bibliography = document.createElement("details");
+    const summary = document.createElement("summary");
+    summary.textContent = `Class references (${references.length})`;
+    bibliography.appendChild(summary);
+    const list = document.createElement("ul");
+    list.className = "relation-proof-steps";
+    references.forEach(({ sourceId, locator }) => {
+      const reference = relationSources?.sources[sourceId];
+      if (!reference) return;
+      const item = document.createElement("li");
+      const link = document.createElement("a");
+      link.href = reference[3];
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      setDisplayLabel(link, `${reference[0]} (${reference[1]}). ${reference[2]}`);
+      item.appendChild(link);
+      if (locator) {
+        const location = document.createElement("p");
+        location.className = "relation-proof-locator";
+        setDisplayLabel(location, locator);
+        item.appendChild(location);
+      }
+      list.appendChild(item);
+    });
+    bibliography.appendChild(list);
+    ui.classDefinition.appendChild(bibliography);
   }
 
   function isMobileLayout() {
@@ -657,12 +704,12 @@
       link.href = reference[3];
       link.target = "_blank";
       link.rel = "noopener noreferrer";
-      link.textContent = `${reference[0]} (${reference[1]}). ${reference[2]}`;
+      setDisplayLabel(link, `${reference[0]} (${reference[1]}). ${reference[2]}`);
       item.appendChild(link);
       if (locators.length) {
         const location = document.createElement("p");
         location.className = "relation-proof-locator";
-        location.textContent = locators.join("; ");
+        setDisplayLabel(location, locators.join("; "));
         item.appendChild(location);
       }
       list.appendChild(item);
@@ -671,7 +718,7 @@
     proof.steps.filter((step) => ["incorrect", "conditional"].includes(step.kind) || (step.kind === "unchecked" && step.sourceIds.length)).forEach((step) => {
       const warning = document.createElement("p");
       warning.className = "relation-proof-warning";
-      warning.textContent = step.note;
+      setDisplayLabel(warning, step.note);
       fragment.appendChild(warning);
     });
     ui.relationEvidence.replaceChildren(fragment);
@@ -915,8 +962,8 @@
   renderClassList();
   selectClass(selectedId);
   if (requestedClass && isMobileLayout()) setMobilePanel("detail");
-  if (requestedClass && window.location.hash === "#complexity") {
-    window.requestAnimationFrame(() => document.getElementById("complexity").scrollIntoView());
+  if (requestedClass && ["#complexity", "#chi-binding"].includes(window.location.hash)) {
+    window.requestAnimationFrame(() => document.getElementById(window.location.hash.slice(1)).scrollIntoView());
   }
   syncZoomSlider();
 
